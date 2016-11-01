@@ -38,6 +38,16 @@ public class Game {
     }
 
     public FieldState whoWins() {
+        for (List<Integer> list : getWinConditions()) {
+            if (areFieldsEqual(list)) {
+                System.out.println("The winner is " +table[list.get(0)].value);
+                return table[list.get(0)];
+            }
+        }
+        return FieldState.EMPTY;
+    }
+
+    private static List<List<Integer>> getWinConditions() {
         List<List<Integer>> lists = new ArrayList<>();
         lists.add(new ArrayList<>(Arrays.asList(0, 1, 2)));
         lists.add(new ArrayList<>(Arrays.asList(3, 4, 5)));
@@ -47,13 +57,7 @@ public class Game {
         lists.add(new ArrayList<>(Arrays.asList(2, 5, 8)));
         lists.add(new ArrayList<>(Arrays.asList(0, 4, 8)));
         lists.add(new ArrayList<>(Arrays.asList(2, 4, 6)));
-        for (List<Integer> list : lists) {
-            if (areFieldsEqual(list)) {
-                System.out.println("The winner is " +table[list.get(0)].value);
-                return table[list.get(0)];
-            }
-        }
-        return FieldState.EMPTY;
+        return lists;
     }
 
     private boolean areFieldsEqual(List<Integer> indexesToCompare) {
