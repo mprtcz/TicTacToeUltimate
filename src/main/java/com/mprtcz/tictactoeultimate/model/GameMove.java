@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name = "GAME_MOVES")
-public class GameMove {
+public class GameMove implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
