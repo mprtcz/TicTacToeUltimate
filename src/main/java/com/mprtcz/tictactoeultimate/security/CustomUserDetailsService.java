@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by Azet on 2016-11-04.
  */
-@Service("customUserDetailsService")
+@Service
 public class CustomUserDetailsService implements UserDetailsService {
     private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
 

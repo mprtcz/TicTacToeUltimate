@@ -30,27 +30,29 @@ public class Game {
         private String value;
         private int number;
 
-        FieldState(String value, int number) {
-            this.value = value;
-            this.number = number;
+        FieldState(String representation, int value) {
+            this.value = representation;
+            this.number = value;
         }
 
         public abstract FieldState getOpposite();
     }
 
+    private static final int NUMBER_OF_DIAGONALS = 2;
+
     private FieldState[][] table;
     private FieldState currentPlayer;
 
-    private int[] sumX;
-    private int[] sumY;
-    private int[] sumZ;
+    private int[] horizontalSums;
+    private int[] verticalSums;
+    private int[] diagonalSums;
 
     private Game(int tableSize) {
         this.table = new FieldState[tableSize][tableSize];
         currentPlayer = FieldState.O;
-        sumX = new int[tableSize];
-        sumY = new int[tableSize];
-        sumZ = new int[2];
+        horizontalSums = new int[tableSize];
+        verticalSums = new int[tableSize];
+        diagonalSums = new int[NUMBER_OF_DIAGONALS];
         init();
     }
 
@@ -62,32 +64,32 @@ public class Game {
         }
     }
 
-    private boolean addToCross(int indexX, int indexY) {
-        if (indexX == indexY) {
-            sumZ[0] += currentPlayer.getNumber();
-            isLineWinning(sumZ[0]);
+    private boolean addToDiagonals(int horizontalCoordinate, int verticalCoordinate) {
+        if (horizontalCoordinate == verticalCoordinate) {
+            diagonalSums[0] += currentPlayer.getNumber();
+            isLineWinning(diagonalSums[0]);
         }
-        if ((indexX + indexY) == (table.length - 1)) {
-            if (table[indexX][indexY].getNumber() != 0) {
-                sumZ[1] += currentPlayer.getNumber();
+        if ((horizontalCoordinate + verticalCoordinate) == (table.length - 1)) {
+            if (table[horizontalCoordinate][verticalCoordinate].getNumber() != 0) {
+                diagonalSums[1] += currentPlayer.getNumber();
             }
-            isLineWinning(sumZ[1]);
+            isLineWinning(diagonalSums[1]);
         }
-        return isLineWinning(sumZ[0]) || isLineWinning(sumZ[1]);
+        return isLineWinning(diagonalSums[0]) || isLineWinning(diagonalSums[1]);
     }
 
-    private boolean addToLinesSums(int indexX, int indexY) {
-        sumX[indexX] += currentPlayer.getNumber();
-        sumY[indexY] += currentPlayer.getNumber();
-        return (isLineWinning(sumY[indexY]) || isLineWinning(sumX[indexX]));
+    private boolean addToLinesSums(int horizontalCoordinate, int verticalCoordinate) {
+        horizontalSums[horizontalCoordinate] += currentPlayer.getNumber();
+        verticalSums[verticalCoordinate] += currentPlayer.getNumber();
+        return (isLineWinning(verticalSums[verticalCoordinate]) || isLineWinning(horizontalSums[horizontalCoordinate]));
     }
 
     private boolean isLineWinning(int lineSum) {
         return lineSum == (table.length * currentPlayer.getNumber());
     }
 
-    private boolean addToSums(int indexX, int indexY) {
-        return addToLinesSums(indexX, indexY) || addToCross(indexX, indexY);
+    private boolean addToSums(int horizontalCoordinate, int verticalCoordinate) {
+        return addToLinesSums(horizontalCoordinate, verticalCoordinate) || addToDiagonals(horizontalCoordinate, verticalCoordinate);
     }
 
     private void displayBoard() {
