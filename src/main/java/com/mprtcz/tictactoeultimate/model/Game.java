@@ -50,7 +50,7 @@ public class Game {
         currentPlayer = FieldState.O;
         sumX = new int[tableSize];
         sumY = new int[tableSize];
-        sumZ  = new int[2];
+        sumZ = new int[2];
         init();
     }
 
@@ -119,7 +119,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game game = new Game(3);
+        Game game = new Game(5);
         game.displayBoard();
 
         boolean isWinner = false;
