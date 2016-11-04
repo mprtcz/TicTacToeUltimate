@@ -8,5 +8,5 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by Azet on 2016-11-03.
  */
 @Transactional
-public interface GameMoveRepository extends CrudRepository<Long, GameMove> {
+public interface GameMoveRepository extends CrudRepository<GameMove, Long> {
 }

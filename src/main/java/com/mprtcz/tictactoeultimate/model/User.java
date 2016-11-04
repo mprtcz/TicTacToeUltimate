@@ -3,9 +3,9 @@ package com.mprtcz.tictactoeultimate.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
+import javax.persistence.Id;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +14,9 @@ import java.util.List;
  */
 @Getter
 @Setter
+@Entity
 @Table(name = "USERS")
-public class User implements Serializable {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

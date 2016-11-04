@@ -11,15 +11,29 @@ public class Game {
 
     @Getter
     public enum FieldState {
-        X("X"),
-        O("O"),
-        EMPTY("-");
+        X("X") {
+            public FieldState getOpposite() {
+                return FieldState.O;
+            }
+        },
+        O("O") {
+            public FieldState getOpposite() {
+                return FieldState.X;
+            }
+        },
+        EMPTY("-") {
+            public FieldState getOpposite() {
+                return FieldState.EMPTY;
+            }
+        };
 
         private String value;
 
         FieldState(String value) {
             this.value = value;
         }
+
+        public abstract FieldState getOpposite();
     }
 
     private FieldState[] table;
@@ -40,7 +54,7 @@ public class Game {
     public FieldState whoWins() {
         for (List<Integer> list : getWinConditions()) {
             if (areFieldsEqual(list)) {
-                System.out.println("The winner is " +table[list.get(0)].value);
+                System.out.println("The winner is " + table[list.get(0)].value);
                 return table[list.get(0)];
             }
         }
@@ -74,16 +88,6 @@ public class Game {
         return true;
     }
 
-    public FieldState changeSign() {
-        if (currentPlayer == FieldState.O) {
-            return FieldState.X;
-        } else if (currentPlayer == FieldState.X) {
-            return FieldState.O;
-        } else {
-            return FieldState.EMPTY;
-        }
-    }
-
     public void displayBoard(int divisor) {
         for (int i = 0; i < table.length; i++) {
             if (i % divisor == 0) {
@@ -95,16 +99,16 @@ public class Game {
     }
 
     public void insertSymbol(int index) {
-        if((index > table.length - 1)  || (index < 0)) {
+        if ((index > table.length - 1) || (index < 0)) {
             System.out.println("Index exceeds table size");
             return;
         }
-        if(FieldState.EMPTY != table[index]) {
+        if (FieldState.EMPTY != table[index]) {
             System.out.println("The field is already picked, try again");
             return;
         }
         table[index] = currentPlayer;
-        currentPlayer = changeSign();
+        currentPlayer = currentPlayer.getOpposite();
 
     }
 
@@ -117,7 +121,7 @@ public class Game {
             System.out.println("Type where you want to put " + game.currentPlayer);
             Scanner in = new Scanner(System.in);
             inputLine = in.nextLine();
-            if(inputLine.toLowerCase().equals("exit")) {
+            if (inputLine.toLowerCase().equals("exit")) {
                 break;
             }
             try {
