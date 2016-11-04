@@ -2,7 +2,7 @@ package com.mprtcz.tictactoeultimate.model;
 
 import lombok.Getter;
 
-import java.util.*;
+import java.util.Scanner;
 
 /**
  * Created by Azet on 2016-10-31.
@@ -10,128 +10,141 @@ import java.util.*;
 public class Game {
 
     @Getter
-    public enum FieldState {
-        X("X") {
+    enum FieldState {
+        X("X", 1) {
             public FieldState getOpposite() {
                 return FieldState.O;
             }
         },
-        O("O") {
+        O("O", -1) {
             public FieldState getOpposite() {
                 return FieldState.X;
             }
         },
-        EMPTY("-") {
+        EMPTY("-", 0) {
             public FieldState getOpposite() {
                 return FieldState.EMPTY;
             }
         };
 
         private String value;
+        private int number;
 
-        FieldState(String value) {
+        FieldState(String value, int number) {
             this.value = value;
+            this.number = number;
         }
 
         public abstract FieldState getOpposite();
     }
 
-    private FieldState[] table;
+    private FieldState[][] table;
     private FieldState currentPlayer;
 
-    public Game(int tableSize) {
-        this.table = new FieldState[tableSize];
+    private int[] sumX;
+    private int[] sumY;
+    private int[] sumZ;
+
+    private Game(int tableSize) {
+        this.table = new FieldState[tableSize][tableSize];
         currentPlayer = FieldState.O;
+        sumX = new int[tableSize];
+        sumY = new int[tableSize];
+        sumZ  = new int[2];
         init();
     }
 
-    public void init() {
+    private void init() {
         for (int i = 0; i < table.length; i++) {
-            table[i] = FieldState.EMPTY;
-        }
-    }
-
-    public FieldState whoWins() {
-        for (List<Integer> list : getWinConditions()) {
-            if (areFieldsEqual(list)) {
-                System.out.println("The winner is " + table[list.get(0)].value);
-                return table[list.get(0)];
+            for (int j = 0; j < table[i].length; j++) {
+                table[i][j] = FieldState.EMPTY;
             }
         }
-        return FieldState.EMPTY;
     }
 
-    private static List<List<Integer>> getWinConditions() {
-        List<List<Integer>> lists = new ArrayList<>();
-        lists.add(new ArrayList<>(Arrays.asList(0, 1, 2)));
-        lists.add(new ArrayList<>(Arrays.asList(3, 4, 5)));
-        lists.add(new ArrayList<>(Arrays.asList(6, 7, 8)));
-        lists.add(new ArrayList<>(Arrays.asList(0, 3, 6)));
-        lists.add(new ArrayList<>(Arrays.asList(1, 4, 7)));
-        lists.add(new ArrayList<>(Arrays.asList(2, 5, 8)));
-        lists.add(new ArrayList<>(Arrays.asList(0, 4, 8)));
-        lists.add(new ArrayList<>(Arrays.asList(2, 4, 6)));
-        return lists;
+    private boolean addToCross(int indexX, int indexY) {
+        if (indexX == indexY) {
+            sumZ[0] += currentPlayer.getNumber();
+            isLineWinning(sumZ[0]);
+        }
+        if ((indexX + indexY) == (table.length - 1)) {
+            if (table[indexX][indexY].getNumber() != 0) {
+                sumZ[1] += currentPlayer.getNumber();
+            }
+            isLineWinning(sumZ[1]);
+        }
+        return isLineWinning(sumZ[0]) || isLineWinning(sumZ[1]);
     }
 
-    private boolean areFieldsEqual(List<Integer> indexesToCompare) {
-        if ((table[indexesToCompare.get(0)] == FieldState.EMPTY) || (indexesToCompare.size() < 2)) {
+    private boolean addToLinesSums(int indexX, int indexY) {
+        sumX[indexX] += currentPlayer.getNumber();
+        sumY[indexY] += currentPlayer.getNumber();
+        return (isLineWinning(sumY[indexY]) || isLineWinning(sumX[indexX]));
+    }
+
+    private boolean isLineWinning(int lineSum) {
+        return lineSum == (table.length * currentPlayer.getNumber());
+    }
+
+    private boolean addToSums(int indexX, int indexY) {
+        return addToLinesSums(indexX, indexY) || addToCross(indexX, indexY);
+    }
+
+    private void displayBoard() {
+        for (FieldState[] tableLine : table) {
+            for (FieldState fieldState : tableLine) {
+                System.out.print(" " + fieldState.value);
+            }
+            System.out.println(" ");
+        }
+    }
+
+    private boolean insertSymbol(int indexVertical, int indexHorizontal) {
+        if ((indexVertical > table[indexHorizontal].length - 1) || (indexVertical < 0)
+                || (indexHorizontal > table.length - 1) || (indexHorizontal < 0)) {
+            System.out.println("Index exceeds table size");
             return false;
         }
-        FieldState initialState = table[indexesToCompare.get(0)];
-        for (int index :
-                indexesToCompare) {
-            if (table[index] != initialState) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public void displayBoard(int divisor) {
-        for (int i = 0; i < table.length; i++) {
-            if (i % divisor == 0) {
-                System.out.print("\n");
-            }
-            System.out.print(" " + table[i].value);
-        }
-        System.out.println("");
-    }
-
-    public void insertSymbol(int index) {
-        if ((index > table.length - 1) || (index < 0)) {
-            System.out.println("Index exceeds table size");
-            return;
-        }
-        if (FieldState.EMPTY != table[index]) {
+        if (FieldState.EMPTY != table[indexHorizontal][indexVertical]) {
             System.out.println("The field is already picked, try again");
-            return;
+            return false;
         }
-        table[index] = currentPlayer;
+        table[indexHorizontal][indexVertical] = currentPlayer;
+        boolean isWinner = addToSums(indexHorizontal, indexVertical);
+        if (isWinner) {
+            return true;
+        }
         currentPlayer = currentPlayer.getOpposite();
-
+        return false;
     }
 
     public static void main(String[] args) {
-        Game game = new Game(9);
-        game.displayBoard(3);
+        Game game = new Game(3);
+        game.displayBoard();
 
+        boolean isWinner = false;
         String inputLine;
-        while (game.whoWins() == FieldState.EMPTY) {
-            System.out.println("Type where you want to put " + game.currentPlayer);
+        do {
+            System.out.println("Type where you want to put " + game.currentPlayer + ", separate coordinates with comma");
             Scanner in = new Scanner(System.in);
             inputLine = in.nextLine();
             if (inputLine.toLowerCase().equals("exit")) {
                 break;
             }
             try {
-                int index = Integer.parseInt(inputLine);
-                game.insertSymbol(index);
-                game.displayBoard(3);
+                String[] indexes = inputLine.split(",");
+                if (indexes.length != 2) {
+                    throw new Exception("Two numbers, babe");
+                }
+                isWinner = game.insertSymbol(Integer.parseInt(indexes[1]), Integer.parseInt(indexes[0]));
+                game.displayBoard();
             } catch (NumberFormatException e) {
                 System.out.println("Only numbers!");
+            } catch (Exception ex) {
+                System.out.println(ex.toString());
             }
-
         }
+        while (!isWinner);
+        System.out.println("The winner is " + game.currentPlayer);
     }
 }
