@@ -29,9 +29,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
+                .antMatchers("/api/hello", "/api/hello/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login")
+                .formLogin().loginPage("/login").permitAll()
                 .loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password");
     }
 
