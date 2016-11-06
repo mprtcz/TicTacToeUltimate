@@ -7,6 +7,7 @@ import java.util.Scanner;
 /**
  * Created by Azet on 2016-10-31.
  */
+@Getter
 public class Game {
 
     @Getter
@@ -47,7 +48,7 @@ public class Game {
     private int[] verticalSums;
     private int[] diagonalSums;
 
-    private Game(int tableSize) {
+    public Game(int tableSize) {
         this.table = new FieldState[tableSize][tableSize];
         currentPlayer = FieldState.O;
         horizontalSums = new int[tableSize];
@@ -101,7 +102,7 @@ public class Game {
         }
     }
 
-    private boolean insertSymbol(int indexVertical, int indexHorizontal) {
+    boolean insertSymbol(int indexVertical, int indexHorizontal) {
         if ((indexVertical > table[indexHorizontal].length - 1) || (indexVertical < 0)
                 || (indexHorizontal > table.length - 1) || (indexHorizontal < 0)) {
             System.out.println("Index exceeds table size");
@@ -121,7 +122,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game game = new Game(5);
+        Game game = new Game(3);
         game.displayBoard();
 
         boolean isWinner = false;
