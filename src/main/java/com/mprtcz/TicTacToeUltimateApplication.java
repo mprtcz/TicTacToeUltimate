@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-//@EnableJpaRepositories(basePackages = "com.mprtcz.tictactoeultimate.repository")
 @EntityScan("com.mprtcz.tictactoeultimate.model")
 public class TicTacToeUltimateApplication {
 
