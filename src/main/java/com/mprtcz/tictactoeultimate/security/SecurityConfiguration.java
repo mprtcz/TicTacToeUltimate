@@ -27,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
                 .antMatchers("/api/hello", "/", "/*").permitAll()
+                .antMatchers("/api/**").permitAll() //disabled security, remove to enable again
                 .antMatchers("/app/**", "/node_modules/**", "/jsp/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

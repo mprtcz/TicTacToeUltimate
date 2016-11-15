@@ -6,21 +6,20 @@ import {GreetingService} from "./greeting.service";
     selector: 'fa-greeting',
     templateUrl: './greeting.component.jsp'
 })
-export class GreetingComponent implements OnInit {
-    constructor(private greetingService: GreetingService) {
-        console.log("Service: " +this.greetingService.toString());
-    }
+export class GreetingComponent {
+    variable : string;
 
-    ngOnInit(): void {
-        console.log("init greeting component");
-    }
+    constructor(private greetingService: GreetingService) {}
 
     string: message;
 
     getSimpleGreeting(): void {
-        console.log("simpleGreeting");
-        console.log("service: " +this.greetingService.toString());
-        //this.message = this.greetingService.getMockMessage();
-        this.greetingService.getSimpleGreetingFromServer().then(message => this.message = message)
+        this.greetingService.getSimpleGreetingFromServer()
+            .then(message => this.message = message)
+    }
+
+    getPersonalizedGreeting(): void {
+        this.greetingService.getPersonalizedMessageFromServer(this.variable)
+            .then(message => this.message = message)
     }
 }

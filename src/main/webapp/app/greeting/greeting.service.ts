@@ -17,8 +17,11 @@ export class GreetingService {
             .catch(this.handleError);
     }
 
-    getMockMessage() : Promise<string> {
-        return 'mockMessage';
+    getPersonalizedMessageFromServer(variable: string) : Promise<string> {
+        return this.http.get(this.greetingUrl + '/' + variable)
+            .toPromise()
+            .then(response => response.text() as string)
+            .catch(this.handleError);
     }
 
 }

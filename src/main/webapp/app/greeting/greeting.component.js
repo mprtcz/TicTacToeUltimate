@@ -13,17 +13,16 @@ var greeting_service_1 = require("./greeting.service");
 var GreetingComponent = (function () {
     function GreetingComponent(greetingService) {
         this.greetingService = greetingService;
-        console.log("Service: " + this.greetingService.toString());
     }
-    GreetingComponent.prototype.ngOnInit = function () {
-        console.log("init greeting component");
-    };
     GreetingComponent.prototype.getSimpleGreeting = function () {
         var _this = this;
-        console.log("simpleGreeting");
-        console.log("service: " + this.greetingService.toString());
-        //this.message = this.greetingService.getMockMessage();
-        this.greetingService.getSimpleGreetingFromServer().then(function (message) { return _this.message = message; });
+        this.greetingService.getSimpleGreetingFromServer()
+            .then(function (message) { return _this.message = message; });
+    };
+    GreetingComponent.prototype.getPersonalizedGreeting = function () {
+        var _this = this;
+        this.greetingService.getPersonalizedMessageFromServer(this.variable)
+            .then(function (message) { return _this.message = message; });
     };
     GreetingComponent = __decorate([
         core_1.Component({
