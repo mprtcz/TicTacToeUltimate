@@ -3,14 +3,20 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from "./app.component";
 import {GreetingComponent} from "./greeting/greeting.component";
+import {GreetingService} from "./greeting/greeting.service";
+import {HttpModule} from "@angular/http";
 
 @NgModule({
-    imports: [BrowserModule],
+    imports: [
+        BrowserModule,
+        HttpModule
+    ],
     declarations: [
         AppComponent,
         GreetingComponent
     ],
-    bootstrap: [ AppComponent ]
+    providers: [GreetingService],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

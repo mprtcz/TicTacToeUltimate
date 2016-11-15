@@ -9,15 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var greeting_service_1 = require("./greeting.service");
 var GreetingComponent = (function () {
-    function GreetingComponent() {
+    function GreetingComponent(greetingService) {
+        this.greetingService = greetingService;
+        console.log("Service: " + this.greetingService.toString());
     }
+    GreetingComponent.prototype.ngOnInit = function () {
+        console.log("init greeting component");
+    };
+    GreetingComponent.prototype.getSimpleGreeting = function () {
+        var _this = this;
+        console.log("simpleGreeting");
+        console.log("service: " + this.greetingService.toString());
+        //this.message = this.greetingService.getMockMessage();
+        this.greetingService.getSimpleGreetingFromServer().then(function (message) { return _this.message = message; });
+    };
     GreetingComponent = __decorate([
         core_1.Component({
+            moduleId: module.id,
             selector: 'fa-greeting',
-            templateUrl: 'app/greeting/greeting.component.jsp'
+            templateUrl: './greeting.component.jsp'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [greeting_service_1.GreetingService])
     ], GreetingComponent);
     return GreetingComponent;
 }());

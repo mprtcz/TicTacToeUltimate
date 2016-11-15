@@ -12,16 +12,22 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var app_component_1 = require("./app.component");
 var greeting_component_1 = require("./greeting/greeting.component");
+var greeting_service_1 = require("./greeting/greeting.service");
+var http_1 = require("@angular/http");
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule],
+            imports: [
+                platform_browser_1.BrowserModule,
+                http_1.HttpModule
+            ],
             declarations: [
                 app_component_1.AppComponent,
                 greeting_component_1.GreetingComponent
             ],
+            providers: [greeting_service_1.GreetingService],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])
