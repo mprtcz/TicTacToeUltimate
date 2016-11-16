@@ -2,6 +2,11 @@ target/
 src/main/resources/node_modules
 !.mvn/wrapper/maven-wrapper.jar
 
+
+## JavaScript (generated from .ts)##
+.js
+.map
+
 ### STS ###
 .apt_generated
 .classpath
