@@ -7,9 +7,10 @@ import {GreetingService} from "./greeting.service";
     templateUrl: './greeting.component.jsp'
 })
 export class GreetingComponent {
-    variable : string;
+    variable: string;
 
-    constructor(private greetingService: GreetingService) {}
+    constructor(private greetingService: GreetingService) {
+    }
 
     string: message;
 

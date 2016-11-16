@@ -4,4 +4,5 @@ import {Component} from '@angular/core';
     selector: 'my-app',
     templateUrl: 'app/app.component.jsp',
 })
-export class AppComponent {}
+export class AppComponent {
+}
