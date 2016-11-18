@@ -38,4 +38,10 @@ public class UserService {
         }
         return null;
     }
+
+    public UserDTO getUserDTOBySssId(String ssoId) {
+        User user = findBySSO(ssoId);
+        UserDTO userDTO = userMapper.toDTO(user);
+        return userDTO;
+    }
 }

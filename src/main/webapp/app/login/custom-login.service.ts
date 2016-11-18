@@ -1,29 +1,56 @@
 import {Injectable} from "@angular/core";
+import {User} from "./user";
+import {RequestOptions, Headers, Http} from "@angular/http";
 
 @Injectable()
 export class CustomLoginService {
-    private username: string;
+    private user: User;
     private isAuthenticated: boolean;
 
-    constructor() {
+    constructor(private http : Http) {
         this.isAuthenticated = false
     };
 
     getUser(): void {
-        return this.username;
+        console.log('getUser = ' +JSON.stringify(this.user));
+        return this.user;
     }
 
     isAuthenticated(): boolean {
         return this.isAuthenticated;
     }
 
-    setUser(username: string): void {
-        this.username = username;
+    setUser(user: string): void {
+        console.log('setUser = ' +user);
+        this.user = user;
         this.isAuthenticated = true;
     }
 
     clearUser(): void {
-        this.username = '';
+        this.user = '';
         this.isAuthenticated = false;
+    }
+
+    authenticate(username: string, password: string): void {
+        const url = 'http://localhost:8080/user';
+        let options = new RequestOptions({headers: this.createAuthHeader(username, password), withCredentials: true});
+        this.http.get(url, options)
+            .toPromise()
+            .then(res => {
+                this.user = res.json() as User;
+                this.setUser(this.user);
+            })
+            .catch((error: any) => {
+                if (error.status === 401) {
+                } else {
+                }
+            });
+    }
+
+    createAuthHeader(username: string, password: string): string {
+        return new Headers({
+            'authorization': 'Basic '
+            + btoa(username + ':' + password)
+        });
     }
 }

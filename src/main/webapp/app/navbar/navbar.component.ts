@@ -8,6 +8,7 @@ import {User} from "../login/user";
     templateUrl: './navbar.component.jsp'
 })
 export class NavbarComponent {
+    private user : User;
     private  loggedInUser = this.loginService.getUser();
 
     constructor(private loginService: CustomLoginService) {
@@ -18,7 +19,12 @@ export class NavbarComponent {
         return this.loginService.getUser() === null;
     }
 
-    getUser() : User {
-        return this.loginService.getUser();
+    getUser() : string {
+        this.user = this.loginService.getUser();
+        if(this.user != null){
+            return this.user.nickname;
+        } else {
+            return "Guest";
+        }
     }
 }

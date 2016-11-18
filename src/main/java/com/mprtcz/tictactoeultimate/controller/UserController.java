@@ -1,6 +1,10 @@
 package com.mprtcz.tictactoeultimate.controller;
 
+import com.mprtcz.tictactoeultimate.model.dto.UserDTO;
+import com.mprtcz.tictactoeultimate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,14 +20,27 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @RequestMapping("/user")
-    public Principal user(Principal user) {
-        System.out.println("user = " + user);
-        return user;
-    }
+    private final
+    UserService userService;
+
+    private final
+    SessionRegistry sessionRegistry;
 
     @Autowired
-    private SessionRegistry sessionRegistry;
+    public UserController(UserService userService, SessionRegistry sessionRegistry) {
+        this.userService = userService;
+        this.sessionRegistry = sessionRegistry;
+    }
+
+    @RequestMapping("/user")
+    public ResponseEntity user(Principal user) {
+        System.out.println("user = " + user);
+        UserDTO userDTO = userService.getUserDTOBySssId(user.getName());
+        if(userDTO!=null) {
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     @RequestMapping("/users")
     public void listLoggedInUsers() {

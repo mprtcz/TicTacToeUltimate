@@ -1,3 +1,9 @@
 export class User {
-    name: string;
+    ssoId: string;
+    nickname: string;
+    email: string
+
+    getNickname() : string {
+        return this.nickname;
+    }
 }

@@ -43,10 +43,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().
-                withUser("temporary").password("temporary").roles("ADMIN").and().
-                withUser("user").password("password").roles("USER").and().
-                withUser("azot").password("asdasd").roles("USER");
+//        auth.inMemoryAuthentication().
+//                withUser("temporary").password("temporary").roles("ADMIN").and().
+//                withUser("user").password("password").roles("USER").and().
+//                withUser("azot").password("asdasd").roles("USER");
+        auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
@@ -60,9 +61,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().httpBasic()
                 .and().exceptionHandling().authenticationEntryPoint(customAuthEntryPoint)
                 .and().formLogin().successHandler(customAuthSuccessHandler)
-                .and().formLogin().failureHandler(customAuthFailureHandler).and()
-                .sessionManagement().maximumSessions(12).sessionRegistry(sessionRegistry());
-        //.and().csrf().disable();
+                .and().formLogin().failureHandler(customAuthFailureHandler)
+                .and()
+                //.csrf().disable()
+                .sessionManagement().maximumSessions(12).sessionRegistry(sessionRegistry())
+        ;
     }
 
     @Bean

@@ -43,4 +43,6 @@ public class User {
 
     @OneToMany(mappedBy = "playerTwo")
     List<GameRecord> gamesHistoryAsX = new ArrayList<>();
+
+
 }
