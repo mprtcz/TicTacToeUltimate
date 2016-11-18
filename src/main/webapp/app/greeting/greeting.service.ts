@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Http} from "@angular/http";
+import {Http, RequestOptions} from "@angular/http";
 
 import 'rxjs/add/operator/toPromise';
 import {Router} from "@angular/router";
-import {CredentialsService} from "../credentials/credentials.service";
 
 @Injectable()
 export class GreetingService {
@@ -11,9 +10,7 @@ export class GreetingService {
     private greetingUrl = 'http://localhost:8080/api/hello';
 
     constructor(private http: Http,
-                private router: Router,
-                private credentialsService: CredentialsService) {
-    }
+                private router: Router) {}
 
     getSimpleGreetingFromServer(): Promise<string> {
         return this.http.get(this.greetingUrl)
@@ -23,8 +20,9 @@ export class GreetingService {
     }
 
     getPersonalizedMessageFromServer(variable: string): Promise<string> {
+        let options = new RequestOptions({ withCredentials: true });
         const url: string = this.greetingUrl + '/' + variable;
-        return this.http.get(url, {headers: this.credentialsService.getHeader()})
+        return this.http.get(url, options)
             .toPromise()
             .then(response => response.text() as string)
             .catch((error: any) => {

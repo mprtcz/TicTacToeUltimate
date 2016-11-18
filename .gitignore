@@ -4,8 +4,8 @@ src/main/resources/node_modules
 
 
 ## JavaScript (generated from .ts)##
-.js
-.map
+*.js
+*.map
 
 ### STS ###
 .apt_generated

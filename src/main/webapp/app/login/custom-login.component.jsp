@@ -10,8 +10,8 @@
         <input type="password" class="form-control" id="password" name="password"
                                                        [(ngModel)]="password"/>
     </div>
-    <button type="submit" class="btn btn-primary" (click)="getResponse()">Submit</button>
+    <button type="submit" class="btn btn-primary" (click)="getData()">Submit</button>
 </form>
-<div *ngIf="response">
-    <h2>Server response: {{response}}</h2>
+<div *ngIf="message">
+    <h2>{{message}}</h2>
 </div>

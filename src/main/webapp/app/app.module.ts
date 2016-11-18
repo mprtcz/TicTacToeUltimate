@@ -8,7 +8,8 @@ import {GreetingService} from "./greeting/greeting.service";
 import {HttpModule} from "@angular/http";
 import {AppRoutingModule} from "./app-routing.module";
 import {CustomLoginComponent} from "./login/custom-login.component";
-import {CredentialsService} from "./credentials/credentials.service";
+import {NavbarComponent} from "./navbar/navbar.component";
+import {CustomLoginService} from "./login/custom-login.service";
 
 @NgModule({
     imports: [
@@ -20,11 +21,13 @@ import {CredentialsService} from "./credentials/credentials.service";
     declarations: [
         AppComponent,
         GreetingComponent,
-        CustomLoginComponent
+        CustomLoginComponent,
+        NavbarComponent
     ],
     providers: [
         GreetingService,
-        CredentialsService],
+        CustomLoginService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

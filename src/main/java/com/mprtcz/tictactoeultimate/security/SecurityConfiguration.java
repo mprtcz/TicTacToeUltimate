@@ -1,14 +1,18 @@
 package com.mprtcz.tictactoeultimate.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 /**
  * Created by Azet on 2016-11-04.
@@ -41,12 +45,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().
                 withUser("temporary").password("temporary").roles("ADMIN").and().
-                withUser("user").password("password").roles("USER");
+                withUser("user").password("password").roles("USER").and().
+                withUser("azot").password("asdasd").roles("USER");
     }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests()
+        httpSecurity
+                .authorizeRequests()
                 .antMatchers("/api/hello", "/", "/*", "/user").permitAll()
                 .antMatchers("/api/**").hasRole("USER")
                 .antMatchers("/app/**", "/node_modules/**", "/jsp/**").permitAll()
@@ -54,8 +60,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().httpBasic()
                 .and().exceptionHandling().authenticationEntryPoint(customAuthEntryPoint)
                 .and().formLogin().successHandler(customAuthSuccessHandler)
-                .and().formLogin().failureHandler(customAuthFailureHandler)
-                .and().csrf().disable();
+                .and().formLogin().failureHandler(customAuthFailureHandler).and()
+                .sessionManagement().maximumSessions(12).sessionRegistry(sessionRegistry());
+        //.and().csrf().disable();
     }
 
     @Bean
@@ -69,5 +76,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         authenticationProvider.setUserDetailsService(customUserDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
+    @Bean
+    public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+        return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
     }
 }
