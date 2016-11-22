@@ -21,7 +21,7 @@ export class NavbarComponent {
     getUser() : string {
         this.user = JSON.parse(localStorage.getItem("currentUser"));
         if(this.user != null){
-            return JSON.stringify(this.user.nickname);
+            return this.user.nickname.replace(new RegExp('\"', 'g'), ''); //new regexp required in order to remove all " characters in given string
         } else {
             return "Guest";
         }

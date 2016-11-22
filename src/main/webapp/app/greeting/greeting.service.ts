@@ -20,7 +20,7 @@ export class GreetingService {
     }
 
     getPersonalizedMessageFromServer(variable: string): Promise<string> {
-        let options = new RequestOptions({ withCredentials: true });
+        let options = new RequestOptions({ withCredentials: localStorage.getItem("currentUser") });
         const url: string = this.greetingUrl + '/' + variable;
         return this.http.get(url, options)
             .toPromise()

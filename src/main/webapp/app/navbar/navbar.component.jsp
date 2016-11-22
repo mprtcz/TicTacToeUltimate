@@ -12,14 +12,16 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a routerLink="/greeting">Greeting</a></li>
                 <li><a routerLink="/login">Login</a></li>
-                <li><a routerLink="/login">Login</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li *ngIf="getUser() == 'Guest'">
-                    <a routerLink="/login"><span class="glyphicon glyphicon-question-sign"></span>Guest</a>
+                    <a routerLink="/login"><span class="glyphicon glyphicon-question-sign"></span> Guest</a>
                 </li>
                 <li *ngIf="getUser() != 'Guest'">
-                    <a routerLink="/greeting"><span class="glyphicon glyphicon-user"></span>Logged as: {{getUser()}}</a>
+                    <a routerLink="/principal"><span class="glyphicon glyphicon-user"></span> {{getUser()}}</a>
+                </li>
+                <li *ngIf="getUser() != 'Guest'">
+                    <a routerLink="/logout"><span class="glyphicon glyphicon-off"></span> Logout</a>
                 </li>
             </ul>
         </div>

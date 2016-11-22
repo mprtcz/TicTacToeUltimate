@@ -10,6 +10,8 @@ import {AppRoutingModule} from "./app-routing.module";
 import {CustomLoginComponent} from "./login/custom-login.component";
 import {NavbarComponent} from "./navbar/navbar.component";
 import {CustomLoginService} from "./login/custom-login.service";
+import {LogoutComponent} from "./logout/logout.component";
+import {UserComponent} from "./user/user.component";
 
 @NgModule({
     imports: [
@@ -22,7 +24,9 @@ import {CustomLoginService} from "./login/custom-login.service";
         AppComponent,
         GreetingComponent,
         CustomLoginComponent,
-        NavbarComponent
+        NavbarComponent,
+        LogoutComponent,
+        UserComponent
     ],
     providers: [
         GreetingService,

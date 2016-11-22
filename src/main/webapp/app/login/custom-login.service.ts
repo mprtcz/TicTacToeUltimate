@@ -11,34 +11,15 @@ export class CustomLoginService {
         this.isAuthenticated = false
     };
 
-    getUser(): void {
-        console.log('getUser = ' +JSON.stringify(this.user));
-        return this.user;
-    }
-
-    isAuthenticated(): boolean {
-        return this.isAuthenticated;
-    }
-
-    setUser(user: string): void {
-        console.log('setUser = ' +user);
-        this.user = user;
-        this.isAuthenticated = true;
-    }
-
-    clearUser(): void {
-        this.user = '';
-        this.isAuthenticated = false;
-    }
-
     authenticate(username: string, password: string): void {
+        this.user = null;
+        localStorage.removeItem("currentUser");
         const url = 'http://localhost:8080/user';
-        let options = new RequestOptions({headers: this.createAuthHeader(username, password), withCredentials: true});
+        let options = new RequestOptions({headers: CustomLoginService.createAuthHeader(username, password)/*, withCredentials: true*/});
         this.http.get(url, options)
             .toPromise()
             .then(res => {
                 this.user = res.json() as User;
-                this.setUser(this.user);
                 localStorage.setItem("currentUser", JSON.stringify(this.user));
                 console.log("Added user: "+JSON.stringify(localStorage.getItem("currentUser")))
             })
@@ -51,7 +32,7 @@ export class CustomLoginService {
             });
     }
 
-    createAuthHeader(username: string, password: string): string {
+    static createAuthHeader(username: string, password: string): string {
         return new Headers({
             'authorization': 'Basic '
             + btoa(username + ':' + password)

@@ -1,10 +1,6 @@
 import {Component} from "@angular/core";
-import {Http, RequestOptions, Headers, Response} from "@angular/http";
-import {Router} from "@angular/router";
 import {CustomLoginService} from "./custom-login.service";
-import {Observable}     from 'rxjs/Observable';
 import 'rxjs/Rx';
-import {User} from "./user";
 
 @Component({
     moduleId: module.id,
@@ -16,9 +12,7 @@ export class CustomLoginComponent {
     private password: string;
     private message: string;
 
-    constructor(private http: Http,
-                private router: Router,
-                private loginService: CustomLoginService) {
+    constructor(private loginService: CustomLoginService) {
     }
 
     getData(): void {
