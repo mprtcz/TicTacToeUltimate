@@ -9,10 +9,9 @@ import {User} from "../login/user";
 })
 export class NavbarComponent {
     private user : User;
-    private  loggedInUser = this.loginService.getUser();
 
     constructor(private loginService: CustomLoginService) {
-        this.loggedInUser = this.loginService.getUser();
+        this.user = JSON.parse(localStorage.getItem("currentUser"));
     }
 
     isAnonymous() : boolean {
@@ -20,9 +19,9 @@ export class NavbarComponent {
     }
 
     getUser() : string {
-        this.user = this.loginService.getUser();
+        this.user = JSON.parse(localStorage.getItem("currentUser"));
         if(this.user != null){
-            return this.user.nickname;
+            return JSON.stringify(this.user.nickname);
         } else {
             return "Guest";
         }

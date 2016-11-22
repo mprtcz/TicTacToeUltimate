@@ -15,10 +15,10 @@
                 <li><a routerLink="/login">Login</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li *ngIf="getUser() == null">
+                <li *ngIf="getUser() == 'Guest'">
                     <a routerLink="/login"><span class="glyphicon glyphicon-question-sign"></span>Guest</a>
                 </li>
-                <li *ngIf="getUser() != null">
+                <li *ngIf="getUser() != 'Guest'">
                     <a routerLink="/greeting"><span class="glyphicon glyphicon-user"></span>Logged as: {{getUser()}}</a>
                 </li>
             </ul>

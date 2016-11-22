@@ -39,10 +39,14 @@ export class CustomLoginService {
             .then(res => {
                 this.user = res.json() as User;
                 this.setUser(this.user);
+                localStorage.setItem("currentUser", JSON.stringify(this.user));
+                console.log("Added user: "+JSON.stringify(localStorage.getItem("currentUser")))
             })
             .catch((error: any) => {
                 if (error.status === 401) {
+                    console.log("Error 401")
                 } else {
+                    console.log("Error " +error.status);
                 }
             });
     }
