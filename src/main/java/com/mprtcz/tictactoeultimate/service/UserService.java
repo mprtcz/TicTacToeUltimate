@@ -5,6 +5,8 @@ import com.mprtcz.tictactoeultimate.model.User;
 import com.mprtcz.tictactoeultimate.model.dto.UserDTO;
 import com.mprtcz.tictactoeultimate.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,8 +27,10 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public void saveUser(UserDTO userDTO) {
-        userRepository.save(userMapper.toEntity(userDTO));
+    public void saveUser(User user) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
     public User findBySSO(String ssoId) {

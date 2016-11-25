@@ -51,6 +51,7 @@ public class UserController {
         if(list.size() > 0) {
             return new ResponseEntity(list, HttpStatus.BAD_REQUEST);
         } else {
+            userService.saveUser(user);
             return new ResponseEntity(HttpStatus.OK);
         }
     }

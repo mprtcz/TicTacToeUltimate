@@ -19,6 +19,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
  */
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    private static final int MAX_SESSIONS = 120;
 
     private final
     CustomUserDetailsService customUserDetailsService;
@@ -34,7 +35,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public SecurityConfiguration(CustomUserDetailsService customUserDetailsService,
-                                 CustomAuthEntryPoint customAuthEntryPoint, CustomAuthFailureHandler customAuthFailureHandler, CustomAuthSuccessHandler customAuthSuccessHandler) {
+                                 CustomAuthEntryPoint customAuthEntryPoint,
+                                 CustomAuthFailureHandler customAuthFailureHandler,
+                                 CustomAuthSuccessHandler customAuthSuccessHandler) {
         this.customUserDetailsService = customUserDetailsService;
         this.customAuthEntryPoint = customAuthEntryPoint;
         this.customAuthFailureHandler = customAuthFailureHandler;
@@ -64,7 +67,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().formLogin().failureHandler(customAuthFailureHandler)
                 .and()
                 .csrf().disable()
-                .sessionManagement().maximumSessions(12).sessionRegistry(sessionRegistry())
+                .sessionManagement().maximumSessions(MAX_SESSIONS).sessionRegistry(sessionRegistry())
         ;
     }
 
