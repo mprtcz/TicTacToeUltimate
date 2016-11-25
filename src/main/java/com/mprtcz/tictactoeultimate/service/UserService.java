@@ -30,7 +30,7 @@ public class UserService {
     }
 
     public User findBySSO(String ssoId) {
-        Iterable<User> users = userRepository.findAll();
+        Iterable<User> users = getAllUsers();
         for (User user : users) {
             if (user.getSsoId().equals(ssoId)) {
                 return user;
@@ -39,9 +39,12 @@ public class UserService {
         return null;
     }
 
-    public UserDTO getUserDTOBySssId(String ssoId) {
+    public Iterable<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public UserDTO getUserDTOBySsoId(String ssoId) {
         User user = findBySSO(ssoId);
-        UserDTO userDTO = userMapper.toDTO(user);
-        return userDTO;
+        return userMapper.toDTO(user);
     }
 }

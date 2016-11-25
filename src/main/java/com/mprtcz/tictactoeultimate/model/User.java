@@ -2,6 +2,7 @@ package com.mprtcz.tictactoeultimate.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.Id;
 
@@ -14,6 +15,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -22,20 +24,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "ssoId cannot be empty")
     @Column(name = "SSO_ID", unique = true, nullable = false)
     private String ssoId;
 
-    @NotEmpty
+    @NotEmpty(message = "password cannot be empty")
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @NotEmpty
+    @NotEmpty(message = "nickname cannot be empty")
     @Column(name = "NICKNAME", nullable = false)
     private String nickname;
 
-    @NotEmpty
-    @Column(name = "EMAIL", nullable = false)
+    @NotEmpty(message = "email cannot be empty")
+    @Column(name = "EMAIL", nullable = false ,unique=true)
     private String email;
 
     @OneToMany(mappedBy = "playerOne")
@@ -43,6 +45,4 @@ public class User {
 
     @OneToMany(mappedBy = "playerTwo")
     List<GameRecord> gamesHistoryAsX = new ArrayList<>();
-
-
 }

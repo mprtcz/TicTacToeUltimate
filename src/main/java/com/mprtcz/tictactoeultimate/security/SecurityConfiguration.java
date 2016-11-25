@@ -54,7 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/api/hello", "/", "/*", "/user").permitAll()
+                .antMatchers("/api/hello", "/", "/*", "/user", "/user/add").permitAll()
                 .antMatchers("/api/**").hasRole("USER")
                 .antMatchers("/app/**", "/node_modules/**", "/jsp/**").permitAll()
                 .anyRequest().authenticated()
@@ -63,7 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().formLogin().successHandler(customAuthSuccessHandler)
                 .and().formLogin().failureHandler(customAuthFailureHandler)
                 .and()
-                //.csrf().disable()
+                .csrf().disable()
                 .sessionManagement().maximumSessions(12).sessionRegistry(sessionRegistry())
         ;
     }

@@ -12,8 +12,6 @@ public class UserDTO {
 
     private String ssoId;
 
-    //private String password;
-
     private String nickname;
 
     private String email;
