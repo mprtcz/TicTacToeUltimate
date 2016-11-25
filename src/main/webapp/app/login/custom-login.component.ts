@@ -16,7 +16,13 @@ export class CustomLoginComponent {
     }
 
     getData(): void {
-        this.message = this.loginService.authenticate(this.username, this.password);
-        console.log('message = ' + this.message)
+        var isLoggedIn = this.loginService.authenticate(this.username, this.password);
+        if (isLoggedIn != null) {
+            if (isLoggedIn) {
+                this.message = 'Logged In'
+            } else {
+                this.message = 'Bad Credentials'
+            }
+        }
     }
 }

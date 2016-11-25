@@ -1,7 +1,12 @@
 package com.mprtcz.tictactoeultimate.model;
 
 import lombok.Getter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -44,16 +49,29 @@ public class Game {
     private FieldState[][] table;
     private FieldState currentPlayer;
 
+    private UserDetails gameHost;
+    private UserDetails secondPlayer;
+
     private int[] horizontalSums;
     private int[] verticalSums;
     private int[] diagonalSums;
 
+    public Game(int tableSize, UserDetails gameHost) {
+        this.table = new FieldState[tableSize][tableSize];
+        this.gameHost = gameHost;
+        this.currentPlayer = FieldState.O;
+        this.horizontalSums = new int[tableSize];
+        this.verticalSums = new int[tableSize];
+        this.diagonalSums = new int[NUMBER_OF_DIAGONALS];
+        init();
+    }
+
     public Game(int tableSize) {
         this.table = new FieldState[tableSize][tableSize];
-        currentPlayer = FieldState.O;
-        horizontalSums = new int[tableSize];
-        verticalSums = new int[tableSize];
-        diagonalSums = new int[NUMBER_OF_DIAGONALS];
+        this.currentPlayer = FieldState.O;
+        this.horizontalSums = new int[tableSize];
+        this.verticalSums = new int[tableSize];
+        this.diagonalSums = new int[NUMBER_OF_DIAGONALS];
         init();
     }
 
@@ -122,7 +140,8 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game game = new Game(3);
+        List<GrantedAuthority> list = new ArrayList<>();
+        Game game = new Game(3, new User("dummyUsername", "dummyPassword", list));
         game.displayBoard();
 
         boolean isWinner = false;
