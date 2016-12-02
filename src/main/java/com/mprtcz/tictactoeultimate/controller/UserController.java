@@ -36,10 +36,12 @@ public class UserController {
 
     @RequestMapping("/user")
     public ResponseEntity user(Principal user) {
-        System.out.println("user = " + user);
-        UserDTO userDTO = userService.getUserDTOBySsoId(user.getName());
-        if(userDTO!=null) {
-            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        if (user != null) {
+            System.out.println("user = " + user);
+            UserDTO userDTO = userService.getUserDTOBySsoId(user.getName());
+            if (userDTO != null) {
+                return new ResponseEntity<>(userDTO, HttpStatus.OK);
+            }
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -48,7 +50,7 @@ public class UserController {
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public ResponseEntity validateNewUser(@RequestBody User user) {
         List<UserConstraintViolation> list = newUserValidator.validateUser(user);
-        if(list.size() > 0) {
+        if (list.size() > 0) {
             return new ResponseEntity(list, HttpStatus.BAD_REQUEST);
         } else {
             userService.saveUser(user);

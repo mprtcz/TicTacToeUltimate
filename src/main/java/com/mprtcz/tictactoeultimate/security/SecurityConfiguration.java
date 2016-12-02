@@ -27,21 +27,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final
     CustomAuthEntryPoint customAuthEntryPoint;
 
-    private final
-    CustomAuthFailureHandler customAuthFailureHandler;
-
-    private final
-    CustomAuthSuccessHandler customAuthSuccessHandler;
-
     @Autowired
     public SecurityConfiguration(CustomUserDetailsService customUserDetailsService,
-                                 CustomAuthEntryPoint customAuthEntryPoint,
-                                 CustomAuthFailureHandler customAuthFailureHandler,
-                                 CustomAuthSuccessHandler customAuthSuccessHandler) {
+                                 CustomAuthEntryPoint customAuthEntryPoint) {
         this.customUserDetailsService = customUserDetailsService;
         this.customAuthEntryPoint = customAuthEntryPoint;
-        this.customAuthFailureHandler = customAuthFailureHandler;
-        this.customAuthSuccessHandler = customAuthSuccessHandler;
     }
 
     @Override
@@ -61,14 +51,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").hasRole("USER")
                 .antMatchers("/app/**", "/node_modules/**", "/jsp/**").permitAll()
                 .anyRequest().authenticated()
-                .and().httpBasic()
-                .and().exceptionHandling().authenticationEntryPoint(customAuthEntryPoint)
-                .and().formLogin().successHandler(customAuthSuccessHandler)
-                .and().formLogin().failureHandler(customAuthFailureHandler)
+                .and().httpBasic().authenticationEntryPoint(customAuthEntryPoint)
                 .and()
                 .csrf().disable()
-                .sessionManagement().maximumSessions(MAX_SESSIONS).sessionRegistry(sessionRegistry())
-        ;
+                .sessionManagement().maximumSessions(MAX_SESSIONS).sessionRegistry(sessionRegistry());
     }
 
     @Bean
