@@ -40,10 +40,10 @@ public class NewUserValidator {
         return validator.validate(user);
     }
 
-    public List<UserConstraintViolation> validateNewUser(User newUser) {
+    private List<UserConstraintViolation> validateNewUser(User newUser) {
         List<UserConstraintViolation> userConstraintViolations = new ArrayList<>();
         if(checkIfSsoIdExists(newUser)) {
-            userConstraintViolations.add(new UserConstraintViolation("SsoId", "SsoId already exists"));
+            userConstraintViolations.add(new UserConstraintViolation("SsoId", "Username already exists"));
         }
         if(checkIfEmailExists(newUser)) {
             userConstraintViolations.add(new UserConstraintViolation("Email", "EMail already exists"));

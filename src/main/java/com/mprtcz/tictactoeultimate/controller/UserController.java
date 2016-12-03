@@ -70,9 +70,9 @@ public class UserController {
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public ResponseEntity validateNewUser(@RequestBody User user) {
-        List<UserConstraintViolation> list = newUserValidator.validateUser(user);
-        if (list.size() > 0) {
-            return new ResponseEntity(list, HttpStatus.BAD_REQUEST);
+        List<UserConstraintViolation> violationsList = newUserValidator.validateUser(user);
+        if (violationsList.size() > 0) {
+            return new ResponseEntity(violationsList, HttpStatus.BAD_REQUEST);
         } else {
             userService.saveUser(user);
             return new ResponseEntity(HttpStatus.OK);

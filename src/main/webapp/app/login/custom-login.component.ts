@@ -2,6 +2,7 @@ import  {Component, AfterViewInit, AfterContentInit, OnInit} from "@angular/core
 import {CustomLoginService} from "./custom-login.service";
 import 'rxjs/Rx';
 import {User} from "./user";
+import {Router} from "@angular/router";
 declare var componentHandler: any;
 
 @Component({
@@ -17,7 +18,8 @@ export class CustomLoginComponent {
     private message: string;
     private user: User;
 
-    constructor(private loginService: CustomLoginService) {
+    constructor(private loginService: CustomLoginService,
+    private router: Router) {
     }
 
     getData(): void {
@@ -28,6 +30,7 @@ export class CustomLoginComponent {
                 localStorage.setItem("currentUser", JSON.stringify(this.user));
                 console.log("Added user: " + JSON.stringify(localStorage.getItem("currentUser")));
                 this.message = 'Success';
+                this.router.navigate(['/greeting']);
             })
             .catch((error: any) => {
                 this.isAuthenticated = false;

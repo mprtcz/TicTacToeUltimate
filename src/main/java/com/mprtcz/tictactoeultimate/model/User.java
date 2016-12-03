@@ -24,7 +24,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "ssoId cannot be empty")
+    @NotEmpty(message = "username cannot be empty")
     @Column(name = "SSO_ID", unique = true, nullable = false)
     private String ssoId;
 
