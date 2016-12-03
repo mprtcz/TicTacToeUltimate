@@ -40,8 +40,29 @@ public class UserController {
             System.out.println("user = " + user);
             UserDTO userDTO = userService.getUserDTOBySsoId(user.getName());
             if (userDTO != null) {
+                userDTO.setRole(null);
                 return new ResponseEntity<>(userDTO, HttpStatus.OK);
             }
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping("/profile")
+    public ResponseEntity profile(Principal user) {
+        if (user != null) {
+            UserDTO userDTO = userService.getUserDTOBySsoId(user.getName());
+            if (userDTO != null) {
+                return new ResponseEntity<>(userDTO, HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(value = "/profile", method = RequestMethod.DELETE)
+    public ResponseEntity deleteProfile(Principal user) {
+        if (user != null) {
+                userService.removeUser(user.getName());
+                return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -56,5 +77,12 @@ public class UserController {
             userService.saveUser(user);
             return new ResponseEntity(HttpStatus.OK);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping("/users")
+    public ResponseEntity getAllUsers() {
+        List<UserDTO> users = userService.getAllUserDTOs();
+        return new ResponseEntity(users, HttpStatus.OK);
     }
 }

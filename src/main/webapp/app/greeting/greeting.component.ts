@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, AfterViewInit} from '@angular/core';
 import {GreetingService} from "./greeting.service";
 
 @Component({
     moduleId: module.id,
     selector: 'fa-greeting',
-    templateUrl: './greeting.component.jsp'
+    templateUrl: './greeting.component.jsp',
+    providers: [ GreetingService ]
 })
-export class GreetingComponent {
+export class GreetingComponent implements AfterViewInit {
     variable: string;
 
     constructor(private greetingService: GreetingService) {

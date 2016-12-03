@@ -1,22 +1,25 @@
-<div class="row">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4">
-        <div class="well well-lg">
-            <h1>Greetings! :)</h1>
-            <br/>
-        </div>
-        <div class="panel panel-default text-center">
-            <div class="panel-heading">
-                <button type="button" class="btn btn-info" (click)="getSimpleGreeting()">Get Simple Greeting</button>
-            </div>
-            <div class="panel-body">
-                <input [(ngModel)]="variable" placeholder="variable"/><br/><br/>
-                <button type="button" class="btn btn-primary" (click)="getPersonalizedGreeting()">Get Variable Greeting
+<section mdl-upgrade class="section--center mdl-grid tab-content">
+    <div class="mdl-card loginCard mdl-grid mdl-shadow--2dp">
+        <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <form action="#">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                        (click)="getSimpleGreeting()">
+                    Get simple greeting
                 </button>
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" name="username" type="text" id="username"
+                           [(ngModel)]="variable">
+                    <label class="mdl-textfield__label" for="username">Username</label>
+                </div>
+                <br/>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                        (click)="getPersonalizedGreeting()">
+                    Get Variable Greeting
+                </button>
+            </form>
+            <div *ngIf="message" class="mdl-card__actions mdl-card--border">
+                <h4 class="mdl-card__title-text">{{message}}</h4>
             </div>
-        </div>
-        <div *ngIf="message">
-            <h2>Server response: {{message | uppercase}}</h2>
         </div>
     </div>
-</div>
+</section>

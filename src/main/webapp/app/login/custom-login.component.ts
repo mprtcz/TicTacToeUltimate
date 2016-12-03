@@ -1,28 +1,43 @@
-import {Component} from "@angular/core";
+import  {Component, AfterViewInit, AfterContentInit, OnInit} from "@angular/core";
 import {CustomLoginService} from "./custom-login.service";
 import 'rxjs/Rx';
+import {User} from "./user";
+declare var componentHandler: any;
 
 @Component({
     moduleId: module.id,
     selector: 'custom-login',
-    templateUrl: './custom-login.component.jsp'
+    templateUrl: './custom-login.component.jsp',
+    providers: [CustomLoginService]
 })
 export class CustomLoginComponent {
+
     private username: string;
     private password: string;
     private message: string;
+    private user: User;
 
     constructor(private loginService: CustomLoginService) {
     }
 
     getData(): void {
-        var isLoggedIn = this.loginService.authenticate(this.username, this.password);
-        if (isLoggedIn != null) {
-            if (isLoggedIn) {
-                this.message = 'Logged In'
-            } else {
-                this.message = 'Bad Credentials'
-            }
-        }
+        localStorage.removeItem("currentUser");
+        this.loginService.authenticate(this.username, this.password).toPromise()
+            .then(res => {
+                this.user = res.json() as User;
+                localStorage.setItem("currentUser", JSON.stringify(this.user));
+                console.log("Added user: " + JSON.stringify(localStorage.getItem("currentUser")));
+                this.message = 'Success';
+            })
+            .catch((error: any) => {
+                this.isAuthenticated = false;
+                if (error.status === 401) {
+                    console.log("Error 401")
+                } else {
+                    console.log("Error " + error.status);
+                }
+                console.log('error occurred!');
+                this.message = 'Bad Credentials';
+            });
     }
 }

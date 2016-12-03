@@ -1,26 +1,27 @@
-<div class="row">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4">
-        <div class="panel panel-info text-center">
-            <div class="panel-heading"><h2>Log In</h2></div>
-            <div class="panel-body">
-                <form role="form">
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" class="form-control" id="username" name="username"
-                               [(ngModel)]="username"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input type="password" class="form-control" id="password" name="password"
-                               [(ngModel)]="password"/>
-                    </div>
-                    <button type="submit" class="btn btn-primary" (click)="getData()">Submit</button>
-                </form>
-                <div *ngIf="message">
-                    <h2>{{message}}</h2>
-                </div>
+<section mdl-upgrade class="section--center tab-content">
+    <div class="mdl-card loginCard mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+        <h4 class="mdl-card__title-text">Log In</h4>
+        <form action="#">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" name="username" type="text" id="username"
+                       [(ngModel)]="username">
+                <label class="mdl-textfield__label" for="username">Username</label>
             </div>
+            <br/>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" name="password" type="password" id="password"
+                       [(ngModel)]="password">
+                <label class="mdl-textfield__label" for="password">Password</label>
+            </div>
+            <br/>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                    (click)="getData()">
+                SUBMIT
+            </button>
+        </form>
+        <div *ngIf="message" class="mdl-card__actions mdl-card--border">
+            <h4 class="mdl-card__title-text">{{message}}</h4>
         </div>
     </div>
-</div>
+</section>
+

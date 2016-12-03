@@ -1,5 +1,5 @@
 target/
-src/main/resources/node_modules
+src/main/resources/runutils.bat
 !.mvn/wrapper/maven-wrapper.jar
 
 

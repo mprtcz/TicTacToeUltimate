@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Azet on 2016-11-03.
  */
@@ -47,8 +49,18 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public List<UserDTO> getAllUserDTOs() {
+        return userMapper.toDTOs((List<User>) getAllUsers());
+    }
+
     public UserDTO getUserDTOBySsoId(String ssoId) {
         User user = findBySSO(ssoId);
         return userMapper.toDTO(user);
+    }
+
+    public void removeUser(String username) {
+        User user = findBySSO(username);
+        System.out.println("Removing user: " +user.toString());
+//        userRepository.delete(user);
     }
 }

@@ -40,6 +40,9 @@ public class User {
     @Column(name = "EMAIL", nullable = false ,unique=true)
     private String email;
 
+    @Column(name = "ROLE", nullable = false)
+    private String role;
+
     @OneToMany(mappedBy = "playerOne")
     List<GameRecord> gamesHistoryAsO = new ArrayList<>();
 
