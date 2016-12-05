@@ -9,7 +9,7 @@ export class UserService {
     constructor(private http: Http){};
 
     deleteAccount() {
-        const url = 'http://localhost:8080/profile';
+        const url = 'http://localhost:8080/users/profile';
         let options = new RequestOptions({withCredentials: CustomLoginService.isUserLoggedIn()});
         return this.http.delete(url, options);
     }

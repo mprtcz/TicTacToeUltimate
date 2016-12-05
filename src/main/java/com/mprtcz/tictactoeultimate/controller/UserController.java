@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Created by mprtcz on 2016-11-04.
  */
+@RequestMapping("/users")
 @RestController
 public class UserController {
 
@@ -55,7 +56,7 @@ public class UserController {
     }
 
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = "/user/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity validateAndSaveNewUser(@RequestBody User user) {
         List<UserConstraintViolation> violationsList = newUserValidator.validateUser(user);
         if (violationsList.size() > 0) {
@@ -67,7 +68,7 @@ public class UserController {
     }
 
     @SuppressWarnings("unchecked")
-    @RequestMapping("/users")
+    @RequestMapping("")
     public ResponseEntity getAllUsers() {
         List<UserDTO> users = userService.getAllUserDTOsByPermission();
         return new ResponseEntity(users, HttpStatus.OK);

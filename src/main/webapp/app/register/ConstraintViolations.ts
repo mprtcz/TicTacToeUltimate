@@ -3,12 +3,14 @@ export class ConstraintViolations {
     nickname: string;
     password: string;
     email: string;
+    role: string;
 
     constructor() {
         this.ssoid = '';
         this.nickname = '';
         this.password = '';
         this.email = '';
+        this.role = '';
     }
 
     isEmpty(): boolean {
@@ -16,7 +18,9 @@ export class ConstraintViolations {
             if (this.nickname == '' || this.nickname == null) {
                 if (this.password == '' || this.password == null) {
                     if (this.email == '' || this.email == null) {
-                        return true;
+                        if (this.role == '' || this.role == null) {
+                            return true;
+                        }
                     }
                 }
             }

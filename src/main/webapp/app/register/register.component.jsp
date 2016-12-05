@@ -7,6 +7,7 @@
         visibility: visible;
         display: block
     }
+
     .mdl-textfield__input {
         text-align: right;
     }
@@ -19,7 +20,8 @@
                 <input class="mdl-textfield__input" name="username" type="text" id="username"
                        [(ngModel)]="newUser.ssoId" (click)="constraintViolationsObj.ssoid = ''">
                 <label class="mdl-textfield__label" for="username">Username</label>
-                    <span *ngIf="constraintViolationsObj.ssoid" class="my-textfield-error">{{constraintViolationsObj.ssoid}}</span>
+                <span *ngIf="constraintViolationsObj.ssoid"
+                      class="my-textfield-error">{{constraintViolationsObj.ssoid}}</span>
             </div>
             <br/>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -47,9 +49,23 @@
                 <input class="mdl-textfield__input" name="email" type="email" id="email"
                        [(ngModel)]="newUser.email" (click)="constraintViolationsObj.email = ''">
                 <label class="mdl-textfield__label" for="email">Email</label>
-                <span *ngIf="constraintViolationsObj.email" class="my-textfield-error">{{constraintViolationsObj.email}}</span>
+                <span *ngIf="constraintViolationsObj.email"
+                      class="my-textfield-error">{{constraintViolationsObj.email}}</span>
             </div>
             <br/>
+            <!-- Part responsible of granting authorities, won't run scripts while ngIf is in tag
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+                    <input class="mdl-textfield__input" name="role" type="text" id="role"
+                           tabIndex="-1" [(ngModel)]="newUser.role">
+                    <label for="role" class="mdl-textfield__label">Role</label>
+                    <ul class="mdl-menu mdl-menu--top-left mdl-js-menu mdl-js-ripple-effect"
+                        data-mdl-for="demo-menu-top-left" for="role">
+                        <li class="mdl-menu__item" (click)="newUser.role = 'ROLE_USER'">User</li>
+                        <li class="mdl-menu__item" (click)="newUser.role = 'ROLE_ADMIN'">ADMIN</li>
+                    </ul>
+            </div>
+            <br/>
+            -->
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
                     (click)="validateAndSubmit()">
                 SUBMIT
@@ -59,4 +75,6 @@
             <h4 class="mdl-card__title-text">{{message}}</h4>
         </div>
     </div>
+
+
 </section>
