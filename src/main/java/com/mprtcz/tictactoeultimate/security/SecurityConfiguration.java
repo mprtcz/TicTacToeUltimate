@@ -48,7 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .authorizeRequests()
                 .antMatchers("/api/hello", "/", "/user/add").permitAll()
-                .antMatchers("/api/**").hasRole("USER")
+                //.antMatchers("/api/**").hasRole("USER")
                 .antMatchers("/app/**", "/node_modules/**", "/jsp/**").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic().authenticationEntryPoint(customAuthEntryPoint)

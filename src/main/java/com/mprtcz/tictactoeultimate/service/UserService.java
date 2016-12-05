@@ -34,7 +34,8 @@ public class UserService {
 
     public void setRoleAndSaveUser(User user) {
         user.setRole("ROLE_USER");
-        userRepository.save(encryptPassword(user));
+        user.setPassword(encryptPassword(user.getPassword()));
+        userRepository.save(user);
     }
 
     public User findBySSO(String ssoId) {
@@ -95,20 +96,18 @@ public class UserService {
             user.setEmail(editedUser.getEmail());
         }
         if(editedUser.getPassword() != null && !editedUser.getPassword().equals("")) {
-            user.setPassword(editedUser.getPassword());
+            user.setPassword(encryptPassword(editedUser.getPassword()));
         }
         if(editedUser.getRole() != null && !editedUser.getRole().equals("")) {
             if(RolesExtractor.isAdmin()) {
                 user.setRole(editedUser.getRole());
             }
         }
-        encryptPassword(user);
         userRepository.save(user);
     }
 
-    private User encryptPassword(User user) {
+    private String encryptPassword(String password) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return user;
+        return passwordEncoder.encode(password);
     }
 }
