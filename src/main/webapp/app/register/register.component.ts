@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
             this.isEditing = false;
         } else {
             this.newUser = this.editUserService.getUser();
-            this.headlineText = 'Edit profile';
+            this.headlineText = 'Edit profile: ' +this.newUser.ssoId;
             this.isEditing = true;
         }
     }
@@ -48,7 +48,6 @@ export class RegisterComponent implements OnInit {
                 this.newUser = '';
                 this.passwordConf ='';
                 this.message = 'Successfully Registered';
-                this.registerService.setUser(null);
                 this.router.navigate(['/greeting']);
             }).catch((error: any) => {
                 if (error.status == 400) {
@@ -60,7 +59,33 @@ export class RegisterComponent implements OnInit {
         );
     }
 
+    updateUser() {
+        this.registerService.updateUser(this.newUser).toPromise()
+            .then(res => {
+                console.log('Updated User: ' +this.newUser);
+                this.message = 'User ' +this.newUser.ssoId + ' updated!';
+                this.newUser = '';
+                this.passwordConf ='';
+                this.editUserService.setUser(null);
+            }).catch((error: any) => {
+            if (error.status == 400) {
+                this.parseConstraintViolations(JSON.parse(error._body));
+            } else {
+                console.log(JSON.stringify(error));
+            }
+        });
+    }
+
     validateAndSubmit() {
+        if(this.isEditing) {
+            if(this.newUser.password != null && this.newUser.password != '') {
+                if (this.newUser.password != this.passwordConf) {
+                    this.constraintViolationsObj.password = 'Passwords do not match';
+                    return;
+                }
+            }
+            this.updateUser();
+        }
         console.log('validating');
         this.constraintViolationsObj = new ConstraintViolations();
         if(this.newUser.ssoId == '' || this.newUser.ssoId == null){
