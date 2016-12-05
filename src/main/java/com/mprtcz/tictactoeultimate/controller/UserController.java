@@ -48,8 +48,8 @@ public class UserController {
     @RequestMapping(value = "/profile", method = RequestMethod.DELETE)
     public ResponseEntity deleteProfile(Principal user) {
         if (user != null) {
-                userService.removeUser(user.getName());
-                return new ResponseEntity<>(HttpStatus.OK);
+            userService.removeUser(user.getName());
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -61,7 +61,7 @@ public class UserController {
         if (violationsList.size() > 0) {
             return new ResponseEntity(violationsList, HttpStatus.BAD_REQUEST);
         } else {
-            userService.saveUser(user);
+            userService.setRoleAndSaveUser(user);
             return new ResponseEntity(HttpStatus.OK);
         }
     }
@@ -73,14 +73,15 @@ public class UserController {
         return new ResponseEntity(users, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/profile", method = RequestMethod.PATCH)
     public ResponseEntity editProfile(@RequestBody User user, Principal principal) {
         User loggedInUser = userService.findBySSO(principal.getName());
-        if(!loggedInUser.getRole().equals("ROLE_ADMIN")) {
-            if(!loggedInUser.getSsoId().equals(principal.getName())) {
+        if (!loggedInUser.getRole().equals("ROLE_ADMIN")) {
+            if (!loggedInUser.getSsoId().equals(principal.getName())) {
                 return new ResponseEntity(HttpStatus.FORBIDDEN);
             }
         }
-        //userService.
+        userService.checkEditingPermissions(user, principal);
         return null;
     }
 }

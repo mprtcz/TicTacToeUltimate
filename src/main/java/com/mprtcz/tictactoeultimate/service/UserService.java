@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -31,11 +32,9 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public void saveUser(User user) {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public void setRoleAndSaveUser(User user) {
         user.setRole("ROLE_USER");
-        userRepository.save(user);
+        userRepository.save(encryptPassword(user));
     }
 
     public User findBySSO(String ssoId) {
@@ -78,8 +77,38 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public void editUser(User editedUser) {
+    public void checkEditingPermissions(User editedUser, Principal principal) {
         User user = findBySSO(editedUser.getSsoId());
+        if(user == null) {
+            return;
+        }
+        if(principal.getName().equals(editedUser.getSsoId()) || RolesExtractor.isAdmin()) {
+            saveEditedUser(user, editedUser);
+        }
     }
 
+    private void saveEditedUser(User user, User editedUser) {
+        if(editedUser.getNickname() != null && !editedUser.getNickname().equals("")) {
+            user.setNickname(editedUser.getNickname());
+        }
+        if(editedUser.getEmail() != null && !editedUser.getEmail().equals("")) {
+            user.setEmail(editedUser.getEmail());
+        }
+        if(editedUser.getPassword() != null && !editedUser.getPassword().equals("")) {
+            user.setPassword(editedUser.getPassword());
+        }
+        if(editedUser.getRole() != null && !editedUser.getRole().equals("")) {
+            if(RolesExtractor.isAdmin()) {
+                user.setRole(editedUser.getRole());
+            }
+        }
+        encryptPassword(user);
+        userRepository.save(user);
+    }
+
+    private User encryptPassword(User user) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return user;
+    }
 }
