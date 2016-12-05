@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {EditUserService} from "../shared/edit-user.service";
 
 @Component({
     moduleId: module.id,
@@ -7,8 +8,9 @@ import {Component} from "@angular/core";
 })
 export class LogoutComponent {
 
-    constructor() {
-        localStorage.removeItem("currentUser")
+    constructor(private sharedService: EditUserService) {
+        localStorage.removeItem("currentUser");
+        this.sharedService.setUser(null);
     }
 
     getCurrentUser() {

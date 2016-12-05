@@ -4,6 +4,7 @@ import {RegisterService} from "./register.service";
 import {ConstraintViolation} from "./ConstraintViolation";
 import {ConstraintViolations} from "./ConstraintViolations";
 import {Router} from "@angular/router";
+import {EditUserService} from "../shared/edit-user.service";
 
 @Component({
     moduleId: module.id,
@@ -17,13 +18,25 @@ export class RegisterComponent implements OnInit {
     private constraintViolationsObj : ConstraintViolations;
     private message : string = '';
     private variable : boolean = true;
+    private headlineText: string;
+    private isEditing : boolean;
 
     ngOnInit(): void {
+        if(this.editUserService.getUser() == null){
+            this.newUser = new NewUser();
+            this.newUser.role = 'INIT';
+            this.headlineText = 'Register';
+            this.isEditing = false;
+        } else {
+            this.newUser = this.editUserService.getUser();
+            this.headlineText = 'Edit profile';
+            this.isEditing = true;
+        }
     }
 
-    constructor(private registerService: RegisterService, private router: Router) {
-        this.newUser = new NewUser();
-        this.newUser.role = 'INIT';
+    constructor(private registerService: RegisterService,
+                private router: Router,
+                private editUserService: EditUserService) {
         this.constraintViolationsObj = new ConstraintViolations();
     }
 
@@ -35,6 +48,7 @@ export class RegisterComponent implements OnInit {
                 this.newUser = '';
                 this.passwordConf ='';
                 this.message = 'Successfully Registered';
+                this.registerService.setUser(null);
                 this.router.navigate(['/greeting']);
             }).catch((error: any) => {
                 if (error.status == 400) {
@@ -86,6 +100,4 @@ export class RegisterComponent implements OnInit {
             }
         }
     }
-
-
 }

@@ -6,6 +6,7 @@ import {GreetingComponent} from "./greeting/greeting.component";
 import {LogoutComponent} from "./logout/logout.component";
 import {UserComponent} from "./user/user.component";
 import {RegisterComponent} from "./register/register.component";
+import {EditUserComponent} from "./edituser/edituser.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/greeting', pathMatch: 'full'},

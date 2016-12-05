@@ -7,12 +7,15 @@
         visibility: visible;
         display: block
     }
+    .mdl-textfield__input {
+        text-align: right;
+    }
 </style>
 <section mdl-upgrade class="section--center tab-content">
     <div class="mdl-card loginCard mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-        <h4 class="mdl-card__title-text">Register</h4>
+        <h4 class="mdl-card__title-text">{{headlineText}} <div *ngIf="isEditing">: {{newUser.ssoId}}</div></h4>
         <form action="#" name="registerForm">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" *ngIf="!isEditing">
                 <input class="mdl-textfield__input" name="username" type="text" id="username"
                        [(ngModel)]="newUser.ssoId" (click)="constraintViolationsObj.ssoid = ''">
                 <label class="mdl-textfield__label" for="username">Username</label>

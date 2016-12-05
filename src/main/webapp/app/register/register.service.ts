@@ -1,9 +1,10 @@
 import {Injectable} from "@angular/core";
 import {NewUser} from "./NewUser";
 import {Http} from "@angular/http";
+import {User} from "../login/user";
 
 @Injectable()
-export class RegisterService{
+export class RegisterService {
 
     constructor(private http : Http) {}
 

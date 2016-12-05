@@ -2,18 +2,24 @@ import {Component} from "@angular/core";
 import {User} from "../login/user";
 import {UserService} from "./user.service";
 import {error} from "util";
+import {RegisterService} from "../register/register.service";
+import {EditUserService} from "../shared/edit-user.service";
 
 @Component({
     moduleId: module.id,
     selector: 'user-info',
     templateUrl: './user.component.jsp',
-    providers: [UserService]
+    providers: [
+        UserService,
+        RegisterService
+    ]
 })
 export class UserComponent {
     private user: User;
     private message: string;
 
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService,
+                private editUserService: EditUserService) {
         this.user = JSON.parse(localStorage.getItem("currentUser"));
     }
 
@@ -28,5 +34,10 @@ export class UserComponent {
             .catch((error: any) => {
                 this.message = JSON.stringify(error);
             })
+    }
+
+    setUser() : void {
+        this.editUserService.setUser(this.user);
+        console.log('setuser: ' + JSON.stringify(this.user));
     }
 }

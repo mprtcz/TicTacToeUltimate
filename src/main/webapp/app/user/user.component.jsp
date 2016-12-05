@@ -35,7 +35,8 @@
                     (click)="deleteAccount()">
                 Delete Account
             </button><br/>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                    (click)="setUser()" routerLink="/register">
                 Edit Info
             </button>
         </div>
