@@ -34,19 +34,6 @@ public class UserController {
         this.newUserValidator = newUserValidator;
     }
 
-    @RequestMapping("/user")
-    public ResponseEntity user(Principal user) {
-        if (user != null) {
-            System.out.println("user = " + user);
-            UserDTO userDTO = userService.getUserDTOBySsoId(user.getName());
-            if (userDTO != null) {
-                userDTO.setRole(null);
-                return new ResponseEntity<>(userDTO, HttpStatus.OK);
-            }
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
     @RequestMapping("/profile")
     public ResponseEntity profile(Principal user) {
         if (user != null) {
