@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * Created by Azet on 2016-11-01.
+ * Created by mprtcz on 2016-11-01.
  */
 @Getter
 @Setter

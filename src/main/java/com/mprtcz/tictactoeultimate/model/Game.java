@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Created by Azet on 2016-10-31.
+ * Created by mprtcz on 2016-10-31.
  */
 @Getter
 public class Game {

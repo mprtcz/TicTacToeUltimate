@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 /**
- * Created by Azet on 2016-11-04.
+ * Created by mprtcz on 2016-11-04.
  */
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {

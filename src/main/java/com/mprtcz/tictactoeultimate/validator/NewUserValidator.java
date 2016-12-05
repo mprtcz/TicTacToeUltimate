@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Azet on 2016-11-25.
+ * Created by mprtcz on 2016-11-25.
  */
 @Component
 public class NewUserValidator {

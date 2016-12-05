@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Created by Azet on 2016-11-25.
+ * Created by mprtcz on 2016-11-25.
  */
 @ToString
 @Getter

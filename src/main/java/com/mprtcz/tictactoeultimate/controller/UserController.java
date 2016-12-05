@@ -17,7 +17,7 @@ import java.security.Principal;
 import java.util.List;
 
 /**
- * Created by Azet on 2016-11-04.
+ * Created by mprtcz on 2016-11-04.
  */
 @RestController
 public class UserController {
@@ -69,7 +69,7 @@ public class UserController {
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public ResponseEntity validateNewUser(@RequestBody User user) {
+    public ResponseEntity validateAndSaveNewUser(@RequestBody User user) {
         List<UserConstraintViolation> violationsList = newUserValidator.validateUser(user);
         if (violationsList.size() > 0) {
             return new ResponseEntity(violationsList, HttpStatus.BAD_REQUEST);
@@ -82,7 +82,18 @@ public class UserController {
     @SuppressWarnings("unchecked")
     @RequestMapping("/users")
     public ResponseEntity getAllUsers() {
-        List<UserDTO> users = userService.getAllUserDTOs();
+        List<UserDTO> users = userService.getAllUserDTOsByPermission();
         return new ResponseEntity(users, HttpStatus.OK);
+    }
+
+    public ResponseEntity editProfile(@RequestBody User user, Principal principal) {
+        User loggedInUser = userService.findBySSO(principal.getName());
+        if(!loggedInUser.getRole().equals("ROLE_ADMIN")) {
+            if(!loggedInUser.getSsoId().equals(principal.getName())) {
+                return new ResponseEntity(HttpStatus.FORBIDDEN);
+            }
+        }
+        //userService.
+        return null;
     }
 }

@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 /**
- * Created by Azet on 2016-11-03.
+ * Created by mprtcz on 2016-11-03.
  */
 @Mapper(componentModel = "spring")
 public interface UserMapper {

@@ -5,7 +5,7 @@ import com.mprtcz.tictactoeultimate.model.dto.GameMoveDTO;
 import org.mapstruct.Mapper;
 
 /**
- * Created by Azet on 2016-11-03.
+ * Created by mprtcz on 2016-11-03.
  */
 @Mapper(componentModel = "spring")
 public interface GameMoveMapper {

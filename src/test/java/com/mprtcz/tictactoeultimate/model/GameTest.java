@@ -7,7 +7,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Azet on 2016-11-06.
+ * Created by mprtcz on 2016-11-06.
  */
 public class GameTest {
     private static final int BOARD_SIDE_SIZE = 3;

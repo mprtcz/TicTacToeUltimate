@@ -3,7 +3,7 @@ package com.mprtcz.tictactoeultimate.service;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by Azet on 2016-11-22.
+ * Created by mprtcz on 2016-11-22.
  */
 @Service("gameService")
 public class GameService {
