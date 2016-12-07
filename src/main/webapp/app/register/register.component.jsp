@@ -53,8 +53,9 @@
                       class="my-textfield-error">{{constraintViolationsObj.email}}</span>
             </div>
             <br/>
-            <!-- Part responsible of granting authorities, won't run scripts while ngIf is in tag
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+            <!-- Part responsible for granting authorities, won't run scripts while ngIf is in tag -->
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth"
+                     *ngIf="isAdmin">
                     <input class="mdl-textfield__input" name="role" type="text" id="role"
                            tabIndex="-1" [(ngModel)]="newUser.role">
                     <label for="role" class="mdl-textfield__label">Role</label>
@@ -65,7 +66,6 @@
                     </ul>
             </div>
             <br/>
-            -->
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
                     (click)="validateAndSubmit()">
                 SUBMIT

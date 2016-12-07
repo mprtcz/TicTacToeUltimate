@@ -16,12 +16,13 @@ export class GreetingService {
         return this.http.get(this.greetingUrl)
             .toPromise()
             .then(response => response.text() as string)
-            .catch(this.handleError);
+            .catch((error: any) => {
+                console.log('error: ' + JSON.stringify(error));
+            });
     }
 
     getPersonalizedMessageFromServer(variable: string): Promise<string> {
         let options = new RequestOptions({ withCredentials: localStorage.getItem("currentUser") });
-        //let options = new RequestOptions({ withCredentials: true });
         console.log('options ' +JSON.stringify(options));
         const url: string = this.greetingUrl + '/' + variable;
         return this.http.get(url, options)

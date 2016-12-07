@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
             this.headlineText = 'Register';
             this.isEditing = false;
         } else {
-            this.newUser = this.editUserService.getUser();
+            this.newUser = this.editUserService.getNewUser();
             this.headlineText = 'Edit profile: ' + this.newUser.ssoId;
             this.isEditing = true;
             this.loggedInUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
         this.registerService.registerNewUser(this.newUser).toPromise()
             .then(res => {
                 console.log(JSON.stringify(res));
-                this.newUser = '';
+                this.newUser = null;
                 this.passwordConf = '';
                 this.message = 'Successfully Registered';
                 this.router.navigate(['/greeting']);
@@ -67,8 +67,8 @@ export class RegisterComponent implements OnInit {
         this.registerService.updateUser(this.newUser).toPromise()
             .then(res => {
                 console.log('Updated User: ' + this.newUser);
-                this.message = 'User ' + this.newUser.ssoId + ' updated!';
-                this.newUser = '';
+                this.message = 'User ' + JSON.stringify(this.newUser.ssoId) + ' updated!';
+                this.newUser = new NewUser();
                 this.passwordConf = '';
                 this.editUserService.setUser(null);
             }).catch((error: any) => {
@@ -81,7 +81,7 @@ export class RegisterComponent implements OnInit {
     }
 
     validateAndSubmit() {
-        console.log('user to update ' +JSON.stringify(this.newUser));
+        console.log('user to update ' + JSON.stringify(this.newUser));
         if (this.isEditing) {
             if (this.newUser.password != null && this.newUser.password != '') {
                 if (this.newUser.password != this.passwordConf) {
@@ -89,7 +89,7 @@ export class RegisterComponent implements OnInit {
                     return;
                 }
             }
-            //this.updateUser();
+            this.updateUser();
         } else {
             console.log('validating');
             this.constraintViolationsObj = new ConstraintViolations();

@@ -1,6 +1,7 @@
 
 import {Injectable} from "@angular/core";
 import {User} from "../login/user";
+import {NewUser} from "../register/NewUser";
 @Injectable()
 export class EditUserService {
     user : User;
@@ -13,5 +14,15 @@ export class EditUserService {
     getUser() : User {
         console.log('returning user: '+JSON.stringify(this.user));
         return this.user;
+    }
+
+    getNewUser(): NewUser {
+        if(this.user == null) {return null}
+        let newUser = new NewUser();
+        newUser.nickname = this.user.nickname;
+        newUser.email = this.user.email;
+        newUser.ssoId = this.user.ssoId;
+        newUser.role = this.user.role;
+        return newUser;
     }
 }

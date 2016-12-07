@@ -1,3 +1,9 @@
+<style>
+    .mdl-button--colored {
+        color: white;
+        text-transform: none;
+    }
+</style>
 <div mdl-upgrade class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
@@ -7,13 +13,17 @@
             <div class="mdl-layout-spacer"></div>
             <!-- Navigation. We hide it in small screens. -->
             <nav class="mdl-navigation">
-                <a *ngIf="!user" class="mdl-navigation__link" routerLink="/login">
-                    <i class="material-icons md-light">touch_app</i> Login</a>
-                <a *ngIf="!user" class="mdl-navigation__link" routerLink="/register">
+                <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored"
+                   *ngIf="!user" routerLink="/login">
+                    <i class="material-icons md-light" mdl-upgrade="true">touch_app</i> Login</a>
+                <a  class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored"
+                    *ngIf="!user" routerLink="/register">
                     <i class="material-icons md-light">library_add</i> Register</a>
-                <a *ngIf="user" class="mdl-navigation__link" routerLink="/profile">
-                    <i class="material-icons md-light">account_box</i> {{user.nickname}}</a>
-                <a *ngIf="user" class="mdl-navigation__link" routerLink="/logout">
+                <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored"
+                   *ngIf="user" routerLink="/profile">
+                    <i class="material-icons md-light" mdl-upgrade>account_box</i> {{user.nickname}}</a>
+                <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored"
+                   *ngIf="user" routerLink="/logout">
                     <i class="material-icons md-light">exit_to_app</i> Logout</a>
             </nav>
         </div>
