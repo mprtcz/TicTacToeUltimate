@@ -35,6 +35,7 @@ public class UserService {
     public void setRoleAndSaveUser(User user) {
         user.setRole("ROLE_USER");
         user.setPassword(encryptPassword(user.getPassword()));
+        user.setSsoId(user.getSsoId().toLowerCase());
         userRepository.save(user);
     }
 

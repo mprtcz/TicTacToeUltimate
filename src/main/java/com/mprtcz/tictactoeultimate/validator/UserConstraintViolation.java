@@ -18,17 +18,17 @@ public class UserConstraintViolation {
     private String property;
     String message ;
 
-    public UserConstraintViolation(String property, String message) {
+    UserConstraintViolation(String property, String message) {
         this.property = property;
         this.message = message;
     }
 
-    public UserConstraintViolation(ConstraintViolation<User> constraintViolation) {
+    private UserConstraintViolation(ConstraintViolation<User> constraintViolation) {
         this.property = constraintViolation.getPropertyPath().toString();
         this.message = constraintViolation.getMessage();
     }
 
-    public static List<UserConstraintViolation> convertViolations(Set<ConstraintViolation<User>> userConstraintViolationSet) {
+    static List<UserConstraintViolation> convertViolations(Set<ConstraintViolation<User>> userConstraintViolationSet) {
         return userConstraintViolationSet.stream().map(UserConstraintViolation::new).collect(Collectors.toList());
     }
 }
