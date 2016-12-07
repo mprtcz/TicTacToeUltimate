@@ -53,7 +53,7 @@ public class NewUserValidator {
 
     private boolean checkIfSsoIdExists(User newUser) {
         for(User u : this.userService.getAllUsers()) {
-            if(u.getSsoId().equals(newUser.getSsoId())) {
+            if(u.getSsoId().toLowerCase().equals(newUser.getSsoId().toLowerCase())) {
                 return true;
             }
         }

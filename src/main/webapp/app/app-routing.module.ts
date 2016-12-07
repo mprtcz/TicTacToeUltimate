@@ -6,7 +6,8 @@ import {GreetingComponent} from "./greeting/greeting.component";
 import {LogoutComponent} from "./logout/logout.component";
 import {UserComponent} from "./user/user.component";
 import {RegisterComponent} from "./register/register.component";
-import {EditUserComponent} from "./edituser/edituser.component";
+import {GamesComponent} from "./games/games.component";
+import {TicTacToeComponent} from "./tttgame/tic-tac-toe.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/greeting', pathMatch: 'full'},
@@ -16,6 +17,8 @@ const routes: Routes = [
     {path: 'greeting', component: GreetingComponent},
     {path: 'logout', component: LogoutComponent},
     {path: 'profile', component: UserComponent},
+    {path: 'games', component: GamesComponent},
+    {path: 'tictactoe', component: TicTacToeComponent},
     {path: 'register', component: RegisterComponent}
 ];
 @NgModule({

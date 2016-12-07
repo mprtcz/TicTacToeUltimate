@@ -8,4 +8,4 @@ import {EditUserService} from "./shared/edit-user.service";
     providers: [EditUserService],
     directives: [MaterialDesignUpgradeElement]
 })
-export class AppComponent implements OnInit {}
+export class AppComponent {}

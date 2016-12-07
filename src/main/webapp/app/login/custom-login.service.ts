@@ -14,12 +14,14 @@ export class CustomLoginService {
 
     authenticate(username: string, password: string) {
         const url = 'http://localhost:8080/users/profile';
-        let options = new RequestOptions({headers: CustomLoginService.createAuthHeader(username, password),
-            withCredentials: CustomLoginService.isUserNotLoggedIn()});
+        let options = new RequestOptions({
+            headers: CustomLoginService.createAuthHeader(username, password),
+            withCredentials: CustomLoginService.isUserNotLoggedIn()
+        });
         return this.http.get(url, options);
     }
 
-    static createAuthHeader(username: string, password: string): string {
+    static createAuthHeader(username: string, password: string): Headers {
         return new Headers({
             'authorization': 'Basic '
             + btoa(username + ':' + password)

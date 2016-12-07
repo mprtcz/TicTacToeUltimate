@@ -33,7 +33,6 @@ export class CustomLoginComponent {
                 this.router.navigate(['/greeting']);
             })
             .catch((error: any) => {
-                this.isAuthenticated = false;
                 if (error.status === 401) {
                     console.log("Error 401")
                 } else {

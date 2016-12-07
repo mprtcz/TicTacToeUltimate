@@ -1,27 +1,34 @@
-import {Component} from "@angular/core";
+import {
+    Component, AfterViewChecked, AfterContentChecked, OnInit, AfterViewInit,
+    ViewEncapsulation, OnChanges, SimpleChanges
+} from "@angular/core";
 import {CustomLoginService} from "../login/custom-login.service";
 import {User} from "../login/user";
+
+declare var componentHandler: any;
 
 @Component({
     moduleId: module.id,
     selector: 'app-navbar',
     templateUrl: './navbar.component.jsp',
-    providers: [ CustomLoginService ]
+    providers: [CustomLoginService],
 })
-export class NavbarComponent {
-    private user : User;
+export class NavbarComponent implements AfterContentChecked {
 
-    constructor(private loginService: CustomLoginService) {
+    ngAfterContentChecked(): void {
+        this.user = JSON.parse(localStorage.getItem("currentUser"));
+        componentHandler.upgradeDom();
+    }
+
+    private user: User;
+
+    constructor() {
         this.user = JSON.parse(localStorage.getItem("currentUser"));
     }
 
-    isAnonymous() : boolean {
-        return this.loginService.getUser() === null;
-    }
-
-    getUser() : string {
+    private determineUser(): string {
         this.user = JSON.parse(localStorage.getItem("currentUser"));
-        if(this.user != null){
+        if (this.user != null) {
             return this.user.nickname.replace(new RegExp('\"', 'g'), ''); //new regexp required in order to remove all " characters in given string
         } else {
             return "Guest";
