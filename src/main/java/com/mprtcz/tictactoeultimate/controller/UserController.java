@@ -8,10 +8,7 @@ import com.mprtcz.tictactoeultimate.validator.UserConstraintViolation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -83,6 +80,22 @@ public class UserController {
             }
         }
         userService.checkEditingPermissions(user, principal);
-        return null;
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{ssoId}", method = RequestMethod.DELETE)
+    public ResponseEntity removeUser(@PathVariable String ssoId, Principal principal) {
+        User loggedInUser = userService.findBySSO(principal.getName());
+        User userToDelete = userService.findBySSO(ssoId);
+        if(userToDelete == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        if (!loggedInUser.getRole().equals("ROLE_ADMIN")) {
+            if (!userToDelete.getSsoId().equals(principal.getName())) {
+                return new ResponseEntity(HttpStatus.FORBIDDEN);
+            }
+        }
+        userService.removeUser(userToDelete.getSsoId());
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -8,6 +8,7 @@ import {UserComponent} from "./user/user.component";
 import {RegisterComponent} from "./register/register.component";
 import {GamesComponent} from "./games/games.component";
 import {TicTacToeComponent} from "./tttgame/tic-tac-toe.component";
+import {UsersComponent} from "./users/users.component";
 
 const routes: Routes = [
     {path: '', redirectTo: '/greeting', pathMatch: 'full'},
@@ -19,6 +20,7 @@ const routes: Routes = [
     {path: 'profile', component: UserComponent},
     {path: 'games', component: GamesComponent},
     {path: 'tictactoe', component: TicTacToeComponent},
+    {path: 'users', component: UsersComponent},
     {path: 'register', component: RegisterComponent}
 ];
 @NgModule({

@@ -1,6 +1,8 @@
 target/
 runutils.bat
 !.mvn/wrapper/maven-wrapper.jar
+materialdesign/
+node_modules/
 
 
 ## JavaScript (generated from .ts)##
