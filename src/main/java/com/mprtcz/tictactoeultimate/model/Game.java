@@ -1,12 +1,9 @@
 package com.mprtcz.tictactoeultimate.model;
 
 import lombok.Getter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import sun.security.acl.PrincipalImpl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.security.Principal;
 import java.util.Scanner;
 
 /**
@@ -49,16 +46,16 @@ public class Game {
     private FieldState[][] table;
     private FieldState currentPlayer;
 
-    private UserDetails gameHost;
-    private UserDetails secondPlayer;
+    private String gameHost;
+    private String secondPlayer;
 
     private int[] horizontalSums;
     private int[] verticalSums;
     private int[] diagonalSums;
 
-    public Game(int tableSize, UserDetails gameHost) {
+    public Game(int tableSize, Principal gameHost) {
         this.table = new FieldState[tableSize][tableSize];
-        this.gameHost = gameHost;
+        this.gameHost = gameHost.getName();
         this.currentPlayer = FieldState.O;
         this.horizontalSums = new int[tableSize];
         this.verticalSums = new int[tableSize];
@@ -73,6 +70,21 @@ public class Game {
         this.verticalSums = new int[tableSize];
         this.diagonalSums = new int[NUMBER_OF_DIAGONALS];
         init();
+    }
+
+    public void setSecondPlayer(Principal secondPlayer) {
+        this.secondPlayer = secondPlayer.getName();
+    }
+
+    public String getCurrentPlayersName() {
+        switch (currentPlayer.getValue()) {
+            case "O":
+                return gameHost;
+            case "X":
+                return secondPlayer;
+            default:
+                return "Unrecognized player";
+        }
     }
 
     private void init() {
@@ -139,9 +151,35 @@ public class Game {
         return false;
     }
 
+    public String makeAMove(String username, String position) {
+        if(getCurrentPlayersName().equals(username)) {
+            try {
+                String[] indexes = position.split(",");
+                if (indexes.length != 2) {
+                    throw new Exception("Two numbers, babe");
+                }
+                boolean result = insertSymbol(Integer.parseInt(indexes[1]), Integer.parseInt(indexes[0]));
+                if(result) {
+                    return "The winner is: " + currentPlayer;
+                } else {
+                    return "Symbol inserted";
+                }
+            } catch (NumberFormatException e) {
+                return "Only numbers!";
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return ex.toString();
+            }
+        }
+        return "Wrong player";
+    }
+
+    public boolean isPlayerInGame(Principal principal) {
+        return gameHost.equals(principal.getName()) || secondPlayer.equals(principal.getName());
+    }
+
     public static void main(String[] args) {
-        List<GrantedAuthority> list = new ArrayList<>();
-        Game game = new Game(3, new User("dummyUsername", "dummyPassword", list));
+        Game game = new Game(3, new PrincipalImpl("dummyUsername"));
         game.displayBoard();
 
         boolean isWinner = false;
