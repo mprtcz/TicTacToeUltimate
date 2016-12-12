@@ -1,5 +1,6 @@
 package com.mprtcz.tictactoeultimate.service;
 
+import com.mprtcz.tictactoeultimate.messages.ServerMessages;
 import com.mprtcz.tictactoeultimate.model.Game;
 import org.springframework.stereotype.Service;
 
@@ -15,36 +16,38 @@ public class GameService {
     private static int CUSTOM_TABLE_SIZE = 3;
     private static List<Game> gamesList = new ArrayList<>();
 
-    public void createGame(Principal principal) {
+    public ServerMessages createGame(Principal principal) {
         Game game = new Game(CUSTOM_TABLE_SIZE, principal);
         gamesList.add(game);
+        return new ServerMessages(ServerMessages.ServerMessageEnum.GAME_CREATED);
     }
 
     public List<Game> getGamesList() {
         return gamesList;
     }
 
-    public String findGameAndInsertMove(Principal principal, String gameMove) {
+    public ServerMessages findGameAndInsertMove(Principal principal, String gameMove) {
         for (Game g : getGamesList()) {
             if (g.isPlayerInGame(principal)) {
                 return g.makeAMove(principal.getName(), gameMove);
             }
         }
-        return "Game with this host does not exist";
+        return new ServerMessages(ServerMessages.ServerMessageEnum.HOSTGAME_DOES_NOT_EXIST);
     }
 
-    public String joinGame(String gameHost, Principal principal) {
+    public ServerMessages joinGame(String gameHost, Principal principal) {
         for (Game g : getGamesList()) {
             if (g.getGameHost().equals(gameHost)) {
                 if (g.getSecondPlayer() == null) {
                     g.setSecondPlayer(principal);
-                    return "Player " +principal.getName() +" joined game";
+                    return new ServerMessages(ServerMessages.ServerMessageEnum.OK,
+                            "Player " +principal.getName() +" joined game");
                 } else {
-                    return "The game already has second player";
+                    return new ServerMessages(ServerMessages.ServerMessageEnum.SECOND_PLAYER_EXISTS);
                 }
             }
         }
-        return "Game with this host does not exist";
+        return new ServerMessages(ServerMessages.ServerMessageEnum.HOSTGAME_DOES_NOT_EXIST);
     }
 
 }

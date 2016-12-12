@@ -1,5 +1,6 @@
 package com.mprtcz.tictactoeultimate.controller;
 
+import com.mprtcz.tictactoeultimate.messages.ServerMessages;
 import com.mprtcz.tictactoeultimate.model.Game;
 import com.mprtcz.tictactoeultimate.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,24 +28,20 @@ public class GameController {
 
     @RequestMapping("/create")
     public ResponseEntity createGame(Principal principal) {
-        gameService.createGame(principal);
-        return new ResponseEntity(HttpStatus.OK);
+        ServerMessages result = gameService.createGame(principal);
+        return result.convertToResponseEntity();
     }
 
     @RequestMapping(value  = "/move", method = RequestMethod.PATCH)
     public ResponseEntity makeAMove(@RequestBody String coordinates, Principal principal) {
-        String result = gameService.findGameAndInsertMove(principal, coordinates);
-        if(result.equals("Symbol inserted") || result.contains("Winner is")) {
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
-        }
+        ServerMessages result = gameService.findGameAndInsertMove(principal, coordinates);
+        return result.convertToResponseEntity();
     }
 
     @RequestMapping("/{gameHost}/join")
     public ResponseEntity joinGame(@PathVariable String gameHost, Principal principal) {
-        String result = gameService.joinGame(gameHost, principal);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        ServerMessages result = gameService.joinGame(gameHost, principal);
+        return result.convertToResponseEntity();
     }
 
     @RequestMapping("/")

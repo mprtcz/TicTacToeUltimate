@@ -1,5 +1,6 @@
 package com.mprtcz.tictactoeultimate.model;
 
+import com.mprtcz.tictactoeultimate.messages.ServerMessages;
 import lombok.Getter;
 import sun.security.acl.PrincipalImpl;
 
@@ -132,46 +133,39 @@ public class Game {
         }
     }
 
-    boolean insertSymbol(int indexVertical, int indexHorizontal) {
+    ServerMessages insertSymbol(int indexVertical, int indexHorizontal) {
         if ((indexVertical > table[indexHorizontal].length - 1) || (indexVertical < 0)
                 || (indexHorizontal > table.length - 1) || (indexHorizontal < 0)) {
-            System.out.println("Index exceeds table size");
-            return false;
+            return new ServerMessages(ServerMessages.ServerMessageEnum.COORDINATES_OUT_OF_TABLE);
         }
         if (FieldState.EMPTY != table[indexHorizontal][indexVertical]) {
-            System.out.println("The field is already picked, try again");
-            return false;
+            return new ServerMessages(ServerMessages.ServerMessageEnum.SYMBOL_ALREADY_IN_PLACE);
         }
         table[indexHorizontal][indexVertical] = currentPlayer;
         boolean isWinner = addToSums(indexHorizontal, indexVertical);
         if (isWinner) {
-            return true;
+            return new ServerMessages(ServerMessages.ServerMessageEnum.GAME_IS_WON, "The winner is: " + currentPlayer);
         }
         currentPlayer = currentPlayer.getOpposite();
-        return false;
+        return new ServerMessages(ServerMessages.ServerMessageEnum.SUCCESSFUL_MOVE);
     }
 
-    public String makeAMove(String username, String position) {
+    public ServerMessages makeAMove(String username, String position) {
         if(getCurrentPlayersName().equals(username)) {
             try {
                 String[] indexes = position.split(",");
                 if (indexes.length != 2) {
-                    throw new Exception("Two numbers, babe");
+                    return new ServerMessages(ServerMessages.ServerMessageEnum.ONLY_NUMBERS);
                 }
-                boolean result = insertSymbol(Integer.parseInt(indexes[1]), Integer.parseInt(indexes[0]));
-                if(result) {
-                    return "The winner is: " + currentPlayer;
-                } else {
-                    return "Symbol inserted";
-                }
+                return insertSymbol(Integer.parseInt(indexes[1]), Integer.parseInt(indexes[0]));
             } catch (NumberFormatException e) {
-                return "Only numbers!";
+                return new ServerMessages(ServerMessages.ServerMessageEnum.ONLY_NUMBERS);
             } catch (Exception ex) {
                 ex.printStackTrace();
-                return ex.toString();
+                return new ServerMessages(ServerMessages.ServerMessageEnum.GENERIC_EXCEPTION, ex.toString());
             }
         }
-        return "Wrong player";
+        return new ServerMessages(ServerMessages.ServerMessageEnum.WRONG_PLAYER);
     }
 
     public boolean isPlayerInGame(Principal principal) {
@@ -182,7 +176,7 @@ public class Game {
         Game game = new Game(3, new PrincipalImpl("dummyUsername"));
         game.displayBoard();
 
-        boolean isWinner = false;
+        ServerMessages isWinner = new ServerMessages(ServerMessages.ServerMessageEnum.GAME_CREATED);
         String inputLine;
         do {
             System.out.println("Type where you want to put " + game.currentPlayer + ", separate coordinates with comma");
@@ -204,7 +198,7 @@ public class Game {
                 System.out.println(ex.toString());
             }
         }
-        while (!isWinner);
+        while (isWinner.getMessageEnum() != ServerMessages.ServerMessageEnum.GAME_IS_WON);
         System.out.println("The winner is " + game.currentPlayer);
     }
 }

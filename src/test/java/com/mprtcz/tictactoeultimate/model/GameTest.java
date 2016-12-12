@@ -1,10 +1,9 @@
 package com.mprtcz.tictactoeultimate.model;
 
+import com.mprtcz.tictactoeultimate.messages.ServerMessages;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by mprtcz on 2016-11-06.
@@ -39,13 +38,13 @@ public class GameTest {
 
     private void checkWinningConditions(int boardSize, int[][] coordinatesTable, Game.FieldState winningSign) {
         Game game = new Game(boardSize);
-        boolean isWinner = false;
+        ServerMessages isWinner = new ServerMessages(ServerMessages.ServerMessageEnum.GAME_CREATED);
         for (int[] coordinates :
                 coordinatesTable) {
-            assertFalse(isWinner);
+            assertNotEquals(isWinner, ServerMessages.ServerMessageEnum.GAME_IS_WON);
             isWinner = game.insertSymbol(coordinates[0], coordinates[1]);
         }
-        assertTrue(isWinner);
+        assertEquals(isWinner.getMessageEnum(), ServerMessages.ServerMessageEnum.GAME_IS_WON);
         assertEquals(winningSign, game.getCurrentPlayer());
     }
 }
