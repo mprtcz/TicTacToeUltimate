@@ -133,6 +133,19 @@ public class Game {
         }
     }
 
+    private String drawBoard() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("\nGame table: \n");
+        for (FieldState[] tableLine : table) {
+            for (FieldState fieldState : tableLine) {
+                stringBuilder.append(" ");
+                stringBuilder.append(fieldState.value);
+            }
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
     ServerMessages insertSymbol(int indexVertical, int indexHorizontal) {
         if ((indexVertical > table[indexHorizontal].length - 1) || (indexVertical < 0)
                 || (indexHorizontal > table.length - 1) || (indexHorizontal < 0)) {
@@ -144,10 +157,11 @@ public class Game {
         table[indexHorizontal][indexVertical] = currentPlayer;
         boolean isWinner = addToSums(indexHorizontal, indexVertical);
         if (isWinner) {
-            return new ServerMessages(ServerMessages.ServerMessageEnum.GAME_IS_WON, "The winner is: " + currentPlayer);
+            return new ServerMessages(ServerMessages.ServerMessageEnum.GAME_IS_WON,
+                    "The winner is: " + getCurrentPlayersName() + drawBoard());
         }
         currentPlayer = currentPlayer.getOpposite();
-        return new ServerMessages(ServerMessages.ServerMessageEnum.SUCCESSFUL_MOVE);
+        return new ServerMessages(ServerMessages.ServerMessageEnum.SUCCESSFUL_MOVE, drawBoard());
     }
 
     public ServerMessages makeAMove(String username, String position) {
