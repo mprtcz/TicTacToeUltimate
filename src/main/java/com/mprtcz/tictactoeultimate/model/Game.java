@@ -182,8 +182,12 @@ public class Game {
         return new ServerMessages(ServerMessages.ServerMessageEnum.WRONG_PLAYER);
     }
 
-    public boolean isPlayerInGame(Principal principal) {
+    private boolean isPlayerInGame(Principal principal) {
         return gameHost.equals(principal.getName()) || secondPlayer.equals(principal.getName());
+    }
+
+    public boolean canAMoveBeMade(Principal principal) {
+        return !(gameHost == null || secondPlayer == null) && isPlayerInGame(principal);
     }
 
     public static void main(String[] args) {

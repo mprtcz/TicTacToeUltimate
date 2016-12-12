@@ -28,7 +28,7 @@ public class GameService {
 
     public ServerMessages findGameAndInsertMove(Principal principal, String gameMove) {
         for (Game g : getGamesList()) {
-            if (g.isPlayerInGame(principal)) {
+            if (g.canAMoveBeMade(principal)) {
                 return g.makeAMove(principal.getName(), gameMove);
             }
         }
