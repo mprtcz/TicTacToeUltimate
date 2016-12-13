@@ -4,7 +4,7 @@ import {GreetingService} from "./greeting.service";
 @Component({
     moduleId: module.id,
     selector: 'fa-greeting',
-    templateUrl: './greeting.component.jsp',
+    templateUrl: '/app/greeting/greeting.component.jsp',
     providers: [ GreetingService ]
 })
 export class GreetingComponent implements AfterViewInit {

@@ -3,6 +3,12 @@ import {Component} from "@angular/core";
 @Component({
     moduleId: module.id,
     selector: 'tttgame',
-    templateUrl: './tic-tac-toe.component.jsp'
+    templateUrl: '/app/tttgame/tic-tac-toe.component.jsp'
 })
-export class TicTacToeComponent {}
+export class TicTacToeComponent {
+
+    private isGameOn : boolean;
+
+    
+
+}

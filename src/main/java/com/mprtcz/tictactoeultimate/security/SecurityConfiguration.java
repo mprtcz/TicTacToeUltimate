@@ -48,7 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .authorizeRequests()
                 .antMatchers("/api/hello", "/*", "/users/add").permitAll()
-                .antMatchers("/app/**", "/node_modules/**", "/materialdesign/**", "/systemjs.config.js").permitAll()
+                .antMatchers("/app/**", "/node_modules/**","/compiledsources/**",
+                        "/materialdesign/**", "/systemjs.config.js").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic().authenticationEntryPoint(customAuthEntryPoint)
                 .and()

@@ -1,4 +1,4 @@
-import  {Component, AfterViewInit, AfterContentInit, OnInit} from "@angular/core";
+import  {Component } from "@angular/core";
 import {CustomLoginService} from "./custom-login.service";
 import 'rxjs/Rx';
 import {User} from "./user";
@@ -8,7 +8,7 @@ declare var componentHandler: any;
 @Component({
     moduleId: module.id,
     selector: 'custom-login',
-    templateUrl: './custom-login.component.jsp',
+    templateUrl: '/app/login/custom-login.component.jsp',
     providers: [CustomLoginService]
 })
 export class CustomLoginComponent {
@@ -26,7 +26,9 @@ export class CustomLoginComponent {
         localStorage.removeItem("currentUser");
         this.loginService.authenticate(this.username, this.password).toPromise()
             .then(res => {
+                console.log("Response: " +JSON.stringify(res));
                 this.user = res.json() as User;
+                console.log("Added this.user: " + JSON.stringify(this.user));
                 localStorage.setItem("currentUser", JSON.stringify(this.user));
                 console.log("Added user: " + JSON.stringify(localStorage.getItem("currentUser")));
                 this.message = 'Success';

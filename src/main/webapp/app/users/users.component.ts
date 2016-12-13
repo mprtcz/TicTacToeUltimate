@@ -5,7 +5,7 @@ import {UsersService} from "./users.serivce";
 @Component({
     moduleId: module.id,
     selector: 'users-list',
-    templateUrl: './users.component.jsp',
+    templateUrl: '/app/users/users.component.jsp',
     providers: [UsersService]
 })
 export class UsersComponent implements OnInit {

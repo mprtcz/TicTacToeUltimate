@@ -10,7 +10,7 @@ import {User} from "../login/user";
 @Component({
     moduleId: module.id,
     selector: 'app-register',
-    templateUrl: './register.component.jsp',
+    templateUrl: '/app/register/register.component.jsp',
     providers: [RegisterService]
 })
 export class RegisterComponent implements OnInit {

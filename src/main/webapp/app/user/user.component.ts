@@ -8,7 +8,7 @@ import {EditUserService} from "../shared/edit-user.service";
 @Component({
     moduleId: module.id,
     selector: 'user-info',
-    templateUrl: './user.component.jsp',
+    templateUrl: '/app/user/user.component.jsp',
     providers: [
         UserService,
         RegisterService

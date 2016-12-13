@@ -7,7 +7,7 @@ declare var componentHandler: any;
 @Component({
     moduleId: module.id,
     selector: 'app-navbar',
-    templateUrl: './navbar.component.jsp',
+    templateUrl: '/app/navbar/navbar.component.jsp',
     providers: [CustomLoginService],
 })
 export class NavbarComponent implements AfterContentChecked {

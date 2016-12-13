@@ -3,11 +3,7 @@ runutils.bat
 !.mvn/wrapper/maven-wrapper.jar
 materialdesign/
 node_modules/
-
-
-## JavaScript (generated from .ts)##
-*.map
-*.js
+compiledsources/
 
 ### STS ###
 .apt_generated

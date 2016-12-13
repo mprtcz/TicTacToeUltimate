@@ -5,7 +5,7 @@ import {Http} from "@angular/http";
 @Component({
     moduleId: module.id,
     selector: 'app-logout',
-    templateUrl: './logout.component.jsp'
+    templateUrl: '/app/logout/logout.component.jsp'
 })
 export class LogoutComponent implements OnInit {
 
