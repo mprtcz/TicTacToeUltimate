@@ -244,7 +244,7 @@
             <id>MySQL</id>
             <properties>
                 <db.driverClass>com.mysql.cj.jdbc.Driver</db.driverClass>
-                <db.connectionURL>jdbc:mysql://localhost:3306/tictactoedb?useSSL=false</db.connectionURL>
+                <db.connectionURL>jdbc:mysql://localhost:3306/tictactoedb?useSSL=false&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC</db.connectionURL>
                 <db.username>root</db.username>
                 <db.password>password</db.password>
                 <hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
