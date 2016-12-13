@@ -1,7 +1,7 @@
 import  {Component } from "@angular/core";
 import {CustomLoginService} from "./custom-login.service";
 import 'rxjs/Rx';
-import {User} from "./user";
+import {User} from "./user.model";
 import {Router} from "@angular/router";
 declare var componentHandler: any;
 

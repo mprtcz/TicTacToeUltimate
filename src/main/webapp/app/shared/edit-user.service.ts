@@ -1,7 +1,7 @@
 
 import {Injectable} from "@angular/core";
-import {User} from "../login/user";
-import {NewUser} from "../register/NewUser";
+import {User} from "../login/user.model";
+import {NewUser} from "../register/NewUser.model";
 @Injectable()
 export class EditUserService {
     user : User;

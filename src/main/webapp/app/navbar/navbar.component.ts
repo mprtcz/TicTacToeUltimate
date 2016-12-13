@@ -1,6 +1,6 @@
 import {Component, AfterContentChecked, OnInit} from "@angular/core";
 import {CustomLoginService} from "../login/custom-login.service";
-import {User} from "../login/user";
+import {User} from "../login/user.model";
 
 declare var componentHandler: any;
 

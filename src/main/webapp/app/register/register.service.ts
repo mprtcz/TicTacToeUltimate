@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
-import {NewUser} from "./NewUser";
+import {NewUser} from "./NewUser.model";
 import {Http, RequestOptions} from "@angular/http";
-import {User} from "../login/user";
+import {User} from "../login/user.model";
 
 @Injectable()
 export class RegisterService {

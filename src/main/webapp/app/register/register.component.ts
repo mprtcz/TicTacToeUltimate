@@ -1,11 +1,11 @@
 import {Component, OnInit} from "@angular/core";
-import {NewUser} from "./NewUser";
+import {NewUser} from "./NewUser.model";
 import {RegisterService} from "./register.service";
-import {ConstraintViolation} from "./ConstraintViolation";
-import {ConstraintViolations} from "./ConstraintViolations";
+import {ConstraintViolation} from "./constraint-violation.model";
+import {ConstraintViolations} from "./constraint-violations.model";
 import {Router} from "@angular/router";
 import {EditUserService} from "../shared/edit-user.service";
-import {User} from "../login/user";
+import {User} from "../login/user.model";
 
 @Component({
     moduleId: module.id,

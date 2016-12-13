@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {User} from "../login/user";
+import {User} from "../login/user.model";
 import {UserService} from "./user.service";
 import {error} from "util";
 import {RegisterService} from "../register/register.service";

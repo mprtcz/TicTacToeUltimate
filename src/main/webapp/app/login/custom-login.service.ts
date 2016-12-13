@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
-import {User} from "./user";
+import {User} from "./user.model";
 import {RequestOptions, Headers, Http} from "@angular/http";
-import {toPromise} from "rxjs/operator/toPromise";
 
 @Injectable()
 export class CustomLoginService {
