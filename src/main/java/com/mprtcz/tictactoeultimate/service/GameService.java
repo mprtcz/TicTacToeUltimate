@@ -50,4 +50,17 @@ public class GameService {
         return new ServerMessages(ServerMessages.ServerMessageEnum.HOSTGAME_DOES_NOT_EXIST);
     }
 
+    public Game getGameUpdate(String gameHost, Principal principal) {
+        for (Game g : getGamesList()) {
+            if (g.getGameHost().equals(gameHost)) {
+                if(g.getGameHost().equals(principal.getName()) || g.getSecondPlayer().equals(principal.getName())) {
+                    return g;
+                } else {
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
 }

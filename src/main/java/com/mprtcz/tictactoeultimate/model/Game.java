@@ -5,6 +5,8 @@ import lombok.Getter;
 import sun.security.acl.PrincipalImpl;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -45,6 +47,7 @@ public class Game {
     private static final int NUMBER_OF_DIAGONALS = 2;
 
     private FieldState[][] table;
+    private String[] oneDimTable;
     private FieldState currentPlayer;
 
     private String gameHost;
@@ -56,6 +59,7 @@ public class Game {
 
     public Game(int tableSize, Principal gameHost) {
         this.table = new FieldState[tableSize][tableSize];
+        this.oneDimTable = new String[tableSize*tableSize];
         this.gameHost = gameHost.getName();
         this.currentPlayer = FieldState.O;
         this.horizontalSums = new int[tableSize];
@@ -77,7 +81,7 @@ public class Game {
         this.secondPlayer = secondPlayer.getName();
     }
 
-    public String getCurrentPlayersName() {
+    private String getCurrentPlayersName() {
         switch (currentPlayer.getValue()) {
             case "O":
                 return gameHost;
@@ -92,6 +96,7 @@ public class Game {
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
                 table[i][j] = FieldState.EMPTY;
+                oneDimTable[i*table.length + j] = " ";
             }
         }
     }
@@ -146,6 +151,16 @@ public class Game {
         return stringBuilder.toString();
     }
 
+    private String getBoardAsJson() {
+        List<String> list = new ArrayList<>();
+        for (FieldState[] row : table) {
+            for (FieldState col : row) {
+                list.add(col.value);
+            }
+        }
+        return list.toString();
+    }
+
     ServerMessages insertSymbol(int indexVertical, int indexHorizontal) {
         if ((indexVertical > table[indexHorizontal].length - 1) || (indexVertical < 0)
                 || (indexHorizontal > table.length - 1) || (indexHorizontal < 0)) {
@@ -155,13 +170,14 @@ public class Game {
             return new ServerMessages(ServerMessages.ServerMessageEnum.SYMBOL_ALREADY_IN_PLACE);
         }
         table[indexHorizontal][indexVertical] = currentPlayer;
+        oneDimTable[indexHorizontal * table.length + indexVertical] = currentPlayer.getValue();
         boolean isWinner = addToSums(indexHorizontal, indexVertical);
         if (isWinner) {
             return new ServerMessages(ServerMessages.ServerMessageEnum.GAME_IS_WON,
-                    "The winner is: " + getCurrentPlayersName() + drawBoard());
+                    "The winner is: " + getCurrentPlayersName() + getBoardAsJson());
         }
         currentPlayer = currentPlayer.getOpposite();
-        return new ServerMessages(ServerMessages.ServerMessageEnum.SUCCESSFUL_MOVE, drawBoard());
+        return new ServerMessages(ServerMessages.ServerMessageEnum.SUCCESSFUL_MOVE, getBoardAsJson());
     }
 
     public ServerMessages makeAMove(String username, String position) {

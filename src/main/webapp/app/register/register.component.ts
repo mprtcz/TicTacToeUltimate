@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {NewUser} from "./NewUser.model";
+import {NewUser} from "./new-user.model";
 import {RegisterService} from "./register.service";
 import {ConstraintViolation} from "./constraint-violation.model";
 import {ConstraintViolations} from "./constraint-violations.model";

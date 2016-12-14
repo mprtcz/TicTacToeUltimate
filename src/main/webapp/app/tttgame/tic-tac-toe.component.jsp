@@ -43,6 +43,7 @@
                 <div class="mdl-cell mdl-cell--1-col" (click)="insertSymbol(8)">{{game.symbols[8]}}</div>
             </div>
             <h4>Under Construction :)</h4>
+            <h4 *ngIf="!isGameOn">Creating game...</h4>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
             (click)="clear()">Clear</button>
         </div>

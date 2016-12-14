@@ -1,8 +1,10 @@
 package com.mprtcz.tictactoeultimate.controller;
 
 import com.mprtcz.tictactoeultimate.messages.ServerMessages;
+import com.mprtcz.tictactoeultimate.model.Game;
 import com.mprtcz.tictactoeultimate.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,5 +41,14 @@ public class TicTacToeController {
     public ResponseEntity joinGame(@PathVariable String gameHost, Principal principal) {
         ServerMessages result = gameService.joinGame(gameHost, principal);
         return result.convertToResponseEntity();
+    }
+
+    @RequestMapping("/{gameHost}/game")
+    public ResponseEntity getGameUpdate(@PathVariable String gameHost, Principal principal) {
+        Game game = gameService.getGameUpdate(gameHost, principal);
+        if(game == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(game, HttpStatus.OK);
     }
 }
