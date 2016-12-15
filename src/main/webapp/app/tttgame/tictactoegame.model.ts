@@ -1,4 +1,4 @@
-export class TicTacToeGame {
+export class TicTacToeGameArray {
     symbols: string[] = [9];
 
     constructor() {

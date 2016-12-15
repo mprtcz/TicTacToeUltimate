@@ -1,7 +1,9 @@
 import {Component, OnInit, OnDestroy} from "@angular/core";
-import {TicTacToeGame} from "./tictactoegame.model";
+import {TicTacToeGameArray} from "./tictactoegame.model";
 import {TicTacToeService} from "./tic-tac-toe-service";
 import {Observable} from "rxjs/Observable";
+import {TictacToeDTO} from "./tic-tac-toe-dto.model";
+import {Router} from "@angular/router";
 
 @Component({
     moduleId: module.id,
@@ -17,37 +19,47 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    private game: TicTacToeGame;
-    private currentSymbol: string = 'X';
+    private game: TicTacToeGameArray;
     private gameHost: string;
+    private loggedPlayer: string;
     private subscription: any;
-    private secondPlayerUsername: string;
+    private isSecondPlayerInGame: boolean;
+    private gameDto : TictacToeDTO;
+    private playersSign : string;
 
     ngOnInit(): void {
         console.log('ngOnInit ttt');
-        this.game = new TicTacToeGame();
+        this.game = new TicTacToeGameArray();
+        this.loggedPlayer = JSON.parse(localStorage.getItem("currentUser")).ssoId;
         this.tttService.createGame()
             .then(response => {
                 console.log('response: ' + JSON.stringify(response));
                 this.isGameOn = true;
                 this.gameHost = JSON.parse(localStorage.getItem("currentUser")).ssoId;
                 console.log('gameHost: ' + this.gameHost);
+                this.playersSign = 'O';
+                this.getGamesState();
+                this.setUpSubscriptionTimer();
             })
             .catch((error: any) => {
                 console.log('error: ' + JSON.stringify(error));
             });
+
+    }
+
+    setUpSubscriptionTimer() : void {
         let timer = Observable.timer(1000, 1000);
         this.subscription = timer.subscribe(t=> {
             this.ticks = t;
-            if (this.secondPlayerUsername) {
-                this.getGamesState()
+            if (this.gameDto.secondPlayer) {
+                this.getGamesState();
             } else {
                 this.checkIfSomeoneJoinedGame();
             }
         });
     }
 
-    constructor(private tttService: TicTacToeService) {
+    constructor(private tttService: TicTacToeService, private router : Router) {
         console.log('constr ttt');
         this.isGameOn = false;
     }
@@ -57,14 +69,22 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
     insertSymbol(index: int): void {
         console.log('insert symbol: ' + index);
         if (this.game.symbols[index] == ' ') {
-            this.game.symbols[index] = this.currentSymbol;
+            this.game.symbols[index] = this.playersSign;
             this.reverseSymbol();
+            this.tttService.parseAndSendInsertion(index)
+                .then(response => {
+                    this.updateGameDto(response);
+                    console.log('response: ' + JSON.stringify(response._body));
+                })
+                .catch((error: any) => {
+                    console.log('error: ' + JSON.stringify(error));
+                    console.log('error: ' + JSON.stringify(error.stack));
+                });
         }
     }
 
     clear(): void {
-        this.game = new TicTacToeGame();
-        this.getGamesState();
+        this.router.navigate(['/greeting']);
     }
 
     reverseSymbol(): void {
@@ -78,6 +98,7 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
     getGamesState(): void {
         this.tttService.gameState(this.gameHost)
             .then(response => {
+                this.updateGameDto(response);
                 console.log('response: ' + JSON.stringify(response._body));
             })
             .catch((error: any) => {
@@ -89,20 +110,27 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
     checkIfSomeoneJoinedGame(): void {
         this.tttService.gameState(this.gameHost)
             .then(response => {
-                console.log('response: ' + JSON.stringify(response._body));
-                let game = JSON.parse(response._body);
-                console.log('Game\'s second player: ' +JSON.stringify(game.secondPlayer));
-                console.log('Game host: ' +JSON.stringify(game.gameHost));
-                console.log('table: ' +JSON.stringify(game.oneDimTable));
-                console.log('current player: ' +JSON.stringify(game.currentPlayer));
-                if(game.secondPlayer != null) {
-                    this.secondPlayerUsername = game.secondPlayer;
-                }
+                this.updateGameDto(response);
             })
             .catch((error: any) => {
-                console.log('error: ' + JSON.stringify(error));
-                console.log('error: ' + JSON.stringify(error.stack));
+                if(error.status === 500) {
+                    console.log('Server Error!');
+                }
             });
+    }
+
+    determineIfThePlayerHasMove() : boolean {
+        if(this.loggedPlayer == this.gameDto.gameHost) {
+            return this.gameDto.currentPlayer == 'O';
+        } else {
+            return this.gameDto.currentPlayer == 'X';
+        }
+    }
+
+    updateGameDto(response : string) : void {
+        this.gameDto = JSON.parse(response._body);
+        this.isSecondPlayerInGame = this.gameDto.secondPlayer != null;
+        this.game.symbols = this.gameDto.oneDimTable;
     }
 
 }
