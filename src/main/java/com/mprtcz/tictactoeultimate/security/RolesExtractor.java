@@ -10,7 +10,11 @@ import org.springframework.security.core.userdetails.User;
 public class RolesExtractor {
 
     public static boolean isAdmin() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal.toString().equals("anonymousUser")) {
+            return false;
+        }
+        User user = (User) principal;
         return user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 }

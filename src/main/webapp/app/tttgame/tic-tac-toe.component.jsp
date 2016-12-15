@@ -55,7 +55,7 @@
             (click)="clear()">Leave the Game</button>
         </div>
         <div class="mdl-card mdl-cell mdl-cell--12-col" *ngIf="!isSecondPlayerInGame">
-            <h4>Waiting for second player!</h4>
+            <h4>Waiting for second player to join...</h4>
         </div>
     </div>
 </section>
