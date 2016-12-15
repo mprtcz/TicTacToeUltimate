@@ -53,14 +53,16 @@ public class GameService {
     public Game getGameUpdate(String gameHost, Principal principal) {
         for (Game g : getGamesList()) {
             if (g.getGameHost().equals(gameHost)) {
-                if(g.getGameHost().equals(principal.getName()) || g.getSecondPlayer().equals(principal.getName())) {
+                if(checkIfPlayerIsInTheGame(g, principal)) {
                     return g;
-                } else {
-                    return null;
                 }
             }
         }
         return null;
+    }
+
+    private boolean checkIfPlayerIsInTheGame(Game g, Principal principal) {
+        return g.getGameHost().equals(principal.getName()) || g.getSecondPlayer() != null && g.getSecondPlayer().equals(principal.getName());
     }
 
 }

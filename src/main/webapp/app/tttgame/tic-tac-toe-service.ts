@@ -13,4 +13,11 @@ export class TicTacToeService {
         return this.http.get(url, options).toPromise();
     }
 
+    gameState(gameHost: string) : Promise {
+        console.log('updating game');
+        let url = 'http://localhost:8080/tictactoe/' + gameHost + '/game';
+        let options = new RequestOptions({ withCredentials: localStorage.getItem("currentUser") });
+        return this.http.get(url, options).toPromise();
+    }
+
 }

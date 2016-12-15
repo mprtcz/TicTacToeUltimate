@@ -26,7 +26,7 @@
 </style>
 <section mdl-upgrade class="section--center mdl-grid tab-content">
     <div class="mdl-card loginCard mdl-grid mdl-shadow--2dp">
-        <div class="mdl-card mdl-cell mdl-cell--12-col">
+        <div class="mdl-card mdl-cell mdl-cell--12-col" *ngIf="secondPlayerUsername" mdl-upgrade>
             <div class="demo-grid-ruler mdl-grid">
                 <div class="mdl-cell mdl-cell--1-col" (click)="insertSymbol(0)">{{game.symbols[0]}}</div>
                 <div class="mdl-cell sideborders mdl-cell--1-col" (click)="insertSymbol(1)">{{game.symbols[1]}}</div>
@@ -46,6 +46,9 @@
             <h4 *ngIf="!isGameOn">Creating game...</h4>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
             (click)="clear()">Clear</button>
+        </div>
+        <div class="mdl-card mdl-cell mdl-cell--12-col" *ngIf="!secondPlayerUsername">
+            <h4>Waiting for second player!</h4>
         </div>
     </div>
 </section>
