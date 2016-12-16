@@ -1,4 +1,4 @@
-export  class TictacToeDTO {
+export  class TicTacToeDTO {
     table : any;
     oneDimTable : string[] = [9];
     currentPlayer : string;

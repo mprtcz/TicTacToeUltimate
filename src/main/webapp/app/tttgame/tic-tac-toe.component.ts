@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from "@angular/core";
 import {TicTacToeGameArray} from "./tictactoegame.model";
 import {TicTacToeService} from "./tic-tac-toe-service";
 import {Observable} from "rxjs/Observable";
-import {TictacToeDTO} from "./tic-tac-toe-dto.model";
+import {TicTacToeDTO} from "./tic-tac-toe-dto.model";
 import {Router} from "@angular/router";
 
 @Component({
@@ -24,7 +24,7 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
     private loggedPlayer: string;
     private subscription: any;
     private isSecondPlayerInGame: boolean;
-    private gameDto : TictacToeDTO;
+    private gameDto : TicTacToeDTO;
     private playersSign : string;
 
     ngOnInit(): void {
