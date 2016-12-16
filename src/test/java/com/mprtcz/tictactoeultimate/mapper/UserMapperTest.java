@@ -1,7 +1,8 @@
 package com.mprtcz.tictactoeultimate.mapper;
 
-import com.mprtcz.tictactoeultimate.model.User;
-import com.mprtcz.tictactoeultimate.model.dto.UserDTO;
+import com.mprtcz.tictactoeultimate.user.model.User;
+import com.mprtcz.tictactoeultimate.user.model.dto.UserDTO;
+import com.mprtcz.tictactoeultimate.user.model.mapper.UserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

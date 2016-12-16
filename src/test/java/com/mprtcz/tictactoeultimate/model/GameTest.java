@@ -1,6 +1,7 @@
 package com.mprtcz.tictactoeultimate.model;
 
-import com.mprtcz.tictactoeultimate.messages.ServerMessages;
+import com.mprtcz.tictactoeultimate.game.model.Game;
+import com.mprtcz.tictactoeultimate.configuration.messages.ServerMessages;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
