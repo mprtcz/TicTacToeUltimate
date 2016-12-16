@@ -28,6 +28,7 @@
     <div class="mdl-card loginCard mdl-grid mdl-shadow--2dp">
         <div class="mdl-card mdl-cell mdl-cell--12-col" *ngIf="isSecondPlayerInGame" mdl-upgrade>
             <div *ngIf="playersSign == gameDto.currentPlayer"><h4>Your move, place {{playersSign}}</h4></div>
+            <div *ngIf="playersSign != gameDto.currentPlayer"><h4>Waiting for opponent's move</h4></div>
             <div class="demo-grid-ruler mdl-grid">
                 <div class="mdl-cell mdl-cell--1-col" (click)="insertSymbol(0)">{{game.symbols[0]}}</div>
                 <div class="mdl-cell sideborders mdl-cell--1-col" (click)="insertSymbol(1)">{{game.symbols[1]}}</div>

@@ -1,8 +1,7 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
 import {TicTacToeDTO} from "../tttgame/tic-tac-toe-dto.model";
 import {GamesService} from "./games.service";
-import {Router} from "@angular/router";
-import {Output} from "@angular/core/src/metadata/directives";
+import {Output} from "@angular/core";
 
 @Component({
     moduleId: module.id,
@@ -34,7 +33,7 @@ export class GamesListComponent implements OnInit {
         this.gamesService.joinGame(game)
             .then(resp => {
                 console.log(JSON.stringify(resp));
-                this.notifyParent.emit(true);
+                this.notifyParent.emit(game);
             }).catch(function (error) {
             console.log("Error " + JSON.stringify(error));
         });

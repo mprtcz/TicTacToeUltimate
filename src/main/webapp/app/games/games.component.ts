@@ -8,8 +8,7 @@ import {GameDataholderService} from "../shared/game-datahoder.service";
     selector: 'games',
     templateUrl: '/app/games/games.component.jsp',
     providers: [
-        GamesService,
-        GameDataholderService
+        GamesService
     ]
 })
 export class GamesComponent implements OnInit {
@@ -18,26 +17,23 @@ export class GamesComponent implements OnInit {
         this.isDisplaying = false;
     }
 
-    constructor(private router : Router, private gameDataholderService: GameDataholderService) {
-    }
-
     private isDisplaying: boolean;
 
-    reroute() : void {
+    constructor(private router: Router, private gameDataholderService: GameDataholderService) {
+    }
+
+    reroute(): void {
         this.router.navigate(['/tictactoe']);
     }
 
-    getNotification(event) : void {
-        if(event) {
-            this.gameDataholderService.isCreating = false;
-            this.reroute();
-        }
-    }
-
-    createNewGame() : void {
-        this.gameDataholderService.isCreating = true;
+    getNotification(event): void {
+        this.gameDataholderService.isCreating = false;
+        this.gameDataholderService.gameHost = event.gameHost;
         this.reroute();
     }
 
-
+    createNewGame(): void {
+        this.gameDataholderService.isCreating = true;
+        this.reroute();
+    }
 }

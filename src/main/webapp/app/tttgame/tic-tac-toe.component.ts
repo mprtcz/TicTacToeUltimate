@@ -4,12 +4,15 @@ import {TicTacToeService} from "./tic-tac-toe-service";
 import {Observable} from "rxjs/Observable";
 import {TicTacToeDTO} from "./tic-tac-toe-dto.model";
 import {Router} from "@angular/router";
+import {GameDataholderService} from "../shared/game-datahoder.service";
 
 @Component({
     moduleId: module.id,
     selector: 'tttgame',
     templateUrl: '/app/tttgame/tic-tac-toe.component.jsp',
-    providers: [TicTacToeService]
+    providers: [
+        TicTacToeService
+    ]
 })
 export class TicTacToeComponent implements OnInit, OnDestroy {
 
@@ -31,19 +34,16 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
         console.log('ngOnInit ttt');
         this.game = new TicTacToeGameArray();
         this.loggedPlayer = JSON.parse(localStorage.getItem("currentUser")).ssoId;
-        this.tttService.createGame()
-            .then(response => {
-                console.log('response: ' + JSON.stringify(response));
-                this.isGameOn = true;
-                this.gameHost = JSON.parse(localStorage.getItem("currentUser")).ssoId;
-                console.log('gameHost: ' + this.gameHost);
-                this.playersSign = 'O';
-                this.getGamesState();
-                this.setUpSubscriptionTimer();
-            })
-            .catch((error: any) => {
-                console.log('error: ' + JSON.stringify(error));
-            });
+
+        if(this.gameDataholderService.isCreating) {
+            console.log('isCreating: true');
+            this.createGame()
+        } else {
+            console.log('isCreating: false');
+            this.gameHost = this.gameDataholderService.gameHost;
+            this.getGamesState();
+            this.setUpSubscriptionTimer();
+        }
 
     }
 
@@ -59,7 +59,9 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
         });
     }
 
-    constructor(private tttService: TicTacToeService, private router : Router) {
+    constructor(private tttService: TicTacToeService,
+                private router : Router,
+                private gameDataholderService : GameDataholderService) {
         console.log('constr ttt');
         this.isGameOn = false;
     }
@@ -132,5 +134,23 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
         this.isSecondPlayerInGame = this.gameDto.secondPlayer != null;
         this.game.symbols = this.gameDto.oneDimTable;
     }
+
+    createGame() : void {
+        this.tttService.createGame()
+            .then(response => {
+                console.log('response: ' + JSON.stringify(response));
+                this.isGameOn = true;
+                this.gameHost = JSON.parse(localStorage.getItem("currentUser")).ssoId;
+                console.log('gameHost: ' + this.gameHost);
+                this.playersSign = 'O';
+                this.getGamesState();
+                this.setUpSubscriptionTimer();
+            })
+            .catch((error: any) => {
+                console.log('error: ' + JSON.stringify(error));
+            });
+    }
+
+
 
 }
