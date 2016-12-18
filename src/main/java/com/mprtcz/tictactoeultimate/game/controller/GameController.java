@@ -27,7 +27,7 @@ public class GameController {
 
     @RequestMapping("/")
     public ResponseEntity getGamesList() {
-        List<Game> gamesList = gameService.getGamesList();
+        List<Game> gamesList = gameService.filterUnresolvedGames();
         return new ResponseEntity<>(gamesList, HttpStatus.OK);
     }
 }

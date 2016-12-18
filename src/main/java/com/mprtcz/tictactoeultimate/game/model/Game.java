@@ -52,6 +52,7 @@ public class Game {
 
     private String gameHost;
     private String secondPlayer;
+    private String winner;
 
     private int[] horizontalSums;
     private int[] verticalSums;
@@ -139,19 +140,6 @@ public class Game {
         }
     }
 
-    private String drawBoard() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\nGame table: \n");
-        for (FieldState[] tableLine : table) {
-            for (FieldState fieldState : tableLine) {
-                stringBuilder.append(" ");
-                stringBuilder.append(fieldState.value);
-            }
-            stringBuilder.append("\n");
-        }
-        return stringBuilder.toString();
-    }
-
     private String getBoardAsJson() {
         List<String> list = new ArrayList<>();
         for (FieldState[] row : table) {
@@ -174,6 +162,7 @@ public class Game {
         oneDimTable[indexHorizontal * table.length + indexVertical] = currentPlayer.getValue();
         boolean isWinner = addToSums(indexHorizontal, indexVertical);
         if (isWinner) {
+            this.winner = getCurrentPlayersName();
             return new ServerMessages(ServerMessages.ServerMessageEnum.GAME_IS_WON,
                     "The winner is: " + getCurrentPlayersName() + getBoardAsJson());
         }
@@ -204,7 +193,11 @@ public class Game {
     }
 
     public boolean canAMoveBeMade(Principal principal) {
-        return !(gameHost == null || secondPlayer == null) && isPlayerInGame(principal);
+        return this.winner == null && gameHost != null && secondPlayer != null && isPlayerInGame(principal);
+    }
+
+    public boolean isUnresolved() {
+        return this.winner == null;
     }
 
     public static void main(String[] args) {

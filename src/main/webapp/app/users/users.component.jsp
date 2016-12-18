@@ -3,6 +3,10 @@
         justify-content: center;
         margin-top: 25px;
     }
+    .mdl-dialog {
+        position: fixed;
+        margin-left: 50%;
+    }
 </style>
 <section mdl-upgrade class="section--center tab-content">
     <div class="mdl-grid mdl-grid--no-spacing">
@@ -31,16 +35,16 @@
             </tbody>
         </table>
     </div>
-    <dialog class="mdl-dialog">
-        <h4 class="mdl-dialog__title">Delete this</h4>
-        <div class="mdl-dialog__content">
-            <p>
-                Do you really want to delete this User?
-            </p>
-        </div>
-        <div class="mdl-dialog__actions">
-            <button type="button" class="mdl-button delete-confirm">Yes</button>
-            <button type="button" class="mdl-button close">No</button>
-        </div>
-    </dialog>
 </section>
+<dialog class="mdl-dialog">
+    <h4 class="mdl-dialog__title">Delete</h4>
+    <div class="mdl-dialog__content">
+        <p>
+            Do you really want to delete this User?
+        </p>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button delete-confirm">Yes</button>
+        <button type="button" class="mdl-button close">No</button>
+    </div>
+</dialog>

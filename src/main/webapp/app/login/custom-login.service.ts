@@ -12,7 +12,7 @@ export class CustomLoginService {
     };
 
     authenticate(username: string, password: string) {
-        const url = 'http://localhost:8080/users/profile';
+        const url = 'http://localhost:8080/api/users/profile';
         let options = new RequestOptions({
             headers: CustomLoginService.createAuthHeader(username, password),
             withCredentials: CustomLoginService.isUserNotLoggedIn()

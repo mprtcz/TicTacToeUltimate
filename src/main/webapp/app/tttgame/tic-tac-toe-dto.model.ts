@@ -4,6 +4,7 @@ export  class TicTacToeDTO {
     currentPlayer : string;
     gameHost : string;
     secondPlayer: string;
+    winner : string;
     horizontalSums : any;
     verticalSums: any;
     diagonalSums: any;

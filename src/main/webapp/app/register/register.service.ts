@@ -9,13 +9,13 @@ export class RegisterService {
     constructor(private http : Http) {}
 
     registerNewUser(newUser : NewUser) {
-        const address = 'http://localhost:8080/users/add';
+        const address = 'http://localhost:8080/api/users/add';
         return this.http.post(address, newUser);
     }
 
     updateUser(newUser : NewUser) {
         let options = new RequestOptions({ withCredentials: true });
-        const address = 'http://localhost:8080/users/profile';
+        const address = 'http://localhost:8080/api/users/profile';
         return this.http.patch(address, newUser, options);
     }
 }

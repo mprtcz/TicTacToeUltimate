@@ -9,13 +9,13 @@ export class UsersService {
     constructor(private http: Http, private currentUserService: CurrentUserService) {}
 
     getUsers(): Promise {
-        let url : string = 'http://localhost:8080/users';
+        let url : string = 'http://localhost:8080/api/users';
         return this.http.get(url, this.getOptions()).toPromise();
     }
 
     deleteUser(user : User) : Promise {
         let userSooId : string = user.ssoId;
-        let url : string = 'http://localhost:8080/users/' + userSooId;
+        let url : string = 'http://localhost:8080/api/users/' + userSooId;
         return this.http.delete(url, this.getOptions()).toPromise();
     }
 

@@ -44,13 +44,12 @@ export class UsersComponent implements OnInit {
             });
     }
 
-    updateUser(user: User): void {
-
-    }
+    updateUser(user: User): void {}
 
     showButtonDialog(user: User): void {
         var self = this;
         var user = user;
+        var dialogPolyfill;
         var dialog = document.querySelector('dialog');
         if (!dialog.showModal) {
             dialogPolyfill.registerDialog(dialog);

@@ -17,7 +17,7 @@ public class ServerMessages {
         SECOND_PLAYER_EXISTS("Second player already exists in this game", HttpStatus.BAD_REQUEST),
         OK("OK", HttpStatus.OK),
         HOSTGAME_DOES_NOT_EXIST("game with this host does not exist", HttpStatus.BAD_REQUEST),
-        GAME_CREATED("Game Created", HttpStatus.OK),
+        GAME_CREATED("Game Created", HttpStatus.CREATED),
         GAME_DOES_NOT_EXIST("This game does not exist", HttpStatus.BAD_REQUEST),
         COORDINATES_OUT_OF_TABLE("Index exceeds table size", HttpStatus.BAD_REQUEST),
         SYMBOL_ALREADY_IN_PLACE("This place has been taken", HttpStatus.BAD_REQUEST),
