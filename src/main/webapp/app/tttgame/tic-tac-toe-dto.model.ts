@@ -1,4 +1,5 @@
 export  class TicTacToeDTO {
+    gameIs: number;
     table : any;
     oneDimTable : string[] = [9];
     currentPlayer : string;

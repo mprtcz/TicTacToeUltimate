@@ -20,19 +20,28 @@ public class GameRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @OneToMany(mappedBy = "gameRecord")
     List<GameMove> movesList = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name="PLAYER_ONE_ID")
+    @JoinColumn(name = "PLAYER_ONE_ID")
     User playerOne;
 
     @ManyToOne
-    @JoinColumn(name="PLAYER_TWO_ID")
+    @JoinColumn(name = "PLAYER_TWO_ID", nullable = true)
     User playerTwo;
 
     @Column(name = "CREATION_DATE")
     private LocalDateTime dateTime;
+
+    @Override
+    public String toString() {
+        return "GameRecord{" +
+                "id=" + id +
+                ", playerOneSSOID=" + playerOne.getSsoId() +
+                ", dateTime=" + dateTime +
+                '}';
+    }
 }

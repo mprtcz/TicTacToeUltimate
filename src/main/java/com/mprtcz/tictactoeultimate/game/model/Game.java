@@ -45,6 +45,7 @@ public class Game {
     }
 
     private static final int NUMBER_OF_DIAGONALS = 2;
+    private Long gameId;
 
     private FieldState[][] table;
     private String[] oneDimTable;
@@ -58,7 +59,8 @@ public class Game {
     private int[] verticalSums;
     private int[] diagonalSums;
 
-    public Game(int tableSize, Principal gameHost) {
+    public Game(int tableSize, Principal gameHost, Long gameId) {
+        this.gameId = gameId;
         this.table = new FieldState[tableSize][tableSize];
         this.oneDimTable = new String[tableSize*tableSize];
         this.gameHost = gameHost.getName();
@@ -77,6 +79,10 @@ public class Game {
         this.verticalSums = new int[tableSize];
         this.diagonalSums = new int[NUMBER_OF_DIAGONALS];
         init();
+    }
+
+    public void setGameId(Long gameId) {
+        this.gameId = gameId;
     }
 
     public void setSecondPlayer(Principal secondPlayer) {
@@ -201,7 +207,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game game = new Game(3, new PrincipalImpl("dummyUsername"));
+        Game game = new Game(3, new PrincipalImpl("dummyUsername"), 1L);
         game.displayBoard();
 
         ServerMessages isWinner = new ServerMessages(ServerMessages.ServerMessageEnum.GAME_CREATED);

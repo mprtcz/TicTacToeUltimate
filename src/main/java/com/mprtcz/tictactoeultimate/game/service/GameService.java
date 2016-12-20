@@ -2,11 +2,18 @@ package com.mprtcz.tictactoeultimate.game.service;
 
 import com.mprtcz.tictactoeultimate.configuration.messages.ServerMessages;
 import com.mprtcz.tictactoeultimate.game.model.Game;
+import com.mprtcz.tictactoeultimate.game.model.GameRecord;
+import com.mprtcz.tictactoeultimate.game.repository.GameRecordRepository;
+import com.mprtcz.tictactoeultimate.user.model.User;
+import com.mprtcz.tictactoeultimate.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -17,15 +24,26 @@ public class GameService {
     private static int CUSTOM_TABLE_SIZE = 3;
     private static List<Game> gamesList = new ArrayList<>();
 
+    private final
+    GameRecordRepository gameRecordRepository;
+
+    private final UserService userService;
+
+    @Autowired
+    public GameService(GameRecordRepository gameRecordRepository, UserService userService) {
+        this.gameRecordRepository = gameRecordRepository;
+        this.userService = userService;
+    }
+
     public ServerMessages createGame(Principal principal) {
         Game existingGameWithHost = findGameByHost(principal.getName());
         if(existingGameWithHost != null) {
-            System.out.println("existingGameWithHost = " + existingGameWithHost);
             gamesList.remove(existingGameWithHost);
-            System.out.println("gameslist after removal " + gamesList.toString());
         }
 
-        Game game = new Game(CUSTOM_TABLE_SIZE, principal);
+        Game game = new Game(CUSTOM_TABLE_SIZE, principal, -1L);
+        GameRecord gameRecord = createGameRecord(game);
+        game.setGameId(gameRecord.getId());
         gamesList.add(game);
         return new ServerMessages(ServerMessages.ServerMessageEnum.GAME_CREATED);
     }
@@ -53,6 +71,7 @@ public class GameService {
             if (g.getGameHost().equals(gameHost)) {
                 if (g.getSecondPlayer() == null) {
                     g.setSecondPlayer(principal);
+                    updateGameRecordWithSecondPlayer(g, principal);
                     return new ServerMessages(ServerMessages.ServerMessageEnum.OK,
                             "Player " + principal.getName() + " joined game");
                 } else {
@@ -99,6 +118,33 @@ public class GameService {
 
     public List<Game> filterUnresolvedGames() {
         return getGamesList().stream().filter(Game::isUnresolved).collect(Collectors.toList());
+    }
+
+    private GameRecord createGameRecord(Game game) {
+        GameRecord gameRecord = new GameRecord();
+        gameRecord.setDateTime(LocalDateTime.now());
+        gameRecord.setPlayerOne(userService.findBySSO(game.getGameHost()));
+        gameRecordRepository.save(gameRecord);
+        return gameRecord;
+    }
+
+    private void updateGameRecordWithSecondPlayer(Game g, Principal principal) {
+        GameRecord gameRecord = findGameRecordByid(g.getGameId());
+        User user = userService.findBySSO(principal.getName());
+        if(user != null && gameRecord != null) {
+            gameRecord.setPlayerTwo(user);
+        }
+        gameRecordRepository.save(gameRecord);
+    }
+
+    private GameRecord findGameRecordByid(Long id) {
+        for (GameRecord gameRecord :
+                gameRecordRepository.findAll()) {
+            if(Objects.equals(gameRecord.getId(), id)) {
+                return gameRecord;
+            }
+        }
+        return null;
     }
 
 }
