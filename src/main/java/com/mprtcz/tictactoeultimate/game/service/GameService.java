@@ -2,7 +2,9 @@ package com.mprtcz.tictactoeultimate.game.service;
 
 import com.mprtcz.tictactoeultimate.configuration.messages.ServerMessages;
 import com.mprtcz.tictactoeultimate.game.model.Game;
+import com.mprtcz.tictactoeultimate.game.model.GameMove;
 import com.mprtcz.tictactoeultimate.game.model.GameRecord;
+import com.mprtcz.tictactoeultimate.game.repository.GameMoveRepository;
 import com.mprtcz.tictactoeultimate.game.repository.GameRecordRepository;
 import com.mprtcz.tictactoeultimate.user.model.User;
 import com.mprtcz.tictactoeultimate.user.service.UserService;
@@ -29,15 +31,18 @@ public class GameService {
 
     private final UserService userService;
 
+    private final GameMoveRepository gameMoveRepository;
+
     @Autowired
-    public GameService(GameRecordRepository gameRecordRepository, UserService userService) {
+    public GameService(GameRecordRepository gameRecordRepository, UserService userService, GameMoveRepository gameMoveRepository) {
         this.gameRecordRepository = gameRecordRepository;
         this.userService = userService;
+        this.gameMoveRepository = gameMoveRepository;
     }
 
     public ServerMessages createGame(Principal principal) {
         Game existingGameWithHost = findGameByHost(principal.getName());
-        if(existingGameWithHost != null) {
+        if (existingGameWithHost != null) {
             gamesList.remove(existingGameWithHost);
         }
 
@@ -55,7 +60,9 @@ public class GameService {
     public ServerMessages findGameAndInsertMove(Principal principal, String gameMove) {
         for (Game g : filterUnresolvedGames()) {
             if (g.canAMoveBeMade(principal)) {
-                return g.makeAMove(principal.getName(), gameMove);
+                ServerMessages serverMessages = g.makeAMove(principal.getName(), gameMove);
+                saveMoveIfSuccessful(gameMove, g, serverMessages);
+                return serverMessages;
             }
         }
         return new ServerMessages(ServerMessages.ServerMessageEnum.HOSTGAME_DOES_NOT_EXIST);
@@ -129,22 +136,33 @@ public class GameService {
     }
 
     private void updateGameRecordWithSecondPlayer(Game g, Principal principal) {
-        GameRecord gameRecord = findGameRecordByid(g.getGameId());
+        GameRecord gameRecord = findGameRecordById(g.getGameId());
         User user = userService.findBySSO(principal.getName());
-        if(user != null && gameRecord != null) {
+        if (user != null && gameRecord != null) {
             gameRecord.setPlayerTwo(user);
         }
         gameRecordRepository.save(gameRecord);
     }
 
-    private GameRecord findGameRecordByid(Long id) {
+    private GameRecord findGameRecordById(Long id) {
         for (GameRecord gameRecord :
                 gameRecordRepository.findAll()) {
-            if(Objects.equals(gameRecord.getId(), id)) {
+            if (Objects.equals(gameRecord.getId(), id)) {
                 return gameRecord;
             }
         }
         return null;
     }
 
+    private void saveMoveIfSuccessful(String move, Game g, ServerMessages serverMessages) {
+        if (serverMessages.getMessageEnum().equals(ServerMessages.ServerMessageEnum.SUCCESSFUL_MOVE) ||
+                serverMessages.getMessageEnum().equals(ServerMessages.ServerMessageEnum.GAME_IS_WON)) {
+            GameMove gameMove = new GameMove();
+            gameMove.setDateTime(LocalDateTime.now());
+            gameMove.setField(move);
+            gameMove.setGameRecord(findGameRecordById(g.getGameId()));
+            gameMove.setSymbol(g.getSymbolAtCoordinates(move));
+            gameMoveRepository.save(gameMove);
+        }
+    }
 }

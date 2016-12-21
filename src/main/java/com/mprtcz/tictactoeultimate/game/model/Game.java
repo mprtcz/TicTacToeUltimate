@@ -206,6 +206,17 @@ public class Game {
         return this.winner == null;
     }
 
+    public String getSymbolAtCoordinates(String coordinates) {
+        String[] indexes = coordinates.split(",");
+        if (indexes.length != 2) {
+            return null;
+        }
+        int xCoordinate = Integer.parseInt(indexes[0]);
+        int yCoordinate = Integer.parseInt(indexes[1]);
+        FieldState fieldState = table[xCoordinate][yCoordinate];
+        return fieldState.getValue();
+    }
+
     public static void main(String[] args) {
         Game game = new Game(3, new PrincipalImpl("dummyUsername"), 1L);
         game.displayBoard();

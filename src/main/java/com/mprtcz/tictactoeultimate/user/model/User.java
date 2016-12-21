@@ -3,9 +3,7 @@ package com.mprtcz.tictactoeultimate.user.model;
 import com.mprtcz.tictactoeultimate.game.model.GameRecord;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
-import javax.persistence.Id;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,7 +14,6 @@ import java.util.List;
  */
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -49,4 +46,15 @@ public class User {
 
     @OneToMany(mappedBy = "playerTwo")
     List<GameRecord> gamesHistoryAsX = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", ssoId='" + ssoId + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }

@@ -30,7 +30,7 @@ public class GameRecord {
     User playerOne;
 
     @ManyToOne
-    @JoinColumn(name = "PLAYER_TWO_ID", nullable = true)
+    @JoinColumn(name = "PLAYER_TWO_ID")
     User playerTwo;
 
     @Column(name = "CREATION_DATE")
@@ -41,7 +41,6 @@ public class GameRecord {
         return "GameRecord{" +
                 "id=" + id +
                 ", playerOneSSOID=" + playerOne.getSsoId() +
-                ", dateTime=" + dateTime +
                 '}';
     }
 }

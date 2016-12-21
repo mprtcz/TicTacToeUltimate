@@ -29,6 +29,6 @@ public class GameMove {
     @JoinColumn(name = "GAME_ID")
     private GameRecord gameRecord;
 
-    @Column(name = "DATETIME")
+    @Column(name = "CREATION_DATE")
     private LocalDateTime dateTime;
 }
