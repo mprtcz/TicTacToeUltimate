@@ -1,10 +1,10 @@
 package com.mprtcz.tictactoeultimate.user.service;
 
-import com.mprtcz.tictactoeultimate.user.model.mapper.UserMapper;
+import com.mprtcz.tictactoeultimate.configuration.security.RolesExtractor;
 import com.mprtcz.tictactoeultimate.user.model.User;
 import com.mprtcz.tictactoeultimate.user.model.dto.UserDTO;
+import com.mprtcz.tictactoeultimate.user.model.mapper.UserMapper;
 import com.mprtcz.tictactoeultimate.user.repository.UserRepository;
-import com.mprtcz.tictactoeultimate.configuration.security.RolesExtractor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -81,10 +81,7 @@ public class UserService {
 
     public void checkEditingPermissions(User editedUser, Principal principal) {
         User user = findBySSO(editedUser.getSsoId());
-        if(user == null) {
-            return;
-        }
-        if(principal.getName().equals(editedUser.getSsoId()) || RolesExtractor.isAdmin()) {
+        if(isAdminOrRootUser(editedUser, principal)) {
             saveEditedUser(user, editedUser);
         }
     }
@@ -110,5 +107,19 @@ public class UserService {
     private String encryptPassword(String password) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
+    }
+
+    public boolean isAdminOrRootUser(String ssoId, Principal principal) {
+        User user = findBySSO(ssoId);
+        return isAdminOrRootUser(user, principal);
+    }
+
+    public boolean isAdminOrRootUser(User user, Principal principal) {
+        return user != null && (principal.getName().equals(user.getSsoId()) || RolesExtractor.isAdmin());
+
+    }
+
+    public boolean userExists(String ssoId) {
+        return findBySSO(ssoId) != null;
     }
 }

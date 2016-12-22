@@ -4,6 +4,8 @@ import com.mprtcz.tictactoeultimate.configuration.messages.ServerMessages;
 import com.mprtcz.tictactoeultimate.game.model.Game;
 import com.mprtcz.tictactoeultimate.game.model.GameMove;
 import com.mprtcz.tictactoeultimate.game.model.GameRecord;
+import com.mprtcz.tictactoeultimate.game.model.dto.GameRecordDTO;
+import com.mprtcz.tictactoeultimate.game.model.mapper.GameRecordMapper;
 import com.mprtcz.tictactoeultimate.game.repository.GameMoveRepository;
 import com.mprtcz.tictactoeultimate.game.repository.GameRecordRepository;
 import com.mprtcz.tictactoeultimate.user.model.User;
@@ -29,15 +31,18 @@ public class GameService {
     private final
     GameRecordRepository gameRecordRepository;
 
+    private final GameRecordMapper gameRecordMapper;
+
     private final UserService userService;
 
     private final GameMoveRepository gameMoveRepository;
 
     @Autowired
-    public GameService(GameRecordRepository gameRecordRepository, UserService userService, GameMoveRepository gameMoveRepository) {
+    public GameService(GameRecordRepository gameRecordRepository, UserService userService, GameMoveRepository gameMoveRepository, GameRecordMapper gameRecordMapper) {
         this.gameRecordRepository = gameRecordRepository;
         this.userService = userService;
         this.gameMoveRepository = gameMoveRepository;
+        this.gameRecordMapper = gameRecordMapper;
     }
 
     public ServerMessages createGame(Principal principal) {
@@ -164,5 +169,40 @@ public class GameService {
             gameMove.setSymbol(g.getSymbolAtCoordinates(move));
             gameMoveRepository.save(gameMove);
         }
+    }
+
+    public List<GameRecordDTO> filterGameRecordDTOsByUser(String ssoId) {
+        List<GameRecordDTO> gameRecordDTOList = new ArrayList<>();
+        for (GameRecord gameRecord :
+                filterGamesByUser(ssoId)) {
+            gameRecordDTOList.add(gameRecordMapper.toDTO(gameRecord));
+        }
+        return gameRecordDTOList;
+    }
+
+    public List<GameRecord> filterGamesByUser(String ssoId) {
+        List<GameRecord> gameRecordsList = getAllGameRecordsList();
+        List<GameRecord> gameRecordsResultList = new ArrayList<>();
+        for (GameRecord gameRecord : gameRecordsList) {
+            if (gameRecord.getPlayerOne().getSsoId().equals(ssoId)
+                    || gameRecord.getPlayerTwo().getSsoId().equals(ssoId)) {
+                gameRecordsResultList.add(gameRecord);
+            }
+        }
+        return gameRecordsResultList;
+    }
+
+    private List<GameRecord> getAllGameRecordsList() {
+        Iterable<GameRecord> gameRecords = gameRecordRepository.findAll();
+        List<GameRecord> gameRecordsList = new ArrayList<>();
+        for (GameRecord gameRecord:
+             gameRecords) {
+            gameRecordsList.add(gameRecord);
+        }
+        return gameRecordsList;
+    }
+
+    public List<GameRecordDTO> getUserGames(String ssoId) {
+        return filterGameRecordDTOsByUser(ssoId);
     }
 }

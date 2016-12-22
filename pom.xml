@@ -122,6 +122,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <addResources>true</addResources>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -130,11 +133,19 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <excludes>
+                        <exclude>**/*.properties</exclude>
+                    </excludes>
                 </configuration>
                 <executions>
                     <execution>
                         <id>default-compile</id>
                         <phase>none</phase>
+                        <configuration>
+                            <excludes>
+                                <exclude>src/main/resources/application.properties</exclude>
+                            </excludes>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>Normal compilation (excluding mappers)</id>
@@ -144,6 +155,7 @@
                         <configuration>
                             <excludes>
                                 <exclude>**/**/mapper/**/*</exclude>
+                                <exclude>src/main/resources/application.properties</exclude>
                             </excludes>
                         </configuration>
                     </execution>
@@ -155,13 +167,16 @@
                         <configuration>
                             <compilerArgs>
                                 <compilerArg>
-                                    -Amapstruct.defaultComponentModel=spring
+                                     -Amapstruct.defaultComponentModel=spring
                                 </compilerArg>
                             </compilerArgs>
                             <includes>
                                 <include>**/**/mapper/**/*</include>
                                 <include>${project.build.directory}/classes/**/*</include>
                             </includes>
+                            <excludes>
+                                <exclude>src/main/resources/application.properties</exclude>
+                            </excludes>
                             <annotationProcessors>
                                 <processor>org.mapstruct.ap.MappingProcessor</processor>
                             </annotationProcessors>
@@ -171,14 +186,6 @@
             </plugin>
 
 <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

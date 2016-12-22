@@ -85,17 +85,16 @@ public class UserController {
 
     @RequestMapping(value = "/{ssoId}", method = RequestMethod.DELETE)
     public ResponseEntity removeUser(@PathVariable String ssoId, Principal principal) {
-        User loggedInUser = userService.findBySSO(principal.getName());
         User userToDelete = userService.findBySSO(ssoId);
-        if(userToDelete == null) {
+        if (userToDelete == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        if (!loggedInUser.getRole().equals("ROLE_ADMIN")) {
-            if (!userToDelete.getSsoId().equals(principal.getName())) {
-                return new ResponseEntity(HttpStatus.FORBIDDEN);
-            }
+        if (userService.isAdminOrRootUser(ssoId, principal)) {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+
         }
         userService.removeUser(userToDelete.getSsoId());
         return new ResponseEntity(HttpStatus.OK);
     }
+
 }
