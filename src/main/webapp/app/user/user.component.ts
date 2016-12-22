@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {User} from "../login/user.model";
 import {UserService} from "./user.service";
-import {error} from "util";
 import {RegisterService} from "../register/register.service";
 import {EditUserService} from "../shared/edit-user.service";
 
@@ -17,6 +16,7 @@ import {EditUserService} from "../shared/edit-user.service";
 export class UserComponent {
     private user: User;
     private message: string;
+    private isDisplaying: boolean;
 
     constructor(private userService: UserService,
                 private editUserService: EditUserService) {
@@ -39,5 +39,14 @@ export class UserComponent {
     setUser() : void {
         this.editUserService.setUser(this.user);
         console.log('setuser: ' + JSON.stringify(this.user));
+    }
+
+    setUser(user : User) : void {
+        this.editUserService.setUser(user);
+        console.log('setuser: ' + JSON.stringify(this.user));
+    }
+
+    showGamesHistory() : void {
+
     }
 }

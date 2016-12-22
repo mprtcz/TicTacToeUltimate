@@ -38,7 +38,14 @@
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
                     (click)="setUser()" routerLink="/register">
                 Edit Info
+            </button><br/>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                    (click)="isDisplaying = !isDisplaying">
+                Show history
             </button>
+        </div>
+        <div class="mdl-cell" *ngIf="isDisplaying">
+            <games-history [username]="user.ssoId"></games-history>
         </div>
     </div>
 </section>

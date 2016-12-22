@@ -27,10 +27,13 @@
                 <td class="mdl-data-table__cell--non-numeric">{{user.role.split('_')[1]}}</td>
                 <td class="mdl-data-table__cell--non-numeric">
                     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                    (click)="showButtonDialog(user)" mdl-upgrade >Delete User</button></td>
+                    (click)="showUser(user)" mdl-upgrade>Show User</button></td>
                 <td class="mdl-data-table__cell--non-numeric">
                     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
                     (click)="updateUser(user)" mdl-upgrade>Edit User</button></td>
+                <td class="mdl-data-table__cell--non-numeric">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                            (click)="showButtonDialog(user)" mdl-upgrade >Delete User</button></td>
             </tr>
             </tbody>
         </table>

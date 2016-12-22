@@ -23,7 +23,6 @@ export class UsersComponent implements OnInit {
         this.usersService.getUsers()
             .then(res => {
                 console.log(JSON.stringify(res));
-                //this.users = res.json() as User[];
                 this.users = JSON.parse(res._body);
                 console.log('parsed users: ' + JSON.stringify(this.users));
             })
@@ -45,6 +44,8 @@ export class UsersComponent implements OnInit {
     }
 
     updateUser(user: User): void {}
+
+    showUser(user : User) : void {}
 
     showButtonDialog(user: User): void {
         var self = this;

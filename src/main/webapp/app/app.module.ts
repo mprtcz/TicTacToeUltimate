@@ -16,6 +16,7 @@ import {GamesComponent} from "./games/games.component";
 import {TicTacToeComponent} from "./tttgame/tic-tac-toe.component";
 import {UsersComponent} from "./users/users.component";
 import {GamesListComponent} from "./games/games-list.component";
+import {GamesHistoryComponent} from "./gameshistory/games-history.component";
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import {GamesListComponent} from "./games/games-list.component";
         TicTacToeComponent,
         UsersComponent,
         MaterialDesignUpgradeElement,
-        GamesListComponent
+        GamesListComponent,
+        GamesHistoryComponent
     ],
     providers: [],
     bootstrap: [AppComponent]
