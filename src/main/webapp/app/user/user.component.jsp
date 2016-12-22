@@ -1,17 +1,22 @@
 <style>
-    .mdl-grid {
+    .mdl-grid:first-child {
         margin-left: 25%;
+    }
+
+    .mdl-grid {
         justify-content: center;
     }
+
     .mdl-list {
         background-color: white;
     }
+
     .mdl-button {
         margin: 14px;
     }
 </style>
 <section mdl-upgrade class="section--center tab-content">
-    <div class="mdl-grid mdl-grid--no-spacing"  *ngIf="user">
+    <div class="mdl-grid mdl-grid--no-spacing" *ngIf="user">
         <ul class="mdl-list mdl-shadow--2dp">
             <li class="mdl-list__item">
                 <ul class="demo-list-icon mdl-list">
@@ -34,18 +39,20 @@
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
                     (click)="deleteAccount()">
                 Delete Account
-            </button><br/>
+            </button>
+            <br/>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
                     (click)="setUser()" routerLink="/register">
                 Edit Info
-            </button><br/>
+            </button>
+            <br/>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
                     (click)="isDisplaying = !isDisplaying">
                 Show history
             </button>
         </div>
-        <div class="mdl-cell" *ngIf="isDisplaying">
-            <games-history [username]="user.ssoId"></games-history>
-        </div>
+    </div>
+    <div class="mdl-grid" *ngIf="isDisplaying">
+        <games-history [username]="user.ssoId"></games-history>
     </div>
 </section>

@@ -1,3 +1,8 @@
+<style>
+    .mdl-grid {
+        padding:0;
+    }
+</style>
 <div mdl-upgrade class="mdl-grid mdl-grid--no-spacing">
     <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
         <thead>
@@ -23,7 +28,9 @@
         </tr>
         </tbody>
     </table>
-    <div *ngIf="movesToDisplay">
-    <games-moves [gamemoves]="movesToDisplay"></games-moves>
+    <div class="mdl-grid" *ngIf="movesToDisplay">
+        <games-moves [gamemoves]="movesToDisplay"></games-moves>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                (click)="movesToDisplay = null" mdl-upgrade>X</button>
     </div>
 </div>
