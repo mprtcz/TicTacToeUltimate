@@ -12,6 +12,7 @@ import {GamesHistoryService} from "./games-history.service";
 })
 export class GamesHistoryComponent implements OnInit {
     private gamesHistory : any[];
+    private movesToDisplay : any[];
 
     @Input('username') username : String;
 
@@ -28,5 +29,10 @@ export class GamesHistoryComponent implements OnInit {
             }).catch(function (error) {
             console.log("Error " + JSON.stringify(error));
         });
+    }
+
+    setMoves(movesToDisplay: any) : void {
+        console.log(JSON.stringify(movesToDisplay));
+        this.movesToDisplay = movesToDisplay;
     }
 }
