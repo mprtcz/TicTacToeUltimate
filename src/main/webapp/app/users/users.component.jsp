@@ -7,6 +7,12 @@
         position: fixed;
         margin-left: 50%;
     }
+    .editUserButton {
+        background-color: coral;
+    }
+    .editUserButton:hover {
+        background-color: coral;
+    }
 </style>
 <section mdl-upgrade class="section--center tab-content">
     <div class="mdl-grid mdl-grid--no-spacing">
@@ -26,10 +32,11 @@
                 <td class="mdl-data-table__cell--non-numeric">{{user.email}}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{user.role.split('_')[1]}}</td>
                 <td class="mdl-data-table__cell--non-numeric">
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
                     (click)="showUser(user)" mdl-upgrade>Show User</button></td>
                 <td class="mdl-data-table__cell--non-numeric">
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                    <button class="mdl-button mdl-js-button mdl-button--raised
+                    mdl-js-ripple-effect editUserButton mdl-button--colored"
                     (click)="updateUser(user)" mdl-upgrade>Edit User</button></td>
                 <td class="mdl-data-table__cell--non-numeric">
                     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"

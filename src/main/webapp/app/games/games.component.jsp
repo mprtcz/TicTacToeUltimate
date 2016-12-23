@@ -1,34 +1,42 @@
 <style>
     .mdl-card {
-        width: inherit;
+        width: 350px;
         margin-top: 20px;
-        margin-left: 10px;
         justify-items: center;
+        margin-left: 0;
+    }
+    .mdl-card__title {
+        padding-top: 0;
+        padding-bottom: 0;
+        justify-content: center;
+    }
+    .mdl-grid {
+        justify-content: center;
     }
 </style>
-<section mdl-upgrade class="section--center mdl-grid tab-content">
-    <div class=" mdl-grid mdl-grid--no-spacing">
-        <div class="mdl-card loginCard mdl-grid  mdl-shadow--2dp">
-            <div class="mdl-card mdl-cell mdl-cell--12-col">
+<section mdl-upgrade class="section--center tab-content">
+    <div class="mdl-grid mdl-grid--no-spacing">
+        <div class="mdl-card mdl-shadow--2dp">
+            <div class="mdl-card mdl-cell ">
                 <div class="mdl-card__title mdl-card--expand">
-                    <h2 class="mdl-card__title-text">Start a Game</h2>
+                    <h4>Start a Game</h4>
                 </div>
                 <ul class="mdl-list">
                     <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content">Tic Tac Toe Game</span>
                         <span class="mdl-list__item-secondary-content">
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
                             (click)="createNewGame()">Start</button>
                     </span>
                         <span class="mdl-list__item-secondary-content">
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                            (click)="isDisplaying = true">Join</button>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                            (click)="isDisplaying = !isDisplaying">Join</button>
                     </span>
                 </ul>
             </div>
         </div>
-        <div class="mdl-card  mdl-grid mdl-shadow--2dp" *ngIf="isDisplaying">
-            <games-list (notifyParent)="getNotification($event)"></games-list>
-        </div>
+    </div>
+    <div class=" mdl-grid" *ngIf="isDisplaying">
+        <games-list (notifyParent)="getNotification($event)"></games-list>
     </div>
 </section>

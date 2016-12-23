@@ -1,3 +1,8 @@
+<style>
+    .mdl-data-table {
+        width: 350px;
+    }
+</style>
 <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" mdl-upgrade>
     <thead>
     <tr>
