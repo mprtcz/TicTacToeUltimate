@@ -28,7 +28,6 @@
             </nav>
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-            <a routerLink="/greeting" class="mdl-layout__tab">Greeting</a>
             <a routerLink="/summary" class="mdl-layout__tab">Games</a>
             <a routerLink="/games" class="mdl-layout__tab"><div *ngIf="user">Start a Game</div></a>
             <a routerLink="/users" class="mdl-layout__tab"><div *ngIf="user">

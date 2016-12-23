@@ -12,7 +12,7 @@ import {UsersComponent} from "./users/users.component";
 import {SummaryComponent} from "./summary/summary.component";
 
 const routes: Routes = [
-    {path: '', redirectTo: '/greeting', pathMatch: 'full'},
+    {path: '', redirectTo: '/summary', pathMatch: 'full'},
     {path: 'login', redirectTo: '/customlogin', pathMatch: 'full'},
     {path: 'start', component: AppComponent},
     {path: 'customlogin', component: CustomLoginComponent},
