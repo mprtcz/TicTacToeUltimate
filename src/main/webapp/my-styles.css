@@ -1,6 +1,7 @@
 .loginCard {
     justify-content: center;
     text-align: center;
+    margin-top: 25px;
 }
 
 .loginCard > h4 {

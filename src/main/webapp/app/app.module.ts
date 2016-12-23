@@ -18,6 +18,7 @@ import {UsersComponent} from "./users/users.component";
 import {GamesListComponent} from "./games/games-list.component";
 import {GamesHistoryComponent} from "./gameshistory/games-history.component";
 import {GameMovesComponent} from "./gameshistory/game-moves.component";
+import {SummaryComponent} from "./summary/summary.component";
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import {GameMovesComponent} from "./gameshistory/game-moves.component";
         MaterialDesignUpgradeElement,
         GamesListComponent,
         GamesHistoryComponent,
-        GameMovesComponent
+        GameMovesComponent,
+        SummaryComponent
     ],
     providers: [],
     bootstrap: [AppComponent]
