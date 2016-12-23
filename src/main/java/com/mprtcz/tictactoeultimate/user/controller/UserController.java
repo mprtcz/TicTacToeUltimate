@@ -3,6 +3,7 @@ package com.mprtcz.tictactoeultimate.user.controller;
 import com.mprtcz.tictactoeultimate.user.model.User;
 import com.mprtcz.tictactoeultimate.user.model.dto.UserDTO;
 import com.mprtcz.tictactoeultimate.user.service.UserService;
+import com.mprtcz.tictactoeultimate.user.service.UserSessionRegistry;
 import com.mprtcz.tictactoeultimate.user.validator.NewUserValidator;
 import com.mprtcz.tictactoeultimate.user.validator.UserConstraintViolation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,16 @@ public class UserController {
     private final
     NewUserValidator newUserValidator;
 
+    private final
+    UserSessionRegistry userSessionRegistry;
+
     @Autowired
-    public UserController(UserService userService, NewUserValidator newUserValidator) {
+    public UserController(UserService userService,
+                          NewUserValidator newUserValidator,
+                          UserSessionRegistry userSessionRegistry) {
         this.userService = userService;
         this.newUserValidator = newUserValidator;
+        this.userSessionRegistry = userSessionRegistry;
     }
 
     @RequestMapping("/profile")
@@ -95,6 +102,12 @@ public class UserController {
         }
         userService.removeUser(userToDelete.getSsoId());
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/online")
+    public ResponseEntity getOnlineUsers() {
+        List<String> onlineUsersList = userSessionRegistry.getOnlineUserNames();
+        return new ResponseEntity<>(onlineUsersList, HttpStatus.OK);
     }
 
 }
