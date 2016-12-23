@@ -30,10 +30,10 @@ public class UserController {
     private final
     UserSessionRegistry userSessionRegistry;
 
+
     @Autowired
     public UserController(UserService userService,
-                          NewUserValidator newUserValidator,
-                          UserSessionRegistry userSessionRegistry) {
+                          NewUserValidator newUserValidator, UserSessionRegistry userSessionRegistry) {
         this.userService = userService;
         this.newUserValidator = newUserValidator;
         this.userSessionRegistry = userSessionRegistry;
@@ -109,5 +109,4 @@ public class UserController {
         List<String> onlineUsersList = userSessionRegistry.getOnlineUserNames();
         return new ResponseEntity<>(onlineUsersList, HttpStatus.OK);
     }
-
 }

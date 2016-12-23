@@ -12,18 +12,17 @@ export class SummaryComponent implements OnInit {
 
     constructor(private summaryService : SummaryService) {}
 
-    ngOnInit() {console.log('Summary Component Initialized');}
+    ngOnInit() {
+        console.log('Summary Component Initialized');
+        this.getOnlineUsers();
+    }
 
     getOnlineUsers() : void {
         this.summaryService.getOnlineUsers()
             .then(res => {
                 console.log("Response: " +JSON.stringify(res));
-                this.onlineUsers ;
-                console.log("Added this.user: " + JSON.stringify(this.user));
-                localStorage.setItem("currentUser", JSON.stringify(this.user));
-                console.log("Added user: " + JSON.stringify(localStorage.getItem("currentUser")));
-                this.message = 'Success';
-                this.router.navigate(['/greeting']);
+                this.onlineUsers = JSON.parse(res._body);
+                console.log("Added onlineUsers: " + JSON.stringify(this.onlineUsers));
             })
             .catch((error: any) => {
                 if (error.status === 401) {

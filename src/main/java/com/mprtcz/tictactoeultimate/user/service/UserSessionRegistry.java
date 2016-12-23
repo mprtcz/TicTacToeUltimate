@@ -19,25 +19,26 @@ public class UserSessionRegistry {
 
     private final SessionRegistry sessionRegistry;
 
+    private final
+    UserService userService;
+
     @Autowired
-    public UserSessionRegistry(SessionRegistry sessionRegistry) {
+    public UserSessionRegistry(SessionRegistry sessionRegistry, UserService userService) {
         this.sessionRegistry = sessionRegistry;
+        this.userService = userService;
     }
 
     private List<UserDetails> getOnlineUserDetails() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String userName = auth.getName();
         List<Object> principals = sessionRegistry.getAllPrincipals();
 
         List<UserDetails> usersDetailsList = new ArrayList<>();
 
         for (Object principal : principals) {
             if (principal instanceof UserDetails) {
-                if (!((UserDetails) principal).getUsername().equals(userName)) {
-                    for (SessionInformation sess : sessionRegistry.getAllSessions(principal, false)) {
-                        if (!sess.isExpired()) {
-                            usersDetailsList.add((UserDetails) sess.getPrincipal());
-                        }
+                for (SessionInformation sess : sessionRegistry.getAllSessions(principal, false)) {
+                    if (!sess.isExpired()) {
+                        usersDetailsList.add((UserDetails) sess.getPrincipal());
                     }
                 }
             }
@@ -51,6 +52,6 @@ public class UserSessionRegistry {
                 getOnlineUserDetails()) {
             usernames.add(userDetails.getUsername());
         }
-        return usernames;
+        return userService.convertSsoIdsToNickNames(usernames);
     }
 }

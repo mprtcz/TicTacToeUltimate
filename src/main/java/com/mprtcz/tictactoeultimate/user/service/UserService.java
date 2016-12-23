@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -27,7 +28,8 @@ public class UserService {
     UserMapper userMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository,
+                       UserMapper userMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
     }
@@ -114,12 +116,20 @@ public class UserService {
         return isAdminOrRootUser(user, principal);
     }
 
-    public boolean isAdminOrRootUser(User user, Principal principal) {
+    private boolean isAdminOrRootUser(User user, Principal principal) {
         return user != null && (principal.getName().equals(user.getSsoId()) || RolesExtractor.isAdmin());
 
     }
 
     public boolean userExists(String ssoId) {
         return findBySSO(ssoId) != null;
+    }
+
+    List<String> convertSsoIdsToNickNames(List<String> ssoIdList) {
+        List<String> nicksList = new ArrayList<>();
+        for(String ssoId: ssoIdList) {
+            nicksList.add(findBySSO(ssoId).getNickname());
+        }
+        return nicksList;
     }
 }
