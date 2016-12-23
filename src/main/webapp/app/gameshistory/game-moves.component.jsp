@@ -1,3 +1,8 @@
+<style>
+    .mdl-data-table {
+        margin-left: 14px;
+    }
+</style>
 <div mdl-upgrade class="mdl-grid mdl-grid--no-spacing">
     <div *ngIf="gamemoves">
         <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">

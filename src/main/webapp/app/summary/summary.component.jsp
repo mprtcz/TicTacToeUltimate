@@ -1,12 +1,19 @@
 <style>
     .mdl-card:last-child {
         padding: 5px;
-        width: 50%;
+        justify-content: center;
+    }
+
+    .mdl-card__title {
+        padding: 0;
+    }
+
+    .mdl-card__supporting-text {
+        padding: 0;
     }
 
     .mdl-card {
         justify-content: center;
-        text-align: center;
         margin-top: 25px;
     }
 
@@ -22,46 +29,43 @@
             <h6 *ngIf="onlineUsers"> Games Online: null</h6>
         </div>
     </div>
-    <div class="mdl-card  mdl-grid mdl-shadow--2dp">
-        <div mdl-upgrade class="mdl-grid mdl-grid--no-spacing">
-            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-                <thead>
-                <tr>
-                    <th class="mdl-data-table__cell--non-numeric">Online Users</th>
-                    <th class="mdl-data-table__cell--non-numeric"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let nickname of onlineUsers">
-                    <td class="mdl-data-table__cell--non-numeric">
-                        <i class="material-icons mdl-list__item-icon">person</i>
-                    </td>
-                    <td class="mdl-data-table__cell--non-numeric">
-                         {{nickname}}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+    <div class="mdl-card mdl-grid mdl-shadow--2dp">
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+            <thead>
+            <tr>
+                <th class="mdl-data-table__cell--non-numeric">Online Users</th>
+                <th class="mdl-data-table__cell--non-numeric"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let nickname of onlineUsers">
+                <td class="mdl-data-table__cell--non-numeric">
+                    <i class="material-icons mdl-list__item-icon">person</i>
+                </td>
+                <td class="mdl-data-table__cell--non-numeric">
+                    {{nickname}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-                <thead>
-                <tr>
-                    <th class="mdl-data-table__cell--non-numeric">Open Games</th>
-                    <th class="mdl-data-table__cell--non-numeric"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let nickname of onlineUsers">
-                    <td class="mdl-data-table__cell--non-numeric">
-                        <i class="material-icons mdl-list__item-icon">person</i>
-                    </td>
-                    <td class="mdl-data-table__cell--non-numeric">
-                         {{nickname}}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-        </div>
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+            <thead>
+            <tr>
+                <th class="mdl-data-table__cell--non-numeric">Open Games</th>
+                <th class="mdl-data-table__cell--non-numeric"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let nickname of onlineUsers">
+                <td class="mdl-data-table__cell--non-numeric">
+                    <i class="material-icons mdl-list__item-icon">person</i>
+                </td>
+                <td class="mdl-data-table__cell--non-numeric">
+                    {{nickname}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </section>

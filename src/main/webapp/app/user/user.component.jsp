@@ -1,18 +1,25 @@
 <style>
-    .mdl-grid:first-child {
-        margin-left: 25%;
-    }
+    /*.mdl-grid:first-child {*/
+        /*margin-left: 25%;*/
+    /*}*/
 
     .mdl-grid {
         justify-content: center;
     }
 
     .mdl-list {
+        width: 500px;
         background-color: white;
+    }
+
+    .mdl-cell {
+        display: inline-block;
+        width: 255px;
     }
 
     .mdl-button {
         margin: 14px;
+        width: 100%;
     }
 </style>
 <section mdl-upgrade class="section--center tab-content">
@@ -37,19 +44,13 @@
         </ul>
         <div class="mdl-cell">
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                    (click)="deleteAccount()">
-                Delete Account
-            </button>
+                    (click)="deleteAccount()">Delete Account</button>
             <br/>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
-                    (click)="setUser()" routerLink="/register">
-                Edit Info
-            </button>
+                    (click)="setUser()" routerLink="/register">Edit Info</button>
             <br/>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
-                    (click)="isDisplaying = !isDisplaying">
-                Show history
-            </button>
+                    (click)="isDisplaying = !isDisplaying">Show history</button>
         </div>
     </div>
     <div class="mdl-grid" *ngIf="isDisplaying">

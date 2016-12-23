@@ -33,6 +33,10 @@ export class GamesHistoryComponent implements OnInit {
 
     setMoves(movesToDisplay: any) : void {
         console.log(JSON.stringify(movesToDisplay));
-        this.movesToDisplay = movesToDisplay;
+        if(this.movesToDisplay == movesToDisplay) {
+            this.movesToDisplay = null;
+        } else {
+            this.movesToDisplay = movesToDisplay;
+        }
     }
 }
