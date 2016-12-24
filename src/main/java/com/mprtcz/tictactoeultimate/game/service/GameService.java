@@ -1,10 +1,11 @@
 package com.mprtcz.tictactoeultimate.game.service;
 
 import com.mprtcz.tictactoeultimate.configuration.messages.ServerMessages;
-import com.mprtcz.tictactoeultimate.game.model.Game;
 import com.mprtcz.tictactoeultimate.game.model.GameMove;
 import com.mprtcz.tictactoeultimate.game.model.GameRecord;
+import com.mprtcz.tictactoeultimate.game.model.TicTacToeGame;
 import com.mprtcz.tictactoeultimate.game.model.dto.GameRecordDTO;
+import com.mprtcz.tictactoeultimate.game.model.interfaces.Game;
 import com.mprtcz.tictactoeultimate.game.model.mapper.GameRecordMapper;
 import com.mprtcz.tictactoeultimate.game.repository.GameMoveRepository;
 import com.mprtcz.tictactoeultimate.game.repository.GameRecordRepository;
@@ -45,16 +46,16 @@ public class GameService {
         this.gameRecordMapper = gameRecordMapper;
     }
 
-    public ServerMessages createGame(Principal principal) {
+    public ServerMessages createTicTacToeGame(Principal principal) {
         Game existingGameWithHost = findGameByHost(principal.getName());
         if (existingGameWithHost != null) {
             gamesList.remove(existingGameWithHost);
         }
 
-        Game game = new Game(CUSTOM_TABLE_SIZE, principal, -1L);
-        GameRecord gameRecord = createGameRecord(game);
-        game.setGameId(gameRecord.getId());
-        gamesList.add(game);
+        Game ticTacToeGame = new TicTacToeGame(CUSTOM_TABLE_SIZE, principal, -1L);
+        GameRecord gameRecord = createGameRecord(ticTacToeGame);
+        ticTacToeGame.setGameId(gameRecord.getId());
+        gamesList.add(ticTacToeGame);
         return new ServerMessages(ServerMessages.ServerMessageEnum.GAME_CREATED);
     }
 

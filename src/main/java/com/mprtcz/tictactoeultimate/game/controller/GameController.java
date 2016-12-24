@@ -1,7 +1,7 @@
 package com.mprtcz.tictactoeultimate.game.controller;
 
-import com.mprtcz.tictactoeultimate.game.model.Game;
 import com.mprtcz.tictactoeultimate.game.model.dto.GameRecordDTO;
+import com.mprtcz.tictactoeultimate.game.model.interfaces.Game;
 import com.mprtcz.tictactoeultimate.game.service.GameService;
 import com.mprtcz.tictactoeultimate.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,4 +50,8 @@ public class GameController {
         List<GameRecordDTO> gameRecordDTOList = gameService.getUserGames(ssoId);
         return new ResponseEntity<>(gameRecordDTOList,HttpStatus.OK);
     }
+
+//    public ResponseEntity getAllRunningGames() {
+//
+//    }
 }
