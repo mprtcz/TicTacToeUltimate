@@ -10,7 +10,7 @@
             <tr>
                 <th>Field</th>
                 <th>Symbol</th>
-                <th>Date</th>
+                <th>Time</th>
             </tr>
             </thead>
             <tbody>
@@ -18,7 +18,7 @@
                 <td class="mdl-data-table__cell--non-numeric">{{move.field}}</td>
                 <td class="mdl-data-table__cell--non-numeric">{{move.symbol}}</td>
                 <td class="mdl-data-table__cell--non-numeric">
-                    {{move.dateTime.dayOfMonth}}.{{move.dateTime.monthValue}}.{{move.dateTime.year}}
+                    {{move.dateTime.hour}}:{{move.dateTime.minute}}:{{move.dateTime.second}}
                 </td>
             </tr>
             </tbody>

@@ -9,7 +9,6 @@ import com.mprtcz.tictactoeultimate.game.model.interfaces.Game;
 import com.mprtcz.tictactoeultimate.game.model.mapper.GameRecordMapper;
 import com.mprtcz.tictactoeultimate.game.repository.GameMoveRepository;
 import com.mprtcz.tictactoeultimate.game.repository.GameRecordRepository;
-import com.mprtcz.tictactoeultimate.user.model.User;
 import com.mprtcz.tictactoeultimate.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,8 +52,7 @@ public class GameService {
         }
 
         Game ticTacToeGame = new TicTacToeGame(CUSTOM_TABLE_SIZE, principal, -1L);
-        GameRecord gameRecord = createGameRecord(ticTacToeGame);
-        ticTacToeGame.setGameId(gameRecord.getId());
+
         gamesList.add(ticTacToeGame);
         return new ServerMessages(ServerMessages.ServerMessageEnum.GAME_CREATED);
     }
@@ -84,7 +82,7 @@ public class GameService {
             if (g.getGameHost().equals(gameHost)) {
                 if (g.getSecondPlayer() == null) {
                     g.setSecondPlayer(principal);
-                    updateGameRecordWithSecondPlayer(g, principal);
+                    createGameRecord(g);
                     return new ServerMessages(ServerMessages.ServerMessageEnum.OK,
                             "Player " + principal.getName() + " joined game");
                 } else {
@@ -137,17 +135,10 @@ public class GameService {
         GameRecord gameRecord = new GameRecord();
         gameRecord.setDateTime(LocalDateTime.now());
         gameRecord.setPlayerOne(userService.findBySSO(game.getGameHost()));
+        gameRecord.setPlayerTwo(userService.findBySSO(game.getSecondPlayer()));
         gameRecordRepository.save(gameRecord);
+        game.setGameId(gameRecord.getId());
         return gameRecord;
-    }
-
-    private void updateGameRecordWithSecondPlayer(Game g, Principal principal) {
-        GameRecord gameRecord = findGameRecordById(g.getGameId());
-        User user = userService.findBySSO(principal.getName());
-        if (user != null && gameRecord != null) {
-            gameRecord.setPlayerTwo(user);
-        }
-        gameRecordRepository.save(gameRecord);
     }
 
     private GameRecord findGameRecordById(Long id) {
@@ -172,7 +163,7 @@ public class GameService {
         }
     }
 
-    public List<GameRecordDTO> filterGameRecordDTOsByUser(String ssoId) {
+    private List<GameRecordDTO> filterGameRecordDTOsByUser(String ssoId) {
         List<GameRecordDTO> gameRecordDTOList = new ArrayList<>();
         for (GameRecord gameRecord :
                 filterGamesByUser(ssoId)) {
@@ -181,7 +172,7 @@ public class GameService {
         return gameRecordDTOList;
     }
 
-    public List<GameRecord> filterGamesByUser(String ssoId) {
+    private List<GameRecord> filterGamesByUser(String ssoId) {
         List<GameRecord> gameRecordsList = getAllGameRecordsList();
         List<GameRecord> gameRecordsResultList = new ArrayList<>();
         for (GameRecord gameRecord : gameRecordsList) {
@@ -198,6 +189,7 @@ public class GameService {
         List<GameRecord> gameRecordsList = new ArrayList<>();
         for (GameRecord gameRecord:
              gameRecords) {
+            System.out.println("gameRecord = " + gameRecord.getDateTime());
             gameRecordsList.add(gameRecord);
         }
         return gameRecordsList;

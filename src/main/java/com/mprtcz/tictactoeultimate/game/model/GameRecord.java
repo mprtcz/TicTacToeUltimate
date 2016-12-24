@@ -40,7 +40,9 @@ public class GameRecord {
     public String toString() {
         return "GameRecord{" +
                 "id=" + id +
-                ", playerOneSSOID=" + playerOne.getSsoId() +
+                ", playerOne=" + playerOne.getSsoId() +
+                ", playerTwo=" + playerTwo.getSsoId() +
+                ", dateTime=" + dateTime.toString() +
                 '}';
     }
 }

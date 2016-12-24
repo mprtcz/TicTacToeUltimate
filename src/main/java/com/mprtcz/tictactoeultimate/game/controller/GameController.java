@@ -50,8 +50,4 @@ public class GameController {
         List<GameRecordDTO> gameRecordDTOList = gameService.getUserGames(ssoId);
         return new ResponseEntity<>(gameRecordDTOList,HttpStatus.OK);
     }
-
-//    public ResponseEntity getAllRunningGames() {
-//
-//    }
 }
