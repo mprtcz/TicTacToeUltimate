@@ -12,13 +12,13 @@ export class GamesService {
 
     fetchTTTGamesFromServer() : Promise {
         let options = new RequestOptions({ withCredentials: this.currentUserService.isUserLoggedIn() });
-        const url = this.serverAddressService.serverAddress + '/games/';
+        const url = this.serverAddressService.serverAddress + '/api/games/';
         return this.http.get(url, options).toPromise();
     }
 
     joinGame(game : TicTacToeDTO) : Promise {
         let options = new RequestOptions({ withCredentials: this.currentUserService.isUserLoggedIn() });
-        const url = this.serverAddressService.serverAddress + '/tictactoe/' + game.gameHost + '/join';
+        const url = this.serverAddressService.serverAddress + '/api/tictactoe/' + game.gameHost + '/join';
         return this.http.get(url, options).toPromise();
     }
 }

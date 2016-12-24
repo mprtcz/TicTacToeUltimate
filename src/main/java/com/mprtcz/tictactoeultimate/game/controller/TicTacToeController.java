@@ -14,7 +14,7 @@ import java.security.Principal;
  * Created by mprtcz on 2016-12-12.
  */
 @RestController
-@RequestMapping("/tictactoe")
+@RequestMapping("/api/tictactoe")
 public class TicTacToeController {
 
     private final

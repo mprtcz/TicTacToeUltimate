@@ -10,7 +10,7 @@ export class GamesHistoryService {
 
     getDataFromServer(username: String) : Promise {
         let options = new RequestOptions({ withCredentials: this.currentUserService.isUserLoggedIn() });
-        const url = this.serverAddressService.serverAddress + '/games/' + username;
+        const url = this.serverAddressService.serverAddress + '/api/games/' + username;
         return this.http.get(url, options).toPromise();
     }
 

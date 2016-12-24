@@ -9,14 +9,14 @@ export class TicTacToeService {
 
     createGame() : Promise {
         console.log('creating game');
-        let url = this.serverAddressService.serverAddress + '/tictactoe/create';
+        let url = this.serverAddressService.serverAddress + '/api/tictactoe/create';
         let options = new RequestOptions({ withCredentials: localStorage.getItem("currentUser") });
         return this.http.get(url, options).toPromise();
     }
 
     gameState(gameHost: string) : Promise {
         console.log('updating game');
-        let url = this.serverAddressService.serverAddress + '/tictactoe/' + gameHost + '/game';
+        let url = this.serverAddressService.serverAddress + '/api/tictactoe/' + gameHost + '/game';
         let options = new RequestOptions({ withCredentials: localStorage.getItem("currentUser") });
         return this.http.get(url, options).toPromise();
     }
@@ -28,7 +28,7 @@ export class TicTacToeService {
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions({ withCredentials: true , headers: headers});
         console.log('Request options: ' +JSON.stringify(options));
-        let url = this.serverAddressService.serverAddress + '/tictactoe/move';
+        let url = this.serverAddressService.serverAddress + '/api/tictactoe/move';
         console.log('move coodrinates: ' +resultedString);
         return this.http.patch(url, resultedString, options).toPromise();
     }

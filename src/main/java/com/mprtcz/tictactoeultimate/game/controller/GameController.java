@@ -18,7 +18,7 @@ import java.util.List;
  * Created by mprtcz on 2016-12-10.
  */
 @RestController
-@RequestMapping("/games")
+@RequestMapping("/api/games")
 public class GameController {
 
     private final
