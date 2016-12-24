@@ -9,7 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by mprtcz on 2016-12-23.
@@ -47,7 +49,7 @@ public class UserSessionRegistry {
     }
 
     public List<String> getOnlineUserNames() {
-        List<String> usernames = new ArrayList<>();
+        Set<String> usernames = new HashSet<>();
         for (UserDetails userDetails :
                 getOnlineUserDetails()) {
             usernames.add(userDetails.getUsername());

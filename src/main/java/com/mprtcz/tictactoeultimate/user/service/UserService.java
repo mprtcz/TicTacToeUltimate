@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -125,7 +126,7 @@ public class UserService {
         return findBySSO(ssoId) != null;
     }
 
-    List<String> convertSsoIdsToNickNames(List<String> ssoIdList) {
+    List<String> convertSsoIdsToNickNames(Collection<String> ssoIdList) {
         List<String> nicksList = new ArrayList<>();
         for(String ssoId: ssoIdList) {
             nicksList.add(findBySSO(ssoId).getNickname());
