@@ -10,26 +10,36 @@
     .mdl-card {
         justify-content: center;
         margin-top: 25px;
-        width: 50%;
-        min-width: 200px;
         padding: 0;
         min-height: 0;
     }
 
+    .autowidth {
+        width: 50%;
+        min-width: 200px;
+        justify-content: center;
+    }
+
+    .halfwidth {
+        min-width: 200px;
+        width: 50%
+    }
+
     .mdl-data-table {
         width: 100%;
+        border: 0;
     }
 </style>
 <section mdl-upgrade class="section--center tab-content">
-    <div class="mdl-card  mdl-grid  mdl-shadow--2dp">
+    <div class="mdl-card autowidth mdl-grid  mdl-shadow--2dp">
         <div class="mdl-card__title"><h4>Summary </h4></div>
         <div class="mdl-card__supporting-text">
             <h6 *ngIf="onlineUsers"> Users Online: {{onlineUsers.length}}</h6>
             <h6 *ngIf="onlineUsers"> Games Online: 0</h6>
         </div>
     </div>
-
-    <div class="mdl-card  mdl-grid  mdl-shadow--2dp">
+<div class="mdl-grid autowidth">
+    <div class="mdl-card halfwidth mdl-shadow--2dp">
         <table class="mdl-data-table mdl-js-data-table">
             <thead>
             <tr>
@@ -48,7 +58,7 @@
         </table>
     </div>
 
-    <div class="mdl-card  mdl-grid  mdl-shadow--2dp">
+    <div class="mdl-card halfwidth mdl-shadow--2dp">
         <table class="mdl-data-table mdl-js-data-table">
             <thead>
             <tr>
@@ -66,4 +76,5 @@
             </tbody>
         </table>
     </div>
+</div>
 </section>
