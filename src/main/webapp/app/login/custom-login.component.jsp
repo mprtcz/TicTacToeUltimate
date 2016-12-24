@@ -1,6 +1,6 @@
 <section mdl-upgrade class="section--center tab-content">
     <div class="mdl-card loginCard mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-        <h4 class="mdl-card__title-text">Log In</h4>
+        <h4 class="mdl-card__title-text">Log in</h4>
         <form action="#">
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" name="username" type="text" id="username"

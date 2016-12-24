@@ -1,18 +1,19 @@
 import {Injectable} from "@angular/core";
 import {User} from "./user.model";
 import {RequestOptions, Headers, Http} from "@angular/http";
+import {ServerAddressService} from "../shared/server-address.service";
 
 @Injectable()
 export class CustomLoginService {
     private user: User;
     private isAuthenticated: boolean;
 
-    constructor(private http : Http) {
+    constructor(private http : Http, private serverAddressService : ServerAddressService) {
         this.isAuthenticated = false
     };
 
     authenticate(username: string, password: string) {
-        const url = 'http://localhost:8080/api/users/profile';
+        const url = this.serverAddressService.serverAddress + '/api/users/profile';
         let options = new RequestOptions({
             headers: CustomLoginService.createAuthHeader(username, password),
             withCredentials: CustomLoginService.isUserNotLoggedIn()

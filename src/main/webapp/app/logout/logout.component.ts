@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {EditUserService} from "../shared/edit-user.service";
 import {Http} from "@angular/http";
+import {ServerAddressService} from "../shared/server-address.service";
 
 @Component({
     moduleId: module.id,
@@ -10,7 +11,7 @@ import {Http} from "@angular/http";
 export class LogoutComponent implements OnInit {
 
     ngOnInit(): void {
-        let address : String = 'http://localhost:8080/logout';
+        let address : String = this.serverAddressService.serverAddress + '/logout';
         console.log('oninit2 logout');
         this.http.get(address).toPromise()
             .then(res => {
@@ -21,7 +22,7 @@ export class LogoutComponent implements OnInit {
         this.sharedService.setUser(null);
     }
 
-    constructor(private sharedService: EditUserService, private http: Http) {
+    constructor(private sharedService: EditUserService, private http: Http, private serverAddressService : ServerAddressService) {
         localStorage.removeItem("currentUser");
     }
 

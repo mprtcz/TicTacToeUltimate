@@ -3,14 +3,16 @@ import {Http, RequestOptions} from "@angular/http";
 
 import 'rxjs/add/operator/toPromise';
 import {Router} from "@angular/router";
+import {ServerAddressService} from "../shared/server-address.service";
 
 @Injectable()
 export class GreetingService {
 
-    private greetingUrl = 'http://localhost:8080/api/hello';
+    private greetingUrl = this.serverAddressService.serverAddress + '/api/hello';
 
     constructor(private http: Http,
-                private router: Router) {}
+                private router: Router,
+                private serverAddressService : ServerAddressService) {}
 
     getSimpleGreetingFromServer(): Promise<string> {
         return this.http.get(this.greetingUrl)

@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {User} from "../login/user.model";
 import {Http, RequestOptions, Response} from "@angular/http";
+import {ServerAddressService} from "./server-address.service";
 
 @Injectable()
 export class CurrentUserService {
 
-    constructor(private http : Http) {
+    constructor(private http : Http, private serverAddressService : ServerAddressService) {
     }
 
     isUserLoggedIn(): boolean {
@@ -37,7 +38,7 @@ export class CurrentUserService {
     }
 
     checkIfTheUserIsLoggedIn() : Promise {
-        let url = 'http://localhost:8080/api/principal';
+        let url = this.serverAddressService.serverAddress + '/api/principal';
         let options = new RequestOptions({ withCredentials: true });
         return this.http.get(url, options).toPromise()
     }
