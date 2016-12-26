@@ -21,7 +21,7 @@ There are two roles:
 * Admin
 * User
 
-on of which can be applied to a user. The default role is `User`, which can be only changed by a user with `Admin` role.
+one of which can be applied to a user. The default role is `User`, which can be only changed by a user with `Admin` role.
 
 Registered users can start and join games. 
 As for this version the game users can play is a custom implementation of Tic tac toe game, 
@@ -38,5 +38,3 @@ clicking at it's nickname in upper right corner of the page.
 Users with `Admin` role can delete and  ~~update~~ other users via Admin tab in the application.
 
 ![image](https://media.giphy.com/media/l4Jz9gXJlFor6SGeA/source.gif)
-
-![image]()
