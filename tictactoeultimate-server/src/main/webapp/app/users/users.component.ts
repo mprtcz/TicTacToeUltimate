@@ -9,6 +9,7 @@ import {UsersService} from "./users.serivce";
     providers: [UsersService]
 })
 export class UsersComponent implements OnInit {
+    private message : string;
 
     ngOnInit(): void {
         this.getUsers();
@@ -19,7 +20,7 @@ export class UsersComponent implements OnInit {
     constructor(private usersService: UsersService) {
     }
 
-    getUsers(): User[] {
+    getUsers(): void {
         this.usersService.getUsers()
             .then(res => {
                 console.log(JSON.stringify(res));
@@ -38,7 +39,6 @@ export class UsersComponent implements OnInit {
                 console.log(JSON.stringify(res));
             })
             .catch((error: any) => {
-                this.message =
                     console.log(JSON.stringify(error));
             });
     }

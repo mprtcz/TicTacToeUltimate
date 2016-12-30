@@ -13,6 +13,10 @@
     .editUserButton:hover {
         background-color: coral;
     }
+    .mdl-data-table {
+        display: block;
+        overflow: scroll;
+    }
 </style>
 <section mdl-upgrade class="section--center tab-content">
     <div class="mdl-grid mdl-grid--no-spacing">
