@@ -1,0 +1,17 @@
+.loginCard {
+    justify-content: center;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.loginCard > h4 {
+    padding: 10px;
+}
+
+body {
+    font-family: "Roboto", "Helvetica", "Arial", serif;
+}
+
+.tabcontent {
+    padding-top: 50px;
+}
