@@ -32,7 +32,7 @@ export class CustomLoginComponent {
                 localStorage.setItem("currentUser", JSON.stringify(this.user));
                 console.log("Added user: " + JSON.stringify(localStorage.getItem("currentUser")));
                 this.message = 'Success';
-                this.router.navigate(['/greeting']);
+                this.router.navigate(['/summary']);
             })
             .catch((error: any) => {
                 if (error.status === 401) {
