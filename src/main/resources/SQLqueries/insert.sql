@@ -1,6 +1,0 @@
-INSERT INTO USERS
-VALUES (1, 'ADMINISTRATOR', '$2a$10$hhYDI937Y0Qg.WT5QR65Uehed8tJLy8vfUNl8i7kMsYjGMzaCV5Pq', 'Admin', 'admin@admin.pl');
-INSERT INTO USERS
-VALUES (2, 'SAMPLEUSER', '$2a$10$4KfkZSO09xdDB3fn1pHN7.ob3Cw/qDP0BC7XU1Ozf4UpDLVeNPAj6', 'User', 'user@user.pl');
-
-UPDATE `tictactoedb`.`users` SET `ROLE`='ROLE_ADMIN' WHERE `ID`='1';
