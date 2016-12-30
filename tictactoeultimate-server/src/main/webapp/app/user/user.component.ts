@@ -24,11 +24,11 @@ export class UserComponent {
     }
 
     deleteAccount() {
-        this.userService.deleteAccount().toPromise()
+        this.userService.deleteAccount()
             .then(res => {
                 localStorage.removeItem("currentUser");
                 console.log(JSON.stringify(res));
-                this.user = '';
+                this.user = null;
                 this.message = 'User Removed';
             })
             .catch((error: any) => {

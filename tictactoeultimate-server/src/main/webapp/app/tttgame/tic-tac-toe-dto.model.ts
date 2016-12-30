@@ -1,7 +1,7 @@
 export  class TicTacToeDTO {
     gameIs: number;
     table : any;
-    oneDimTable : string[] = [9];
+    oneDimTable : string[] = [];
     currentPlayer : string;
     gameHost : string;
     secondPlayer: string;

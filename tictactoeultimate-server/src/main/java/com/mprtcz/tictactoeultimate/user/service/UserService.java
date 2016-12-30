@@ -117,8 +117,13 @@ public class UserService {
     }
 
     private boolean isAdminOrRootUser(User user, Principal principal) {
-        return user != null && (principal.getName().equals(user.getSsoId()) || RolesExtractor.isAdmin());
+        if(user == null) {
+            return false;
+        }
+        boolean isAdmin = RolesExtractor.isAdmin();
+        boolean isRootUser = principal.getName().equals(user.getSsoId());
 
+        return isAdmin || isRootUser;
     }
 
     public boolean userExists(String ssoId) {

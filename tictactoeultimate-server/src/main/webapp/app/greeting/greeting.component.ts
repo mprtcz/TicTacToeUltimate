@@ -7,7 +7,7 @@ import {GreetingService} from "./greeting.service";
     templateUrl: '/app/greeting/greeting.component.jsp',
     providers: [ GreetingService ]
 })
-export class GreetingComponent implements AfterViewInit {
+export class GreetingComponent {
     variable: string;
 
     constructor(private greetingService: GreetingService) {

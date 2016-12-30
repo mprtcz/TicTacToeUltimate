@@ -6,11 +6,11 @@ import {ServerAddressService} from "../shared/server-address.service";
 @Injectable()
 export class UserService {
 
-    constructor(private http: Http, private private serverAddressService : ServerAddressService){};
+    constructor(private http: Http, private serverAddressService : ServerAddressService){};
 
-    deleteAccount() {
+    deleteAccount() : Promise<Response> {
         const url = this.serverAddressService.serverAddress + '/api/users/profile';
         let options = new RequestOptions({withCredentials: CustomLoginService.isUserLoggedIn()});
-        return this.http.delete(url, options);
+        return this.http.delete(url, options).toPromise();
     }
 }

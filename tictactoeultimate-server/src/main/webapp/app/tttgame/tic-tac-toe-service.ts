@@ -7,21 +7,21 @@ export class TicTacToeService {
 
     constructor(private http: Http, private serverAddressService : ServerAddressService){}
 
-    createGame() : Promise {
+    createGame() : Promise<Response> {
         console.log('creating game');
         let url = this.serverAddressService.serverAddress + '/api/tictactoe/create';
         let options = new RequestOptions({ withCredentials: localStorage.getItem("currentUser") });
         return this.http.get(url, options).toPromise();
     }
 
-    gameState(gameHost: string) : Promise {
+    gameState(gameHost: string) : Promise<Response> {
         console.log('updating game');
         let url = this.serverAddressService.serverAddress + '/api/tictactoe/' + gameHost + '/game';
         let options = new RequestOptions({ withCredentials: localStorage.getItem("currentUser") });
         return this.http.get(url, options).toPromise();
     }
 
-    parseAndSendInsertion(number: number) {
+    parseAndSendInsertion(number: int) {
         let firstCoordinate = Math.floor(number/3);
         let secondCoordinate = number % 3;
         let resultedString = firstCoordinate + ',' + secondCoordinate;

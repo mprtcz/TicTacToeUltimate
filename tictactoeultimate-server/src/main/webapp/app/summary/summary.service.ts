@@ -8,7 +8,7 @@ export class SummaryService {
 
     constructor(private http: Http, private currentUserService : CurrentUserService, private serverAddressService : ServerAddressService) { }
 
-    getOnlineUsers() : Promise {
+    getOnlineUsers() : Promise<Response> {
         let options = new RequestOptions({ withCredentials: this.currentUserService.isUserLoggedIn() });
         const url = this.serverAddressService.serverAddress + '/api/users/online';
         return this.http.get(url, options).toPromise();

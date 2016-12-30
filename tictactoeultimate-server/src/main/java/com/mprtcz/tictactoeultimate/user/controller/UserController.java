@@ -96,7 +96,7 @@ public class UserController {
         if (userToDelete == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        if (userService.isAdminOrRootUser(ssoId, principal)) {
+        if (!userService.isAdminOrRootUser(ssoId, principal)) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
 
         }

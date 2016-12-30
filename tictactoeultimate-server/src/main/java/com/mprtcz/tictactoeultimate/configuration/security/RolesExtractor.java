@@ -15,6 +15,7 @@ public class RolesExtractor {
             return false;
         }
         User user = (User) principal;
-        return user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        boolean result = user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        return result;
     }
 }

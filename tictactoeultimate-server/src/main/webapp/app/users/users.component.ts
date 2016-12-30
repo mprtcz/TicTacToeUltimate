@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, AfterContentInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {User} from "../login/user.model";
 import {UsersService} from "./users.serivce";
 
@@ -55,12 +55,15 @@ export class UsersComponent implements OnInit {
         if (!dialog.showModal) {
             dialogPolyfill.registerDialog(dialog);
         }
+        //noinspection TypeScriptUnresolvedFunction
         dialog.showModal();
         dialog.querySelector('.close').addEventListener('click', function () {
+            //noinspection TypeScriptUnresolvedFunction
             dialog.close();
         });
         dialog.querySelector('.delete-confirm').addEventListener('click', function () {
             console.log('confirmed');
+            //noinspection TypeScriptUnresolvedFunction
             dialog.close();
             self.deleteUser(user);
         });

@@ -37,7 +37,7 @@ export class CurrentUserService {
         localStorage.removeItem("currentUser");
     }
 
-    checkIfTheUserIsLoggedIn() : Promise {
+    checkIfTheUserIsLoggedIn() : Promise<Response> {
         let url = this.serverAddressService.serverAddress + '/api/principal';
         let options = new RequestOptions({ withCredentials: true });
         return this.http.get(url, options).toPromise()

@@ -114,7 +114,7 @@ export class TicTacToeComponent implements OnInit, OnDestroy {
         }
     }
 
-    updateGameDto(response: string): void {
+    updateGameDto(response: any): void {
         this.gameDto = JSON.parse(response._body);
         this.isSecondPlayerInGame = this.gameDto.secondPlayer != null;
         this.game.symbols = this.gameDto.oneDimTable;
